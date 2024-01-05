@@ -9,7 +9,7 @@
     height: 40px;
     width: 100%;
 }
-Button{
+.dashboard Button{
     height: 100%;
     width: 25%;
     background-color: black !important;

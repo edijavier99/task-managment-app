@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import "../../styles/pages/notas.css"
 
 export const Notas = () =>{
+    const [description, setDescription] = useState("")
     return(
         <section className="notas">
            <div className="background-image">
@@ -9,9 +10,16 @@ export const Notas = () =>{
             </div>
             <h1>Notas</h1>
             <section className="notas-container">
-               <textarea>
-               </textarea>
+                <input id="nota-title" className="text-center" placeholder="Titulo"/>
+                <textarea  maxlength="1600" 
+                           value={description} 
+                           onChange={(e)=>{
+                            setDescription(e.target.value)
+                           }}
+                           ></textarea>
+                <span className="character-number text-muted bg-danger">{description.length }/1600</span>
             </section>
+            <button className="btn btn-dark">Guardar</button>
         </section>
     )
 }
