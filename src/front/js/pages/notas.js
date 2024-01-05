@@ -17,7 +17,7 @@ export const Notas = () =>{
                             setDescription(e.target.value)
                            }}
                            ></textarea>
-                <span className="character-number text-muted bg-danger">{description.length }/1600</span>
+                <span className="character-number text-muted">{description.length }/1600</span>
             </section>
             <button className="btn btn-dark">Guardar</button>
         </section>
