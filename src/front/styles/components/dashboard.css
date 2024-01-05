@@ -1,0 +1,22 @@
+
+@media (max-width: 470px){
+.dashboard{
+    width: 100%;
+    height: auto; 
+    margin-top: 80px;
+}
+.titles{
+    height: 40px;
+    width: 100%;
+}
+Button{
+    height: 100%;
+    width: 25%;
+    background-color: black !important;
+    border: none;
+    color:white;
+    border-radius: 3px;
+    outline: none !important;
+    box-shadow: none !important;
+}
+}
