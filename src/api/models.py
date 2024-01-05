@@ -17,7 +17,6 @@ class User(db.Model):
         return {
             "id": self.id,
             "email": self.email,
-            # do not serialize the password, its a security breach
         }
 
 class Todo(db.Model):
@@ -39,7 +38,7 @@ class Notes(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable= False)
     description = db.Column(db.String(1650), nullable= False)
-    date = db.Column(db.Date, nullable=True)
+    date = db.Column(db.Date, nullable=False)
 
     def __repr__(self):
         return f'<Notes {self.id}>'
