@@ -12,7 +12,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-
 	const [selectedDate, setSelectedDate] = useState(null)
 
 	const handleDateChange = (date) => {

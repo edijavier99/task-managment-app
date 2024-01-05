@@ -3,6 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(40), nullable=False)
     surname = db.Column(db.String(40), nullable=False)
@@ -20,6 +21,7 @@ class User(db.Model):
         }
 
 class Todo(db.Model):
+    __tablename__ = "todo"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable= False)
     date = db.Column(db.Date, nullable = False)
@@ -35,6 +37,7 @@ class Todo(db.Model):
         }
 
 class Notes(db.Model):
+    __tablename__ = "notes"
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable= False)
     description = db.Column(db.String(1650), nullable= False)

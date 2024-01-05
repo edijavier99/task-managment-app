@@ -26,7 +26,7 @@ def handle_hello():
 @api.route('/todo', methods=['GET'])
 def get_all_tasks():
     all_tasks = Todo.query.all()
-    all_tasks = list(map(lambda x : x.serialize, all_tasks))
+    all_tasks = list(map(lambda x : x.serialize(), all_tasks))
     return jsonify(all_tasks),200
 
 @api.route('/todo/<int:id>', methods= ['GET'])
