@@ -52,7 +52,7 @@ def add_todo():
             }
             return jsonify(response_body),400
     
-    new_todo = Todo(title = data["title"], date = data["date"])
+    new_todo = Todo(title = data["title"].capitalize(), date = data["date"])
     db.session.add(new_todo)   
     db.session.commit()
 
