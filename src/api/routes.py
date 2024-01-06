@@ -5,6 +5,8 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User,Todo,Notes
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from datetime import datetime
+
 
 api = Blueprint('api', __name__)
 
@@ -51,8 +53,11 @@ def add_todo():
                 "msg": f"{field.capitalize()} should be in request"
             }
             return jsonify(response_body),400
+        
+    date_str = data["date"]
+    date_obj = datetime.strptime(date_str, '%d/%m/%Y').date()
     
-    new_todo = Todo(title = data["title"].capitalize(), date = data["date"])
+    new_todo = Todo(title=data["title"].capitalize(), date=date_obj)
     db.session.add(new_todo)   
     db.session.commit()
 
@@ -61,7 +66,7 @@ def add_todo():
 @api.route('/delete-todo/<int:id>', methods= ["DELETE"])
 def delete_todo(id):
     todo_to_delete = Todo.query.get(id)
-    db.session.remove(todo_to_delete)
+    db.session.delete(todo_to_delete)
     db.session.commit()
 
     return jsonify({"msg": "Todo succesfully removed"})
@@ -125,7 +130,7 @@ def add_notes():
 @api.route('/delete-note/<int:id>', methods= ["DELETE"])
 def delete_note(id):
     note_to_delete = Notes.query.get(id)
-    db.session.remove(note_to_delete)
+    db.session.delete(note_to_delete)
     db.session.commit()
 
     return jsonify({"msg": "Note succesfully removed"})
