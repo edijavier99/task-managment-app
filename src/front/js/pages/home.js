@@ -23,19 +23,6 @@ export const Home = () => {
 		<main id="main">
 			<Profile/>
 			<Dashboard/>
-
-			<div>
-      <label>Select a Date: </label>
-      <DatePicker
-        selected={selectedDate}
-        onChange={handleDateChange}
-        dateFormat="yyyy-MM-dd"  // Puedes personalizar el formato de la fecha
-      />
-      {selectedDate && (
-        <p>You selected: {selectedDate.toISOString().split('T')[0]}</p>
-      )}
-    </div>
-
 		</main>
 	);
 };

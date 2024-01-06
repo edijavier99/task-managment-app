@@ -95,7 +95,7 @@ def modify_todo(id):
 @api.route('/notes', methods=['GET'])
 def get_all_notes():
     all_notes = Notes.query.all()
-    all_notes = list(map(lambda x : x.serialize, all_notes))
+    all_notes = list(map(lambda x : x.serialize(), all_notes))
     return jsonify(all_notes),200
 
 @api.route('/notes/<int:id>', methods= ['GET'])
@@ -120,8 +120,11 @@ def add_notes():
                 "msg": f"{field.capitalize()} should be in request"
             }
             return jsonify(response_body),400
+        
+    date_str = data["date"]
+    date_obj = datetime.strptime(date_str, '%d/%m/%Y').date()
     
-    new_notes = Notes(title = data["title"], date = data["date"], description = data["description"])
+    new_notes = Notes(title = data["title"], date=date_obj, description = data["description"])
     db.session.add(new_notes)   
     db.session.commit()
 

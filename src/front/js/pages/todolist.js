@@ -3,7 +3,7 @@ import "../../styles/pages/todolist.css"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Context } from "../store/appContext";
-import { format } from 'date-fns';
+import { format, set } from 'date-fns';
 
 
 export const ToDoList = () =>{
@@ -33,17 +33,15 @@ export const ToDoList = () =>{
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             setTodos(data);
         })
         .catch(err => console.log(err));
-        
     }
 
     const createTodo = () =>{
-        if (date == '' || null || undefined){
+        if (!date){
             alert("Introduce una fecha antes de añadir ")
-        }else if(title == '' || null || undefined){
+        }else if(!title){
             alert("Introduce una tarea antes de añadir")
         }else {
             const newTodo = { title, date };
@@ -57,6 +55,9 @@ export const ToDoList = () =>{
             })
             .then(resp => {								
                 return resp.json();
+            })
+            .then(data=>{
+                setTitle("")
             })
             .catch(err => console.log(err))
         }
