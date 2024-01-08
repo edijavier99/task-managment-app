@@ -11,6 +11,7 @@ import { ToDoList } from "./pages/todolist";
 import { Notas } from "./pages/notas";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import { Welcome } from "./pages/welcome";
 
 //create your first component
 const Layout = () => {
@@ -29,6 +30,7 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<ToDoList />} path="/todo-list" />
                         <Route element={<Notas />} path="/notas" />
+                        <Route element={<Welcome />} path="/welcome" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
