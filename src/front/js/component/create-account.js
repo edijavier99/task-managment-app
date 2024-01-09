@@ -5,6 +5,7 @@ export const CreateAccount = () =>{
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [surname, setSurname] = useState("")
+    const [password, setPassword] = useState("")
     return(
         <section className="create-account">
            <header className="header">
@@ -51,6 +52,20 @@ export const CreateAccount = () =>{
                            required
                     />
                 </div>
+                <div className="form-group">
+                    <label for="password" id="password-label">Contraseña</label>
+                    <input id="password" 
+                           placeholder="Introduce contraseña"
+                           name="password"
+                           type="password"
+                           onChange={(e)=>{
+                                setPassword(e.target.value)
+                           }}
+                           value={password}
+                           required
+                    />
+                </div>
+
                 <div className="form-group">
                     <button type="submit"  id="submit" className="submit-button">Crear</button>
                 </div>

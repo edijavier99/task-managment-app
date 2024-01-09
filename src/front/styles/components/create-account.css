@@ -1,4 +1,4 @@
-.create-account{
+.create-account, .login{
     padding: 15px;
     position: absolute;
     top:50px
@@ -12,11 +12,11 @@ form{
     border-radius: 5px;
     background-color: rgb(225, 209, 190);
 }
-#name-label, #email-label, #surname-label{
+#name-label, #email-label, #surname-label, #password-label{
     display: block;
     margin: 0.5rem 0;
 }
-input[type="text"], input[type="email"]{
+input[type="text"], input[type="email"], input[type="password"]{
     width: 100%;
     padding: 7px;
     border-radius: 3px;
