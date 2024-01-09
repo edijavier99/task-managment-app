@@ -204,3 +204,29 @@ def delete_user(id):
     db.session.commit()
 
     return jsonify({"msg" : f"{user_to_delete.name} user deleted"})
+
+#Route to Login
+
+@api.route('/login', methods=['POST'])
+def user_login():
+    email = request.json.get("email", None)
+    password = request.json.get("password", None)
+
+    if email is None or password is None:
+        response_body = {
+            "msg": "Email and password are required"
+        }
+        return jsonify(response_body), 400
+
+    user = User.query.filter_by(email=email).first()
+    if user is None:
+        response_body = {
+            "msg": "User not found"
+        }
+        return jsonify(response_body), 404
+
+    if user and user.password == password:
+        logged = "Successfully logged"
+        return jsonify({"loginOK": logged, "user_id": user.id, "username": user.username, "email": user.email})
+
+       
