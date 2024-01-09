@@ -157,3 +157,50 @@ def modify_note(id):
 
     return jsonify({"msg": f"{update_note.title} Notes updated"}),200
 
+
+#For users
+
+@api.route('/users', methods='GET')
+def get_all_users():
+    all_users= User.query.all()
+    all_users = list(map( lambda x : x.serialize(), all_users))
+
+    return jsonify(all_users),200
+
+@api.route('/users/<int:id>' , methods='GET')
+def get_single_user(id):
+    single_user = User.query.get(id)
+    return jsonify(single_user),200
+
+@api.route('/create-user', methods='POST')
+def create_user():
+    data = request.get_json()
+    if data is None :
+        response_body = {
+            "msg" : "Body should be passed with request"
+        }
+        return jsonify(response_body),400
+    
+    required_fields = ["name" , "surname" , "email" , "password"]
+
+    for fields in required_fields:
+        if fields not in data:
+            response_body = {
+                "msg" : f"{fields.capitalize()} should be in the request"
+            }
+        return jsonify(response_body),400
+
+    new_user = User(name = data["name"], surname = data["surname"], email = data["email"], password = data["password"])
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"msg": f"{new_user.name} added"}),200
+
+
+@api.route('/delete-user/<int:id>', methods='DELETE')
+def delete_user(id):
+    user_to_delete = User.query.get(id)
+    db.session.delete(user_to_delete) 
+    db.session.commit()
+
+    return jsonify({"msg" : f"{user_to_delete.name} user deleted"})
