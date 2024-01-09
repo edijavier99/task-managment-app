@@ -1,20 +1,44 @@
 import React, { useState } from "react";
 import "../../styles/components/create-account.css"
+import { useNavigate } from "react-router-dom";
 
 export const CreateAccount = () =>{
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [surname, setSurname] = useState("")
     const [password, setPassword] = useState("")
+    const navigate = useNavigate()
+
+    const createUser = () =>{
+        fetch(process.env.BACKEND_URL + 'api/create-user', {
+            method: 'POST',
+            headers: {
+                "Content-Type" : "application/json"
+            },
+            body: JSON.stringify({ name, email, surname, password })
+        })
+        .then(response => {
+            if (response.ok) {
+                navigate('/login');
+            } else {
+                throw new Error(`Error en la solicitud: ${response.statusText}`);
+            }
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
     return(
         <section className="create-account">
            <header className="header">
                 <h1 id="title">Task Managment <br/>Crear una cuenta</h1>
                 <p id="description">Empieza a organizar tu dia con nosotros...</p>
            </header>
-           <form className="survey-form">
+           <form className="survey-form"  onSubmit={(e) => {
+                    e.preventDefault();
+                    createUser();
+                }}>
                 <div className="form-group">
-                    <label for="name" id="name-label">Nombre</label>
+                    <label htmlFor="name" id="name-label">Nombre</label>
                     <input id="name" 
                            placeholder="Introduce tu nombre"
                            name="name"
@@ -27,7 +51,7 @@ export const CreateAccount = () =>{
                     />
                 </div>
                 <div className="form-group">
-                    <label for="surname" id="surname-label">Apellido</label>
+                    <label htmlFor="surname" id="surname-label">Apellido</label>
                     <input id="surname" 
                            placeholder="Introduce tu nombre"
                            name="surname"
@@ -40,7 +64,7 @@ export const CreateAccount = () =>{
                     />
                 </div>
                 <div className="form-group">
-                    <label for="email" id="email-label">Email</label>
+                    <label htmlFor="email" id="email-label">Email</label>
                     <input id="email" 
                            placeholder="Introduce tu email"
                            name="email"
@@ -53,7 +77,7 @@ export const CreateAccount = () =>{
                     />
                 </div>
                 <div className="form-group">
-                    <label for="password" id="password-label">Contraseña</label>
+                    <label htmlFor="password" id="password-label">Contraseña</label>
                     <input id="password" 
                            placeholder="Introduce contraseña"
                            name="password"
@@ -65,9 +89,8 @@ export const CreateAccount = () =>{
                            required
                     />
                 </div>
-
                 <div className="form-group">
-                    <button type="submit"  id="submit" className="submit-button">Crear</button>
+                    <button type="submit" id="submit" className="submit-button">Crear</button>
                 </div>
            </form>
         </section>

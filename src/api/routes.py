@@ -130,7 +130,7 @@ def add_notes():
 
     return jsonify({"msg": "New notes added"}),200
 
-@api.route('/delete-note/<int:id>', methods= ["DELETE"])
+@api.route('/delete-note/<int:id>', methods= ['DELETE'])
 def delete_note(id):
     note_to_delete = Notes.query.get(id)
     db.session.delete(note_to_delete)
@@ -159,20 +159,18 @@ def modify_note(id):
 
 
 #For users
-
-@api.route('/users', methods='GET')
+@api.route('/users', methods=['GET'])
 def get_all_users():
-    all_users= User.query.all()
-    all_users = list(map( lambda x : x.serialize(), all_users))
+   all_users = User.query.all()
+   all_users = list(map(lambda x : x.serialize(),all_users))
+   return jsonify(all_users),200
 
-    return jsonify(all_users),200
-
-@api.route('/users/<int:id>' , methods='GET')
+@api.route('/users/<int:id>', methods=['GET'])
 def get_single_user(id):
     single_user = User.query.get(id)
     return jsonify(single_user),200
 
-@api.route('/create-user', methods='POST')
+@api.route('/create-user', methods=['POST'])
 def create_user():
     data = request.get_json()
     if data is None :
@@ -180,15 +178,14 @@ def create_user():
             "msg" : "Body should be passed with request"
         }
         return jsonify(response_body),400
-    
+        
     required_fields = ["name" , "surname" , "email" , "password"]
-
     for fields in required_fields:
         if fields not in data:
             response_body = {
                 "msg" : f"{fields.capitalize()} should be in the request"
             }
-        return jsonify(response_body),400
+            return jsonify(response_body),400
 
     new_user = User(name = data["name"], surname = data["surname"], email = data["email"], password = data["password"])
     db.session.add(new_user)
@@ -197,7 +194,7 @@ def create_user():
     return jsonify({"msg": f"{new_user.name} added"}),200
 
 
-@api.route('/delete-user/<int:id>', methods='DELETE')
+@api.route('/delete-user/<int:id>', methods=['DELETE'])
 def delete_user(id):
     user_to_delete = User.query.get(id)
     db.session.delete(user_to_delete) 
@@ -205,7 +202,7 @@ def delete_user(id):
 
     return jsonify({"msg" : f"{user_to_delete.name} user deleted"})
 
-#Route to Login
+# Route to Login
 
 @api.route('/login', methods=['POST'])
 def user_login():
@@ -227,6 +224,8 @@ def user_login():
 
     if user and user.password == password:
         logged = "Successfully logged"
-        return jsonify({"loginOK": logged, "user_id": user.id, "username": user.username, "email": user.email})
+        return jsonify({"loginOK": logged, "user_id": user.id, "name": user.name, "email": user.email})
+    else :
+        return jsonify({"msg" : "Contraseña Incorrecta"})
 
        

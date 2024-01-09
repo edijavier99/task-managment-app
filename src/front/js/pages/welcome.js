@@ -1,29 +1,12 @@
 import React, { useState } from "react";
 import "../../styles/pages/welcome.css";
-import { Login } from "../component/login";
-import { CreateAccount } from "../component/create-account";
+import { useNavigate } from "react-router-dom";
 
 export const Welcome = () => {
-  const [showLogin, setShowLogin] = useState(false);
-  const [showCreateAccount, setShowCreateAccount] = useState(false);
-
-  const handleLoginClick = () => {
-    setShowLogin(true);
-    setShowCreateAccount(false);
-  };
-
-  const handleCreateAccountClick = () => {
-    setShowCreateAccount(true);
-    setShowLogin(false);
-  };
+  const navigate = useNavigate()
 
   return (
     <section className="welcome-page">
-      {showLogin ? (
-        <Login />
-      ) : showCreateAccount ? (
-        <CreateAccount />
-      ) : (
         <div className="welcome-container">
           <img
             className="welcome-logo mt-3"
@@ -34,15 +17,14 @@ export const Welcome = () => {
           <p className="my-4">
             Organiza tus tareas, organiza tu día, crea, guarda tus notas y muchos más...
           </p>
-          <button className="btn btn-primary mb-3" onClick={handleLoginClick}>
+          <button className="btn btn-primary mb-3" onClick={()=>navigate("/login")}>
             Iniciar sesión
           </button>{" "}
           <br />
-          <button className="btn btn-secondary" onClick={handleCreateAccountClick}>
+          <button className="btn btn-secondary" onClick={()=>navigate("/crear-cuenta")}>
             Crear una cuenta
           </button>
         </div>
-      )}
     </section>
   );
 };
