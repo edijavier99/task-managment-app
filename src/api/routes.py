@@ -102,7 +102,7 @@ def mark_todo_as_completed(id):
 
 @api.route('/completed-todos', methods=['GET'])
 def get_completed_todos():
-    completed_todos = Todo.query.filter_by(completed=True).all()
+    completed_todos = Todo.query.filter_by(complete=True).all()
     return jsonify([todo.serialize() for todo in completed_todos])
 
 #Routes for Notes

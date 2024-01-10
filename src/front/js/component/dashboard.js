@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { Button, Card, CardBody, Collapse } from 'reactstrap';
 import "../../styles/components/dashboard.css"
 import { useNavigate } from "react-router-dom";
+import { Historial } from "./historial";
+import Notes from "./notes";
+
 export const Dashboard = () =>{
     const navigate = useNavigate()
     const [openPanel, setOpenPanel] = useState(null);
@@ -11,25 +14,18 @@ export const Dashboard = () =>{
       };
     const Hoy = () =>{
         return(
-            <>
-                <p>Le Lorem Ipsum est simplement...</p>
-                <button className="btn btn-success" onClick={()=>navigate("/todo-list")}>ToDo</button>
-            </>
+            <div className="text-center">
+                <h6>Edi estas son las tareas que tienes pendientes para hoy:</h6>
+                <button className="btn btn-success my-5" onClick={()=>navigate("/todo-list")}>ToDo</button>
+            </div>
         )
     }
-    const Notas = () =>{
-        return(
-            <>
-                <p>Le Lorem Ipsum est simplement...</p>
-                <button className="btn btn-success" onClick={()=>navigate("/notas")}>Notas</button>
-            </>
-        )
-    }
+
     const panelData = [
         { key: 'Hoy', content:'Some placeholder content for the Carrito panel.' },
         { key: 'Tareas', content:  <Hoy/> },
-        { key: 'Notas', content: <Notas/> },
-        { key: 'Historial', content: 'Some placeholder content for the About Me panel.' },
+        { key: 'Notas', content:<Notes /> },
+        { key: 'Historial', content: <Historial /> },
       ];
     useEffect(()=>{
         togglePanel(panelData[0].key)
