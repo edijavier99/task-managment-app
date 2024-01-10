@@ -1,0 +1,22 @@
+#notesList{
+    list-style: none;
+    padding-left: 0;
+}
+#notesList div{
+    border-radius: 3px;
+    font-size: 20px;
+    background-color: rgb(230, 226, 226);
+    padding: 15px;
+    margin-bottom: 5px;
+    padding-left: 30px;
+    text-align: left !important;
+}
+#notesList span{
+    font-size: clamp(14px, 1rem, 18px); 
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+    word-wrap: break-word;
+    text-overflow: ellipsis; 
+}
