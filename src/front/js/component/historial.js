@@ -24,7 +24,12 @@ export const Historial = () =>{
     },[])
 
     const showCompletedTasks = () => {
-        return completedTask.map((task, index) => {
+        const sortedTasks = [...completedTask];
+        sortedTasks.forEach(task => {
+            task.date = new Date(task.date);
+        });
+        sortedTasks.sort((a, b) => a.date - b.date);
+        return sortedTasks.map((task, index) => {
             const formattedDate = new Date(task.date);
             return (
                 <div key={index}>
@@ -33,7 +38,7 @@ export const Historial = () =>{
                 </div>
             );
         });
-    }
+    };
     
     return(
         <section className="text-center">

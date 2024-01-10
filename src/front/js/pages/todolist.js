@@ -100,6 +100,27 @@ export const ToDoList = () =>{
         
     }
 
+    const showTodos = () =>{
+        const shortedTodos = [...todos]
+        shortedTodos.forEach((item)=>{
+            item.date = new Date(item.date)
+        })
+        shortedTodos.sort((a,b)=> a.date - b.date)
+        return  shortedTodos.map((item,index)=>{
+            const dateObject = new Date(item.date);
+            const isCompleted = completedTodos.includes(item.id);
+            return <div className="todo-list-item" key={index}>
+                       <span className="check" onClick={() => handleCheckClick(item.id)}>
+                        {isCompleted && "✔"}
+                        </span>
+                        <li className="ps-5 d-flex" key={index}>{item.title}
+                            <div className="ms-auto me-2 todo-delete-icon"><i className="fa-solid fa-trash" onClick={()=>deleteTodo(item.id,item)} style={{color:"#af3528"}}></i></div>
+                        </li>
+                        <span className="date-for-todos text-muted">{dateObject.toDateString()}</span>
+                    </div>
+            })
+    }
+
     useEffect(()=>{
         getAllTodos()
     },[])
@@ -137,19 +158,7 @@ export const ToDoList = () =>{
 
             <div className="todo-container ">
                <ul className="todo-list p-0">
-                   {todos.map((item,index)=>{
-                    const dateObject = new Date(item.date);
-                    const isCompleted = completedTodos.includes(item.id);
-                    return <div className="todo-list-item" key={index}>
-                               <span className="check" onClick={() => handleCheckClick(item.id)}>
-                                {isCompleted && "✔"}
-                                </span>
-                                <li className="ps-5 d-flex" key={index}>{item.title}
-                                    <div className="ms-auto me-2 todo-delete-icon"><i class="fa-solid fa-trash" onClick={()=>deleteTodo(item.id,item)} style={{color:"#af3528"}}></i></div>
-                                </li>
-                                <span className="date-for-todos text-muted">{dateObject.toDateString()}</span>
-                            </div>
-                    })}
+                  {showTodos()}
                </ul> 
                 <div className="todos-counter">
                     <span className="text-muted m-3">{todos.length} tareas por completar</span> 

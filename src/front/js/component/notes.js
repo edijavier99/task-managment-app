@@ -25,10 +25,12 @@ const Notes = () =>{
     
     const showAllNotes = () =>{
         return notes.map((notes,index)=>{
+            const dateObject = new Date(notes.date)
             return(
                 <div key={index} >
                     <li><h4>{notes.title}</h4></li>
                     <span>{notes.description}</span>
+                    <span className = "text-muted small mt-2">{dateObject.toDateString()}</span>
                     <button className="btn btn-dark dark-text w-100 mt-4 mb-3">Ir</button>
                 </div>
             )
