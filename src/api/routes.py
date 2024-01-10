@@ -36,6 +36,8 @@ def get_single_task(id):
     single_task = Todo.query.get(id)
     return jsonify(single_task),200
 
+
+
 @api.route('/add-todo', methods= ['POST'])
 def add_todo():
     data = request.get_json()
@@ -55,7 +57,7 @@ def add_todo():
             return jsonify(response_body),400
         
     date_str = data["date"]
-    date_obj = datetime.strptime(date_str, '%d/%m/%Y').date()
+    date_obj = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ').date()
     
     new_todo = Todo(title=data["title"].capitalize(), date=date_obj)
     db.session.add(new_todo)   
@@ -89,6 +91,19 @@ def modify_todo(id):
 
     return jsonify({"msg": f"{update_todo.title} Todo updated"}),200
 
+@api.route('/completedTodo/<int:id>', methods=['PUT'])
+def mark_todo_as_completed(id):
+    todo = Todo.query.get_or_404(id)
+    # Actualizar el estado de la tarea a completada
+    todo.complete = True
+    db.session.commit()
+
+    return jsonify({"msg": f"{todo.title} marcada como completada"}), 200
+
+@api.route('/completed-todos', methods=['GET'])
+def get_completed_todos():
+    completed_todos = Todo.query.filter_by(completed=True).all()
+    return jsonify([todo.serialize() for todo in completed_todos])
 
 #Routes for Notes
 

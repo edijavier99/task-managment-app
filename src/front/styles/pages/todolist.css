@@ -117,3 +117,6 @@
     align-items: center;
     justify-content: center;
 }
+.selected{
+   color: red;
+}

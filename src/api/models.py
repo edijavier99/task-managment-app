@@ -26,6 +26,7 @@ class Todo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable= False)
     date = db.Column(db.Date, nullable = False)
+    complete = db.Column(db.Boolean, default = False)
 
     def __repr__(self):
         return f'<Todo {self.id}>'
@@ -34,7 +35,8 @@ class Todo(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "date": self.date
+            "date": self.date,
+            "complete": self.complete
         }
 
 class Notes(db.Model):

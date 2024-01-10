@@ -3,26 +3,31 @@ import "../../styles/pages/todolist.css"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Context } from "../store/appContext";
-import { format, set } from 'date-fns';
-
+import  { forwardRef } from 'react';
 
 export const ToDoList = () =>{
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
     const {store,actions} = useContext(Context)
     const [todos, setTodos] = useState([])
-    const [completedTodos, setCompletedTodos] = useState([]);
+    const [completedTodos, setCompletedTodos] = useState([])
+    const [selected, setSelected] = useState(false)
+
 
     const handleCheckClick = (id) => {
       setCompletedTodos((prevCompleted) => [...prevCompleted, id]);
+      markAsCompleted(id)
+      setTimeout(() => {
+        setTodos(todos.filter(task => task.id !== id));
+      }, 1000);
     };
 
-    const CustomDatePickerInput = ({ value, onClick }) => (
-        <div className="custom-datepicker-input" onClick={onClick}>
-         {value}
-              <i className="fa-solid fa-calendar" ></i>
+    const CustomDatePickerInput = forwardRef(({ value, onClick }, ref) => (
+        <div className="custom-datepicker-input" onClick={onClick} ref={ref}>
+            {value}
+            <i className={`fa-solid fa-calendar ${selected ? 'selected' : ''}`}></i>
         </div>
-    );
+    ));
     
     const getAllTodos = () =>{
         fetch(process.env.BACKEND_URL + 'api/todo', {
@@ -33,7 +38,9 @@ export const ToDoList = () =>{
         })
         .then(response => response.json())
         .then(data => {
-            setTodos(data);
+            const incompleteTasks = data.filter(task => task.complete !== true);
+            // Actualiza el estado con las tareas filtradas
+            setTodos(incompleteTasks);
         })
         .catch(err => console.log(err));
     }
@@ -58,6 +65,7 @@ export const ToDoList = () =>{
             })
             .then(data=>{
                 setTitle("")
+                setSelected("")
             })
             .catch(err => console.log(err))
         }
@@ -73,6 +81,23 @@ export const ToDoList = () =>{
             }
         })
         .then(response => response.json())
+    }
+
+    const markAsCompleted = (id) =>{
+        fetch(process.env.BACKEND_URL + 'api/completedTodo/' + id ,{
+            method: 'PUT',
+            headers: {
+                "Content-Type" : "Application/json"
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                  throw new Error(`Error al marcar tarea como completada: ${response.statusText}`);
+                }
+                return response.json();
+              })
+            .catch(error => {console.log(error)})
+        
     }
 
     useEffect(()=>{
@@ -98,7 +123,10 @@ export const ToDoList = () =>{
                     <div className="datePickerContainer">
                     <DatePicker
                         className="dateTodo"
-                        onChange={(newDate) => setDate(newDate.toLocaleDateString())}
+                        onChange={(newDate) => {
+                            setDate(newDate)
+                            setSelected(true)
+                        }}
                         dateFormat="yyyy-MM-dd"
                         customInput={<CustomDatePickerInput />}
                     />
@@ -113,13 +141,13 @@ export const ToDoList = () =>{
                     const dateObject = new Date(item.date);
                     const isCompleted = completedTodos.includes(item.id);
                     return <div className="todo-list-item" key={index}>
-                                <span className="check" onClick={() => handleCheckClick(item.id)}>
-                                    {isCompleted && "✔"} 
+                               <span className="check" onClick={() => handleCheckClick(item.id)}>
+                                {isCompleted && "✔"}
                                 </span>
                                 <li className="ps-5 d-flex" key={index}>{item.title}
                                     <div className="ms-auto me-2 todo-delete-icon"><i class="fa-solid fa-trash" onClick={()=>deleteTodo(item.id,item)} style={{color:"#af3528"}}></i></div>
                                 </li>
-                                <span className="date-for-todos text-muted">{dateObject.toLocaleDateString()}</span>
+                                <span className="date-for-todos text-muted">{dateObject.toDateString()}</span>
                             </div>
                     })}
                </ul> 
