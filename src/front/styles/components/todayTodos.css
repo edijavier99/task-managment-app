@@ -1,3 +1,30 @@
+
 #todayList{
-    
+    padding: 0;
+    list-style: none;
+}
+.todoContainer{
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   background-color: rgb(230, 226, 226);
+   padding:13px;
+   border-radius: 3px;
+}
+.todoInfo{
+    width: 80%;
+    align-items: left;
+}
+.check-today{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin: 0px 10px;
+    border:1px solid black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.todayDate{
+    font-size: 10px;
 }

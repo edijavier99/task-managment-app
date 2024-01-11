@@ -1,12 +1,14 @@
 import React, {useContext, useEffect, useState} from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
-import "../../styles/components/notes.css"
+import "../../styles/components/todayTodos.css"
 
 export const TodayTodos = () =>{
     const {store , actions} = useContext(Context)
     const navigate = useNavigate()
     const [todos,setTodos] = useState([])
+    const [completedTodos, setCompletedTodos] = useState([])
+
 
    
     const getAllTodos = () =>{
@@ -26,25 +28,51 @@ export const TodayTodos = () =>{
         .catch(err => console.log(err));
     }
 
+    const deleteTodo = (id,deletedItem) =>{
+        const updatedTodo = todos.filter((item)=> item.title !== deletedItem.title);
+        setTodos(updatedTodo);
+        fetch(process.env.BACKEND_URL + 'api/delete-todo/' + id ,{
+            method: 'DELETE',
+            headers: {
+                "Content-Type" : "Application/json"
+            }
+        })
+        .then(response => response.json())
+    }
+
+    const handleCheckClick = (id) => {
+        setCompletedTodos((prevCompleted) => [...prevCompleted, id]);
+        actions.markAsCompleted(id)
+        setTimeout(() => {
+          setTodos(todos.filter(task => task.id !== id));
+        }, 1000);
+      };
+
     useEffect(()=>{
         getAllTodos()
     },[])
 
     const showTodaysTodos = () =>{
         return todos.map((item,index)=>{
+            const dateObject = new Date(item.date);
+            const isCompleted = completedTodos.includes(item.id);
             return(
-                <div key={index} id="todayList">
-                    <li>{item.title}</li>
+                <div key={index} className="todoContainer my-3" >
+                    <span className="check-today" onClick={()=> handleCheckClick(item.id)} >{isCompleted && "✔"}</span>
+                    <div className="d-flex flex-column todoInfo">
+                        <li>{item.title}</li>
+                        <span className="text-muted todayDate ">{dateObject.toDateString()}</span>
+                    </div>
+                    <i className="fa-solid fa-trash" onClick={()=> deleteTodo(item.id, item)} style={{color:"#af3528"}}></i>
                 </div>
             )
         })
     }
-
    
     return(
         <section>
-            <h6>Estos son las tareas que tienes para hoy</h6>
-            <ul>
+            <h6>Estos son las tareas que tienes pendientes para hoy</h6>
+            <ul id="todayList">
                 {showTodaysTodos()}
             </ul>
             <button className="btn btn-success my-5" onClick={()=>navigate("/todo-list")}>ToDo</button>

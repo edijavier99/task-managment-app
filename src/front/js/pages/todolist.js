@@ -17,7 +17,7 @@ export const ToDoList = () =>{
 
     const handleCheckClick = (id) => {
       setCompletedTodos((prevCompleted) => [...prevCompleted, id]);
-      markAsCompleted(id)
+      actions.markAsCompleted(id)
       setTimeout(() => {
         setTodos(todos.filter(task => task.id !== id));
       }, 1000);
@@ -81,23 +81,6 @@ export const ToDoList = () =>{
             }
         })
         .then(response => response.json())
-    }
-
-    const markAsCompleted = (id) =>{
-        fetch(process.env.BACKEND_URL + 'api/completedTodo/' + id ,{
-            method: 'PUT',
-            headers: {
-                "Content-Type" : "Application/json"
-            }
-        })
-            .then(response => {
-                if (!response.ok) {
-                  throw new Error(`Error al marcar tarea como completada: ${response.statusText}`);
-                }
-                return response.json();
-              })
-            .catch(error => {console.log(error)})
-        
     }
 
     const showTodos = () =>{
