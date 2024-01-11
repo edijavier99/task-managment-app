@@ -1,9 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState,useContext } from "react";
 import "../../styles/pages/todolist.css"
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Context } from "../store/appContext";
 import  { forwardRef } from 'react';
+import { SingleTodo } from "../component/singleTodo";
 
 export const ToDoList = () =>{
     const [title, setTitle] = useState('');
@@ -39,7 +40,6 @@ export const ToDoList = () =>{
         .then(response => response.json())
         .then(data => {
             const incompleteTasks = data.filter(task => task.complete !== true);
-            // Actualiza el estado con las tareas filtradas
             setTodos(incompleteTasks);
         })
         .catch(err => console.log(err));
@@ -109,15 +109,14 @@ export const ToDoList = () =>{
         return  shortedTodos.map((item,index)=>{
             const dateObject = new Date(item.date);
             const isCompleted = completedTodos.includes(item.id);
-            return <div className="todo-list-item" key={index}>
-                       <span className="check" onClick={() => handleCheckClick(item.id)}>
-                        {isCompleted && "✔"}
-                        </span>
-                        <li className="ps-5 d-flex" key={index}>{item.title}
-                            <div className="ms-auto me-2 todo-delete-icon"><i className="fa-solid fa-trash" onClick={()=>deleteTodo(item.id,item)} style={{color:"#af3528"}}></i></div>
-                        </li>
-                        <span className="date-for-todos text-muted">{dateObject.toDateString()}</span>
-                    </div>
+            return <SingleTodo  key={index}
+                            index={index}
+                            item={item}
+                            completed={isCompleted}
+                            date={dateObject}
+                            deleteTodo={() => deleteTodo(item.id,item)}
+                            handleCheckClick={() => handleCheckClick(item.id)}
+             />
             })
     }
 
@@ -138,7 +137,7 @@ export const ToDoList = () =>{
                     placeholder="Introduce nueva tarea..."
                     value={title}
                     onChange={(e) => {
-                        setTitle(e.target.value);
+                        setTitle(actions.capitalizeFirstLetter(e.target.value))
                     }}
                     />
                     <div className="datePickerContainer">

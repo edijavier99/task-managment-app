@@ -1,9 +1,10 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, useContext } from "react";
 import "../../styles/pages/notas.css"
-import { Alert } from "reactstrap";
+import { Context } from "../store/appContext";
 
 export const Notas = () =>{
     const [description, setDescription] = useState("")
+    const {store , actions} = useContext(Context)
     const [title,setTitle] = useState("")
     const today = new Date()
     const date = today.toLocaleDateString()
@@ -31,26 +32,7 @@ export const Notas = () =>{
             })
             .catch(err=>console.log(err))
         }
-       
     }
-
-    function capitalizeFirstLetter(text) {
-        return text.charAt(0).toUpperCase() + text.slice(1);
-      }
-      
-    // const getAllNotes = () =>{
-    //     fetch(process.env.BACKEND_URL + 'notes' ,{
-    //         method: 'GET',
-    //         headers: {
-    //             "Content-Type" : "Application/json"
-    //         }
-    //     })
-    //     .then(data =>{
-    //         console.log(data);
-    //         setNotes(data)
-    //     }).catch(err=>console.log(err))
-    // }
-
 
     return(
         <section className="notas">
@@ -64,13 +46,13 @@ export const Notas = () =>{
                        placeholder="Titulo"
                        value={title}
                        onChange={(e)=>{
-                        setTitle(capitalizeFirstLetter(e.target.value))
+                        setTitle(actions.capitalizeFirstLetter(e.target.value))
                        }}
                 />
-                <textarea  maxlength="1600" 
+                <textarea  maxLength="1600" 
                            value={description} 
                            onChange={(e)=>{
-                                setDescription(capitalizeFirstLetter(e.target.value));
+                                setDescription(actions.capitalizeFirstLetter(e.target.value));
                         }}
                            ></textarea>
                 <span className="character-number text-muted">{description.length }/1600</span>

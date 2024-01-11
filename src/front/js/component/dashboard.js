@@ -5,25 +5,18 @@ import "../../styles/components/dashboard.css"
 import { useNavigate } from "react-router-dom";
 import { Historial } from "./historial";
 import Notes from "./notes";
+import {TodayTodos} from "./todayTodos"
 
 export const Dashboard = () =>{
     const navigate = useNavigate()
     const [openPanel, setOpenPanel] = useState(null);
     const togglePanel = (key) => {
         setOpenPanel(openPanel === key ? null : key);
-      };
-    const Hoy = () =>{
-        return(
-            <div className="text-center">
-                <h6>Edi estas son las tareas que tienes pendientes para hoy:</h6>
-                <button className="btn btn-success my-5" onClick={()=>navigate("/todo-list")}>ToDo</button>
-            </div>
-        )
-    }
-
+    };
+  
     const panelData = [
         { key: 'Hoy', content:'Some placeholder content for the Carrito panel.' },
-        { key: 'Tareas', content:  <Hoy/> },
+        { key: 'Tareas', content:  <TodayTodos/> },
         { key: 'Notas', content:<Notes /> },
         { key: 'Historial', content: <Historial /> },
       ];
