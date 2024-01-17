@@ -15,8 +15,8 @@ export const Dashboard = () =>{
     };
   
     const panelData = [
-        { key: 'Hoy', content:'Some placeholder content for the Carrito panel.' },
-        { key: 'Tareas', content:  <TodayTodos/> },
+        { key: 'Hoy', content:  <TodayTodos/> },
+        { key: 'Organizador', content:'Some placeholder content for the Carrito panel.' },
         { key: 'Notas', content:<Notes /> },
         { key: 'Historial', content: <Historial /> },
       ];

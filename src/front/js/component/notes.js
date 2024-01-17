@@ -39,12 +39,12 @@ const Notes = () =>{
 
     return(
         <section className="flex flex-column text-center">
-            <h2 className="mb-4">Tus notas...📝</h2>
+            <h2 className="">Tus notas...📝</h2>
+            <button className="btn goButton my-4" onClick={()=>navigate("/notas")}>Añadir Notas</button>
             <ul id="notesList">
                 {showAllNotes()}
             </ul>
             <span className="text-muted small d-block">{notes.length} Notas añadidas</span>
-            <button className="btn btn-success my-4" onClick={()=>navigate("/notas")}>Notas</button>
         </section>
     )
 }

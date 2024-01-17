@@ -71,11 +71,12 @@ export const TodayTodos = () =>{
    
     return(
         <section>
-            <h6>Estos son las tareas que tienes pendientes para hoy</h6>
+            <h4>Tareas que tienes pendientes para hoy</h4>
+            <button className="btn  goButton" onClick={()=>navigate("/todo-list")}>Añadir Tareas</button>
+
             <ul id="todayList">
                 {showTodaysTodos()}
             </ul>
-            <button className="btn btn-success my-5" onClick={()=>navigate("/todo-list")}>ToDo</button>
         </section>
     )
 }

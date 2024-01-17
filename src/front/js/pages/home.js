@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Profile } from "../component/profile";
@@ -11,6 +11,15 @@ import 'react-datepicker/dist/react-datepicker.css';
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const [selectedDate, setSelectedDate] = useState(null)
+	const [search, setSearch] = useState()
+	const searchFunction = () =>{
+		const allTodos = store.todayTodos
+		
+	}
+
+	useEffect(()=>{
+		actions.getAllTodos()
+	},[searchFunction()])
 
 	return (
 		<section>
@@ -25,7 +34,14 @@ export const Home = () => {
 			<main id="main">
 				<Profile/>
 				<form className="d-flex" id="searchBar">
-					<input className="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
+					<input className="form-control me-2" 
+						   type="search" 
+						   placeholder="Search" 
+						   aria-label="Search"
+						   onChange={(e)=>{
+							setSearch(e.target.value)
+						   }}
+					/>
 					<button className="btn btn-outline-success" type="submit">Search</button>
 				</form>
 				<Dashboard/>
