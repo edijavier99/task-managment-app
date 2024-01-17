@@ -1,9 +1,9 @@
 
 @media (max-width: 470px){
 .dashboard{
-    width: 100%;
+    width: 90%;
     height: auto; 
-    margin-top: 80px;
+    margin: 0 auto;
 }
 .titles{
     height: 40px;
@@ -15,8 +15,8 @@
     background-color: black !important;
     border: none;
     color:white;
-    border-radius: 3px;
     outline: none !important;
     box-shadow: none !important;
+    border-radius: 0 !important;
 }
 }

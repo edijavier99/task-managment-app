@@ -1,11 +1,15 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint
+from flask import Flask, request, jsonify, url_for, Blueprint,current_app
 from api.models import db, User,Todo,Notes
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
-from datetime import datetime
+from datetime import datetime,timedelta
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 
 
 api = Blueprint('api', __name__)
@@ -243,4 +247,26 @@ def user_login():
     else :
         return jsonify({"msg" : "Contraseña Incorrecta"})
 
-       
+# def send_mail(task):
+#     smtp_server = "smtp.gmail.com"
+#     smtp_port = 587
+#     smtp_username = "eddy.javiieer@gmail.com"
+#     smtp_password = "edijavier"
+
+
+
+# @api.route('/verify-tasks', methods=['GET'])
+# def verify_tasks():
+#     with current_app.app_context():
+
+#         fecha_manana = datetime.now() + timedelta(days=1)
+#         all_tasks = Todo.query.all()
+#         all_tasks = list( map(lambda x : x.serialize(), all_tasks))
+#         tasks_for_tomorrow = [ task for task in all_tasks if task["date"] == fecha_manana.date()]
+
+#         for tarea in tasks_for_tomorrow :
+#             send_mail(tarea)
+
+#         return jsonify(print(tasks_for_tomorrow ))
+    
+

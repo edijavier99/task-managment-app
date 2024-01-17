@@ -6,7 +6,7 @@
 #title, #description{
     text-align: center;
 }
-form{
+.survey-form{
     border: 1px solid black;
     padding: 15px;
     border-radius: 5px;
@@ -22,7 +22,7 @@ input[type="text"], input[type="email"], input[type="password"]{
     border-radius: 3px;
     border: 1px solid black;
 }
-button[type="submit"]{
+.survey-form button[type="submit"]{
     width:100%;
     font-size: 20px;
     padding:10px;

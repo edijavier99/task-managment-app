@@ -29,7 +29,7 @@ export const Dashboard = () =>{
     <section className="dashboard">
         <div className="titles ">
         {panelData.map(({ key }) => (
-                <Button key={key}onClick={() => togglePanel(key)}>
+                <Button key={key} onClick={() => togglePanel(key)}>
                   {key}
                 </Button>
               ))}

@@ -4,9 +4,9 @@
     box-sizing: border-box;
 }
 .profile-img-container{
-    height: 230px;
-    width: 50%;
-    margin: 60px auto;
+    height: 150px;
+    width: 35%;
+    margin: 20px auto;
 }
 .profile-img-container img {
     width: 100%;
@@ -16,20 +16,30 @@
     border-radius: 50%;
 }
 .personal-information{
-    background-image: url(https://c0.klipartz.com/pngpicture/462/399/gratis-png-nota-adhesiva-amarilla-con-un-alfiler-rojo-nota-musical-papel-de-nota-post-it-samsung-galaxy-nota-8-nota-post-it.png);
-    background-position: -62px;
-    transform: rotate(-3deg);
+    background: linear-gradient(90deg, gray, black);
     width: 90%;
-    margin: -30px auto;
-    height: auto;
-    padding:20px;
-    border-radius: 10px
+    margin: 0px auto;
+    padding:10px 20px 20px 20px;
+    border-radius: 10px;
+    color:white;
+}
+.personal-information .user-name{
+    font-size: 15px;
+}
+.personal-information blockquote{
+    font-size: 13px;
+}
+.todayDate{
+    font-size: 11px;
 }
 #chincheta{
     width: 30px;
+    float:right;
     height: 30px;
-    position: absolute;
-    left:385px;
-    top:-10px;
+    margin-top: -28px;
+    margin-right: -35px;
 }
-
+  
+.dynamic-div {
+    transition: height 0.3s ease-in-out;
+  }
