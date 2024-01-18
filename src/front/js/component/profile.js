@@ -2,14 +2,14 @@ import React, { useState,useEffect } from "react";
 import "../../styles/components/profile.css"
 
 export const Profile = () =>{
-    const [height, setHeight] = useState(170)
+    const [height, setHeight] = useState(180)
 
     const  date = new Date()
     const today = date.toDateString()
 
     useEffect(() => {
         const manejarScroll = () => {
-          const nuevaAltura = Math.max(40, 170 - window.scrollY);
+          const nuevaAltura = Math.max(40, 180 - window.scrollY);
           setHeight(nuevaAltura);
         };
         window.addEventListener('scroll', manejarScroll);

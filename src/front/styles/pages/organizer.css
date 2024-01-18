@@ -10,4 +10,12 @@
 .organizer-board{
     border: 1px solid black;
     text-align: center;
+    height:100%;
+}
+.organizer-item{
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    margin-bottom: 10px;
+    background-color: gray;
 }

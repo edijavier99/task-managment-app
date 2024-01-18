@@ -1,7 +1,7 @@
 import React from "react";
 
-export const OrganizatorItem = () =>{
+export const OrganizatorItem = (props) =>{
     return(
-        <div>hola</div>
+        
     )
 }
