@@ -247,6 +247,22 @@ def user_login():
     else :
         return jsonify({"msg" : "Contraseña Incorrecta"})
 
+@api.route('/search', methods=['GET'])
+def search():
+    search_query = request.args.get('query')
+    message = ""
+    if search_query:
+        resultsTodo = Todo.query.filter(Todo.title.ilike(f'%{search_query}%')).all()
+        resultNotes = Notes.query.filter(Notes.title.ilike(f'%{search_query}%')).all()
+        allResults = resultNotes + resultsTodo
+        serialized_results = [{'id': item.id, 'title': item.title} for item in allResults]
+    else:
+        serialized_results = []
+        message = "No se ha encontrado ninguna coincidencia."
+
+    return jsonify({"Results": serialized_results , "Message": message}), 200
+
+
 # def send_mail(task):
 #     smtp_server = "smtp.gmail.com"
 #     smtp_port = 587

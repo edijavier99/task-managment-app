@@ -11,3 +11,15 @@ header{
     margin:40px auto 5px auto;
 
 }
+#item-result{
+    width: 90%;
+    margin: 0 auto;
+}
+#item-result-title{
+    padding: 10px;
+    margin-bottom: 5px;
+    display: block;
+    border-bottom: 1px solid gray;
+    width: 100%;
+    box-shadow: 0.5px 0.5px 3px;
+}

@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
 			todayTodos : [],
+			filteredResults : [],
 		},
 		actions: {
 			// Use getActions to call a function within a fuction
@@ -40,7 +41,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 					setStore({todayTodos : [...store.todayTodos, ...data]})
 				})
 				.catch(error => {console.log(error)})
-			}	  
+			},
+			// getFilteredSearch : (query)=>{
+			// 	try {
+			// 		fetch(`${process.env.BACKEND_URL}/api/search?query=${query}`, { 
+			// 			method: "GET", 
+			// 			headers: { 
+			// 				"Content-Type": "application/json",
+			// 			},
+			// 		})
+			// 		.then((res) => res.json())
+			// 		.then((result) => {  
+			// 			const store = getStore()
+			// 			setStore({filteredResults : [...store.filteredResults, result.Results]})
+			// 			console.log(store.filteredResults);
+			// 		})
+			// 		  } catch (error) {
+			// 	  console.error('Error al realizar la búsqueda:', error);
+			// 	}
+			// }	  
 		}
 	};
 };

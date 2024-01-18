@@ -4,23 +4,40 @@ import "../../styles/home.css";
 import { Profile } from "../component/profile";
 import { Dashboard } from "../component/dashboard";
 
-import DatePicker from 'react-datepicker';
-import 'react-datepicker/dist/react-datepicker.css';
-
-
 export const Home = () => {
 	const { store, actions } = useContext(Context);
-	const [selectedDate, setSelectedDate] = useState(null)
-	const [search, setSearch] = useState()
-	const searchFunction = () =>{
-		const allTodos = store.todayTodos
-		
+	const [searchQuery, setSearchQuery] = useState("")
+	const [searchResults, setSearchResults] = useState([]);
+
+	const getFilteredSearch = (query)=>{
+			try {
+				fetch(`${process.env.BACKEND_URL}/api/search?query=${query}`, { 
+					method: "GET", 
+					headers: { 
+						"Content-Type": "application/json",
+					},
+				})
+				.then((res) => res.json())
+				.then((result) => {  
+					setSearchResults(result.Results)
+					console.log(result.Results);
+				})
+				  } catch (error) {
+			  console.error('Error al realizar la búsqueda:', error);
+			}
+		}	
+
+	const showSearchResults = () =>{
+		return searchResults.map((result, index) => {
+			return (
+					<span  key={index} id="item-result">
+						<a id="item-result-title">
+							{result.title}
+						</a>
+					</span>
+				);
+			})
 	}
-
-	useEffect(()=>{
-		actions.getAllTodos()
-	},[searchFunction()])
-
 	return (
 		<section>
 			<header className="">
@@ -33,17 +50,30 @@ export const Home = () => {
 			</header>
 			<main id="main">
 				<Profile/>
-				<form className="d-flex" id="searchBar">
+				<form className="d-flex" id="searchBar" onSubmit={(e)=>{
+					e.preventDefault()
+				}}>
 					<input className="form-control me-2" 
 						   type="search" 
 						   placeholder="Search" 
 						   aria-label="Search"
-						   onChange={(e)=>{
-							setSearch(e.target.value)
-						   }}
+						   value={searchQuery}
+						   onChange={(e) => {
+							setSearchQuery(e.target.value);
+							getFilteredSearch(e.target.value)
+						}}
 					/>
-					<button className="btn btn-outline-success" type="submit">Search</button>
+					<button className="btn btn-outline-success" type="button" onClick={()=>{
+						getFilteredSearch(searchQuery)
+					}}>Buscar</button>
 				</form>
+				<div>
+					{searchResults.length > 0 && (
+					<div className="d-flex flex-column ">
+						{showSearchResults()}
+					</div>
+		 		)}
+				</div>
 				<Dashboard/>
 			</main>
 		</section>
