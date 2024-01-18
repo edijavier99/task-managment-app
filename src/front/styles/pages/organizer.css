@@ -1,0 +1,13 @@
+
+.organizer-container{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 30px;
+    height: 500px;
+    width: 90%;
+    margin: 0 auto;
+}
+.organizer-board{
+    border: 1px solid black;
+    text-align: center;
+}

@@ -65,11 +65,12 @@ export const Home = () => {
 					/>
 					<button className="btn btn-outline-success" type="button" onClick={()=>{
 						getFilteredSearch(searchQuery)
+						
 					}}>Buscar</button>
 				</form>
 				<div>
 					{searchResults.length > 0 && (
-					<div className="d-flex flex-column ">
+					<div className="d-flex flex-column">
 						{showSearchResults()}
 					</div>
 		 		)}
