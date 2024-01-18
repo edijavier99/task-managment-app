@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "../../styles/pages/organizer.css";
+import { DroppableElement } from "../component/droppableElement";
+
 
 export const Organizer = () => {
   const pasosArray = [
@@ -27,9 +29,7 @@ export const Organizer = () => {
 
  
     const onDragEnd = (result) => {
-      const { source, destination, draggableId } = result;
-      console.log(result);
-      
+      const { source, destination, draggableId } = result;      
       if(!destination) return;
       if(destination.droppableId === source.droppableId && destination.index === source.index) return;
       
@@ -101,86 +101,9 @@ export const Organizer = () => {
   return (
     <section className="organizer-container">
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="prueba-pasos">
-          {(provided) => (
-            <section className="organizer-inner-container" {...provided.droppableProps} ref={provided.innerRef}>
-              <div className="organizer-board">
-                <h3>Pasos</h3>
-                {pasos.map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided) => (
-                      <span
-                        className="organizer-item"
-                        key={item.id}
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <p>{item.name}</p>
-                        <p>{item.surname}</p>
-                      </span>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            </section>
-          )}
-        </Droppable>
-
-        <Droppable droppableId="prueba-enProceso">
-          {(provided) => (
-            <section className="organizer-inner-container" {...provided.droppableProps} ref={provided.innerRef}>
-              <div className="organizer-board">
-                <h3>En proceso</h3>
-                {enProceso.map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided) => (
-                      <span
-                        className="organizer-item"
-                        key={item.id}
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <p>{item.name}</p>
-                        <p>{item.surname}</p>
-                      </span>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            </section>
-          )}
-        </Droppable>
-
-        <Droppable droppableId="prueba-terminado">
-          {(provided) => (
-            <section className="organizer-inner-container" {...provided.droppableProps} ref={provided.innerRef}>
-              <div className="organizer-board">
-                <h3>Terminado</h3>
-                {terminado.map((item, index) => (
-                  <Draggable key={item.id} draggableId={item.id} index={index}>
-                    {(provided) => (
-                      <span
-                        className="organizer-item"
-                        key={item.id}
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <p>{item.name}</p>
-                        <p>{item.surname}</p>
-                      </span>
-                    )}
-                  </Draggable>
-                ))}
-                {provided.placeholder}
-              </div>
-            </section>
-          )}
-        </Droppable>
+        <DroppableElement droppableId ="prueba-pasos" stageContainer ={pasos} />
+        <DroppableElement droppableId ="prueba-enProceso" stageContainer ={enProceso} />
+        <DroppableElement droppableId ="prueba-terminado" stageContainer ={terminado} />
       </DragDropContext>
     </section>
   );

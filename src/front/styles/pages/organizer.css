@@ -19,3 +19,7 @@
     margin-bottom: 10px;
     background-color: gray;
 }
+.draggingActive{
+    background: linear-gradient(90deg, gray, lightgray);
+
+}

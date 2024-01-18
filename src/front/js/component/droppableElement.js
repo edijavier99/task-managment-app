@@ -1,12 +1,17 @@
 import React from "react"
 import { Droppable, Draggable } from "react-beautiful-dnd";
+import "../../styles/pages/organizer.css";
+
+
 
 export const DroppableElement = (props) =>{
+
+    
     return(
         <Droppable droppableId={props.droppableId}>
-          {(provided) => (
+          {(provided, snapshot) => (
             <section className="organizer-inner-container" {...provided.droppableProps} ref={provided.innerRef}>
-              <div className="organizer-board">
+                <div className={`organizer-board ${snapshot.isDraggingOver ? 'draggingActive' : ''}`}>
                 <h3>Pasos</h3>
                 {props.stageContainer.map((item, index) => (
                   <Draggable key={item.id} draggableId={item.id} index={index}>
