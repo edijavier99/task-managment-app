@@ -28,7 +28,7 @@ export const DroppableElement = (props) => {
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            <h3>Pasos</h3>
+            <h3 className="mb-3">{props.stageName}</h3>
             {props.stageContainer.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id} index={index}>
                 {(provided, snapshot) => (

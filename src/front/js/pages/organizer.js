@@ -109,15 +109,26 @@ export const Organizer = () => {
       } else if (droppableId === "prueba-terminado") {
         setTerminado((prevTerminado) => [...prevTerminado, { id: Date.now().toString(), name: value }]);
       }
-    };
+  };
+  
   return (
-    <section className="organizer-container">
-      <DragDropContext onDragEnd={onDragEnd}>
-        <DroppableElement droppableId ="prueba-pasos" stageContainer ={pasos} onTextareaChange={handleTextareaChange}  />
-        <DroppableElement droppableId ="prueba-enProceso" stageContainer ={enProceso}  onTextareaChange={handleTextareaChange} />
-        <DroppableElement droppableId ="prueba-terminado" stageContainer ={terminado}  onTextareaChange={handleTextareaChange} />
-      </DragDropContext>
-      
+    <section id="projects">
+      <header className="projects-header d-flex align-items-center justify-content-center">
+          <h1>Área de Proyectos</h1>
+      </header>
+      <main>
+      <div > 
+        <h3>Tus proyectos</h3>
+      </div>
+      <h2 className="text-center my-5">Panel de proceso</h2>
+        <section className="organizer-container">
+          <DragDropContext onDragEnd={onDragEnd}>
+            <DroppableElement droppableId ="prueba-pasos" stageName="Pasos" stageContainer ={pasos} onTextareaChange={handleTextareaChange}  />
+            <DroppableElement droppableId ="prueba-enProceso" stageName="En Proceso" stageContainer ={enProceso}  onTextareaChange={handleTextareaChange} />
+            <DroppableElement droppableId ="prueba-terminado" stageName="Finalizado" stageContainer ={terminado}  onTextareaChange={handleTextareaChange} />
+          </DragDropContext>
+        </section>
+      </main>
     </section>
   );
 };

@@ -1,4 +1,14 @@
 
+.projects-header{
+    height: 130px;
+    width: 100%;
+    background-image: url("https://cdn.pixabay.com/photo/2018/01/11/21/27/desk-3076954_1280.jpg");
+    background-position-y: -50%;
+}
+.projects-header h1{
+    font-size: 60px;
+}
+/* CSS for the projects container */
 .organizer-container{
     display: grid;
     grid-template-columns: repeat(3,1fr);
