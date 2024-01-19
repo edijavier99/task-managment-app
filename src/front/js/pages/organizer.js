@@ -10,12 +10,28 @@ export const Organizer = () => {
   const [projects, setProjects] = useState([])
   const {store,actions} = useContext(Context)
   const { getAllProjects } = actions;
+  const [stage,setStage] = useState()
+  const [pasos, setPasos] = useState([]);
+  const [enProceso, setEnProceso] = useState([]);
+  const [terminado, setTerminado] = useState([]);
 
   const fetchData = async () => {
     try {
-      const data = await getAllProjects();
-      setProjects(data.projects);
-      setPasos(data.projects[0].steps)
+    const data = await getAllProjects();
+    setProjects(data.projects)
+    const allSteps = data.projects[0].steps
+      
+    console.log(allSteps);
+
+    // Organizar los pasos en contenedores según su categoría
+    const pasos = allSteps.filter(step => step.category === 'step');
+    const enProceso = allSteps.filter(step => step.category === 'proccess');
+    const terminado = allSteps.filter(step => step.category === 'finished');
+
+    setPasos(pasos);
+    setEnProceso(enProceso);
+    setTerminado(terminado);
+
     } catch (error) {
       console.log(error);
     }
@@ -23,11 +39,7 @@ export const Organizer = () => {
   
   useEffect(() => {
     fetchData();
-  }, []); 
-  
-    const [pasos, setPasos] = useState([]);
-    const [enProceso, setEnProceso] = useState([]);
-    const [terminado, setTerminado] = useState([]);
+  }, []);
     
     const onDragEnd = (result) => {
       const { source, destination } = result;      
@@ -95,8 +107,32 @@ export const Organizer = () => {
             return newPasos;
           });
         }
+        changeWhenDnD(draggedItem.project_id, draggedItem.id, destination.droppableId);
       }
+  }
+
+  const changeWhenDnD = (projectId, stepId, destinationDroppableId) => {
+    let category;
+    if (destinationDroppableId === 'prueba-enProceso') {
+      category = 'proccess';
+    } else if (destinationDroppableId === 'prueba-terminado') {
+      category = 'finished';
+    } else {
+      category = 'step';
     }
+    fetch(`${process.env.BACKEND_URL}/api/projects/${projectId}/stage/${stepId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ category }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleTextareaChange = (value, droppableId) => {
       setNewItem("")

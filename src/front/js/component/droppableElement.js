@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Droppable, Draggable } from "react-beautiful-dnd";
 
 export const DroppableElement = (props) => {
   const [addCart, setAddCart] = useState(false);
   const [stepTitle, setStepTitle] = useState("");
+  const [stageContainer, setStageContainer] = useState(props.stageContainer);
+
+  useEffect(() => {
+    // Actualizar el estado local cuando cambie el stageContainer desde props
+    setStageContainer(props.stageContainer);
+  }, [props.stageContainer]);
 
   const closeAddCart = () => {
     setAddCart(false);
@@ -29,7 +35,7 @@ export const DroppableElement = (props) => {
             ref={provided.innerRef}
           >
             <h3 className="mb-3">{props.stageName}</h3>
-            {props.stageContainer.map((item, index) => (
+            {stageContainer.map((item, index) => (
               <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                 {(provided, snapshot) => (
                   <span

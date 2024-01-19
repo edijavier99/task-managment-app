@@ -1,7 +1,7 @@
 
 #projects{
     background: linear-gradient(90deg, rgb(97, 96, 96), black);
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw
 }
 .projects-header{
@@ -103,4 +103,17 @@
 .addCartActive{
     background-color: rgb(16, 150, 240);
     color: white !important;
+}
+
+@media (max-width: 470px){
+    .projects-header h1{
+        font-size: 40px
+    }
+    #projects h2{
+        font-size: 30px;
+        width: 100%
+    }
+    .organizer-container{
+        grid-template-columns: repeat(1,1fr);
+    }
 }
