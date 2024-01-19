@@ -65,9 +65,9 @@
     background-image: url("https://img.freepik.com/premium-photo/white-crumpled-paper-paper-texture_213524-50.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1700179200&semt=ais");
     float: right;
 }
-.goButton{
+#saveNoteBtn{
     width: 45% !important;
-    margin-top:10px !important
+    margin: 20px auto
 }
 .card-body{
     text-align: center;

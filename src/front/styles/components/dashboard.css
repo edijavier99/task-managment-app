@@ -19,4 +19,7 @@
     box-shadow: none !important;
     border-radius: 0 !important;
 }
+.goButton{
+    width: 45% !important
+}
 }

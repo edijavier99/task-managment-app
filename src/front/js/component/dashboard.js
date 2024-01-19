@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { Historial } from "./historial";
 import Notes from "./notes";
 import {TodayTodos} from "./todayTodos"
+import {OrganizerHome} from "./organizerHome"
 
 export const Dashboard = () =>{
     const navigate = useNavigate()
@@ -16,7 +17,7 @@ export const Dashboard = () =>{
   
     const panelData = [
         { key: 'Hoy', content:  <TodayTodos/> },
-        { key: 'Organizador', content:'Some placeholder content for the Carrito panel.' },
+        { key: 'Organizador', content: <OrganizerHome /> },
         { key: 'Notas', content:<Notes /> },
         { key: 'Historial', content: <Historial /> },
       ];

@@ -58,6 +58,7 @@ export const Notas = () =>{
                 <span className="character-number text-muted">{description.length }/1600</span>
             </section>
             <button className="btn btn-dark"
+                    id="saveNoteBtn"
                     onClick={()=>{
                         console.log("Before Add Note - Title:", title, "Description:", description);
                         addNote()             
