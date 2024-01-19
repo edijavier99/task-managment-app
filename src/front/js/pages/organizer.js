@@ -1,34 +1,34 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import getState from "../store/flux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "../../styles/pages/organizer.css";
 import { DroppableElement } from "../component/droppableElement";
-
+import { Context } from "../store/appContext";
 
 export const Organizer = () => {
   const [newItem, setNewItem] = useState()
-  const pasosArray = [
-    {
-      id: 'gary',
-      name: 'Gary Goodspeed',
-      surname: 'Esponja'
-    },
-    {
-      id: 'leopoldo',
-      name: 'Leopoldo Goodspeed',
-      surname: 'Calamardo'
-    },
-    {
-      id: 'tigre',
-      name: 'Tigre Goodspeed',
-      surname: 'Nobita'
-    },
-  ];
+  const [projects, setProjects] = useState([])
+  const {store,actions} = useContext(Context)
+  const { getAllProjects } = actions;
 
-  const [pasos, setPasos] = useState(pasosArray);
-  const [enProceso, setEnProceso] = useState([]);
-  const [terminado, setTerminado] = useState([]);
-
- 
+  const fetchData = async () => {
+    try {
+      const data = await getAllProjects();
+      setProjects(data.projects);
+      setPasos(data.projects[0].steps)
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  
+  useEffect(() => {
+    fetchData();
+  }, []); 
+  
+    const [pasos, setPasos] = useState([]);
+    const [enProceso, setEnProceso] = useState([]);
+    const [terminado, setTerminado] = useState([]);
+    
     const onDragEnd = (result) => {
       const { source, destination } = result;      
       if(!destination) return;
@@ -41,7 +41,6 @@ export const Organizer = () => {
         return result;
       };
   
-
       if (source.droppableId === destination.droppableId) {
         let updatedList;
         if (source.droppableId === 'prueba-pasos') {
@@ -56,8 +55,7 @@ export const Organizer = () => {
         }
       }else{
         let draggedItem;
-
-  // Eliminar el elemento del contenedor de origen
+        // Eliminar el elemento del contenedor de origen
         if (source.droppableId === 'prueba-pasos') {
           setPasos((prevPasos) => {
             const newPasos = [...prevPasos];
@@ -103,11 +101,11 @@ export const Organizer = () => {
   const handleTextareaChange = (value, droppableId) => {
       setNewItem("")
       if (droppableId === "prueba-pasos") {
-        setPasos((prevPasos) => [...prevPasos, { id: Date.now().toString(), name: value }]);
+        setPasos((prevPasos) => [...prevPasos, { id: Date.now().toString(), title: value }]);
       } else if (droppableId === "prueba-enProceso") {
-        setEnProceso((prevEnProceso) => [...prevEnProceso, { id: Date.now().toString(), name: value }]);
+        setEnProceso((prevEnProceso) => [...prevEnProceso, { id: Date.now().toString(), title: value }]);
       } else if (droppableId === "prueba-terminado") {
-        setTerminado((prevTerminado) => [...prevTerminado, { id: Date.now().toString(), name: value }]);
+        setTerminado((prevTerminado) => [...prevTerminado, { id: Date.now().toString(), title: value }]);
       }
   };
   
@@ -117,10 +115,10 @@ export const Organizer = () => {
           <h1>Área de Proyectos</h1>
       </header>
       <main>
-      <div > 
-        <h3>Tus proyectos</h3>
+      <div id="showProjectBoard" > 
+          {actions.showTheItems(projects)}
       </div>
-      <h2 className="text-center my-5">Panel de proceso</h2>
+      <h2 className="my-4 titlePanel">Panel de proceso</h2>
         <section className="organizer-container">
           <DragDropContext onDragEnd={onDragEnd}>
             <DroppableElement droppableId ="prueba-pasos" stageName="Pasos" stageContainer ={pasos} onTextareaChange={handleTextareaChange}  />

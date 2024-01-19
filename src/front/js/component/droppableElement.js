@@ -30,7 +30,7 @@ export const DroppableElement = (props) => {
           >
             <h3 className="mb-3">{props.stageName}</h3>
             {props.stageContainer.map((item, index) => (
-              <Draggable key={item.id} draggableId={item.id} index={index}>
+              <Draggable key={item.id} draggableId={item.id.toString()} index={index}>
                 {(provided, snapshot) => (
                   <span
                     className={`organizer-item ${
@@ -41,8 +41,7 @@ export const DroppableElement = (props) => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <p>{item.name}</p>
-                    <p>{item.surname}</p>
+                    <p>{item.title}</p>
                   </span>
                 )}
               </Draggable>

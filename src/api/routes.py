@@ -2,7 +2,7 @@
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
 from flask import Flask, request, jsonify, url_for, Blueprint,current_app
-from api.models import db, User,Todo,Notes
+from api.models import db, User,Todo,Notes,Project,Step,myEnum
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from datetime import datetime,timedelta
@@ -261,6 +261,79 @@ def search():
         message = "No se ha encontrado ninguna coincidencia."
 
     return jsonify({"Results": serialized_results , "Message": message}), 200
+
+@api.route('/projects', methods=['GET'])
+def get_all_projects():
+    all_projects = Project.query.all()
+    all_projects = list(map(lambda x : x.serialize(), all_projects))
+    return jsonify({"projects" : all_projects}), 200
+
+@api.route('/projects/<int:id>', methods=['GET'])
+def get_single_projects(id):
+    single_project = Project.query.get(id)
+    return jsonify({"Project" : single_project}), 200
+
+
+@api.route('/projects/<int:proyecto_id>/stage/<string:categoria>', methods=['GET'])
+def get_steps_of_project(proyecto_id, categoria):
+    proyecto = Project.query.get_or_404(proyecto_id)
+
+    # Filtra los pasos del proyecto por categoría
+    pasos_filtrados = [step.serialize() for step in proyecto.steps if step.category == myEnum[categoria]]
+
+    return jsonify({
+        'id_proyecto': proyecto.id,
+        'title_proyecto': proyecto.title,
+        'categoria': categoria,
+        'pasos': pasos_filtrados
+    }),200
+
+@api.route('/project', methods=['POST'])
+def create_project():
+    data = request.get_json()
+
+    if data is None:
+        response_body = {
+            "msg" : "Body should be passed with request"
+        }
+        return jsonify(response_body),400
+    
+    if "title" not in data:
+        response_body = {
+            "msg" : "Title should be passed with request"
+        }
+        return jsonify(response_body),400
+    
+    new_project = Project(title = data["title"])
+    db.session.add(new_project)
+    db.session.commit()
+
+    return jsonify({"Has añadido": f"{new_project.title}"})
+
+
+@api.route('/projects/<int:proyecto_id>/steps', methods=['POST'])
+def create_step_for_project(proyecto_id):
+    proyecto = Project.query.get_or_404(proyecto_id)
+    datos_paso = request.json
+    nuevo_paso = Step(title=datos_paso['title'], category=myEnum[datos_paso['category']])
+    proyecto.steps.append(nuevo_paso)
+    db.session.commit()
+
+    return jsonify({"mensaje": f"Has añadido un nuevo paso al proyecto {proyecto.title}."})
+
+@api.route('/projects/<int:proyecto_id>/stage/<int:paso_id>', methods=['PUT'])
+def actualizar_categoria_paso(proyecto_id, paso_id):
+    paso = Step.query.filter_by(id=paso_id).first_or_404()
+    nueva_categoria = request.json.get('category')
+    if nueva_categoria not in myEnum.__members__:
+        return jsonify({"error": "Categoría no válida."}), 400
+    paso.category = myEnum[nueva_categoria]
+    db.session.commit()
+
+    return jsonify({"mensaje": f"Se actualizó la categoría del paso {paso.title}."})
+
+
+
 
 
 # def send_mail(task):

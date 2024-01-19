@@ -1,8 +1,17 @@
 from flask_sqlalchemy import SQLAlchemy
+
 from sqlalchemy import Enum,ForeignKey,Float
+import enum
+
+class myEnum(enum.Enum):
+    step = "step"
+    proccess = "proccess"
+    finished = "finished"
 
 
 db = SQLAlchemy()
+
+
 
 class User(db.Model):
     __tablename__ = "user"
@@ -82,6 +91,7 @@ class Step(db.Model):
     title = db.Column(db.String(70), nullable=False)
     project_id = db.Column(db.Integer, ForeignKey('project.id'))
     project = db.relationship("Project", back_populates="steps")
+    category = db.Column(Enum(myEnum))
 
     def __repr__(self):
         return f'<Step {self.id}>'
@@ -91,4 +101,5 @@ class Step(db.Model):
             "id": self.id,
             "title": self.title,
             "project_id": self.project_id,
+            "category": self.category.value if self.category else None,
         }

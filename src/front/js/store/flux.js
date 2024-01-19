@@ -1,3 +1,4 @@
+import React from 'react';
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
@@ -42,26 +43,29 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch(error => {console.log(error)})
 			},
-			// getFilteredSearch : (query)=>{
-			// 	try {
-			// 		fetch(`${process.env.BACKEND_URL}/api/search?query=${query}`, { 
-			// 			method: "GET", 
-			// 			headers: { 
-			// 				"Content-Type": "application/json",
-			// 			},
-			// 		})
-			// 		.then((res) => res.json())
-			// 		.then((result) => {  
-			// 			const store = getStore()
-			// 			setStore({filteredResults : [...store.filteredResults, result.Results]})
-			// 			console.log(store.filteredResults);
-			// 		})
-			// 		  } catch (error) {
-			// 	  console.error('Error al realizar la búsqueda:', error);
-			// 	}
-			// }	  
+			getAllProjects : async () =>{
+					try {
+					const res = await fetch(process.env.BACKEND_URL + "api/projects", {
+						method: 'GET',
+						headers: {
+							"Content-Type": "Application/json"
+						}
+					});
+					return await res.json();
+				} catch (err) {
+					return console.log(err);
+				}
+			},
+			showTheItems : (arr) =>{
+				return arr.map((item,index)=>{
+					return(
+						<div className="showTheItems" key={index}>
+							<span>{item.title}</span>
+						</div>
+					)
+				})
+			}
 		}
 	};
 };
-
 export default getState;
