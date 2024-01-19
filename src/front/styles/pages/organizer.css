@@ -3,23 +3,53 @@
     display: grid;
     grid-template-columns: repeat(3,1fr);
     gap: 30px;
-    height: 500px;
     width: 90%;
     margin: 0 auto;
 }
 .organizer-board{
-    border: 1px solid black;
     text-align: center;
-    height:100%;
+    background-color: #E5E4E2;
+    padding: 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
 }
 .organizer-item{
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
     margin-bottom: 10px;
-    background-color: gray;
+    background-color: white;
+    border-radius: 5px;
 }
 .draggingActive{
-    background: linear-gradient(90deg, gray, lightgray);
+    background-color: #f5f4f2;
+}
+.drag{
+    box-shadow: 0 0 5px black;
+}
+.addCartToOrganizer{
+    height: 60px;
+    display: flex;
+    align-items: center;
+    background-color: #E5E4E2;
+    padding: 25px;
+}
+.addCartBoard{
+    width: 100%;
+    display: flex;
+    background-color: #E5E4E2;
 
+}
+.addCartBoard textarea{
+    width: 93%;
+    margin: 0 auto;
+    border: none;
+    border-radius: 5px;
+    padding: 10px;
+}
+.addCartBoard textarea:focus{
+    outline: none;
+}
+.addCartActive{
+    background-color: rgb(16, 150, 240);
+    color: white !important;
 }

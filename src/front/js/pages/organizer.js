@@ -5,6 +5,7 @@ import { DroppableElement } from "../component/droppableElement";
 
 
 export const Organizer = () => {
+  const [newItem, setNewItem] = useState()
   const pasosArray = [
     {
       id: 'gary',
@@ -29,7 +30,7 @@ export const Organizer = () => {
 
  
     const onDragEnd = (result) => {
-      const { source, destination, draggableId } = result;      
+      const { source, destination } = result;      
       if(!destination) return;
       if(destination.droppableId === source.droppableId && destination.index === source.index) return;
       
@@ -98,13 +99,25 @@ export const Organizer = () => {
         }
       }
     }
+
+  const handleTextareaChange = (value, droppableId) => {
+      setNewItem("")
+      if (droppableId === "prueba-pasos") {
+        setPasos((prevPasos) => [...prevPasos, { id: Date.now().toString(), name: value }]);
+      } else if (droppableId === "prueba-enProceso") {
+        setEnProceso((prevEnProceso) => [...prevEnProceso, { id: Date.now().toString(), name: value }]);
+      } else if (droppableId === "prueba-terminado") {
+        setTerminado((prevTerminado) => [...prevTerminado, { id: Date.now().toString(), name: value }]);
+      }
+    };
   return (
     <section className="organizer-container">
       <DragDropContext onDragEnd={onDragEnd}>
-        <DroppableElement droppableId ="prueba-pasos" stageContainer ={pasos} />
-        <DroppableElement droppableId ="prueba-enProceso" stageContainer ={enProceso} />
-        <DroppableElement droppableId ="prueba-terminado" stageContainer ={terminado} />
+        <DroppableElement droppableId ="prueba-pasos" stageContainer ={pasos} onTextareaChange={handleTextareaChange}  />
+        <DroppableElement droppableId ="prueba-enProceso" stageContainer ={enProceso}  onTextareaChange={handleTextareaChange} />
+        <DroppableElement droppableId ="prueba-terminado" stageContainer ={terminado}  onTextareaChange={handleTextareaChange} />
       </DragDropContext>
+      
     </section>
   );
 };
