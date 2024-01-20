@@ -15,6 +15,8 @@ export const Organizer = () => {
   const [enProceso, setEnProceso] = useState([]);
   const [terminado, setTerminado] = useState([]);
   const [selectedProyjectId, setSelectedProjectId] = useState()
+  const [addProject, setAddProject] = useState(false)
+  const [projectTitle, setProjectTitle] = useState("")
 
   useEffect(() => {
     fetchData();
@@ -24,24 +26,37 @@ export const Organizer = () => {
     try {
     const data = await getAllProjects();
     setProjects(data.projects)
+    console.log(data.projects);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleItemClick = async (itemId) => {
-    // Resta 1 para ajustar el índice (si itemId es un índice basado en 1)
-    const adjustedItemId = itemId - 1;  
-    setSelectedProjectId(itemId)
-    const allSteps = projects[adjustedItemId].steps;  
-    // Organizar los pasos en contenedores según su categoría
-    const pasos = allSteps.filter(step => step.category === 'step');
-    const enProceso = allSteps.filter(step => step.category === 'proccess');
-    const terminado = allSteps.filter(step => step.category === 'finished');
-    setPasos(pasos);
-    setEnProceso(enProceso);
-    setTerminado(terminado);
+  const handleItemClick = async (projectId) => {
+    try {
+      // Obtener el proyecto con el id correspondiente
+      const selectedProject = projects.find(project => project.id === projectId);
+  
+      if (selectedProject && selectedProject.steps) {
+        setSelectedProjectId(projectId);
+  
+        const allSteps = selectedProject.steps;
+        // Organizar los pasos en contenedores según su categoría
+        const pasos = allSteps.filter(step => step.category === 'step');
+        const enProceso = allSteps.filter(step => step.category === 'proccess');
+        const terminado = allSteps.filter(step => step.category === 'finished');
+  
+        setPasos(pasos);
+        setEnProceso(enProceso);
+        setTerminado(terminado);
+      } else {
+        console.error(`No se encontró el proyecto con id ${projectId} o no tiene la propiedad 'steps'.`);
+      }
+    } catch (error) {
+      console.error('Error al manejar el clic en el proyecto:', error);
+    }
   };
+  
   
     const onDragEnd = (result) => {
       const { source, destination } = result;     
@@ -162,15 +177,41 @@ export const Organizer = () => {
         alert("Debes seleccionar o crear un proyecto para que puedas añadir")
     }
 };
+  const handdleAddProjectInput = () =>{
+    setAddProject(!addProject)
+  } 
 
-  
+  const sendProject = async () =>{
+    try{
+      if(projectTitle.length >0){
+      const response = await fetch(`${process.env.BACKEND_URL}api/project`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ title: projectTitle })
+      });
+      fetchData()
+      setProjectTitle("")
+      setAddProject(false)
+    }else 
+      alert("Debes añadir un titulo al prpoyecto")
+    } catch(err){
+      throw err; 
+    }
+  }
+
   return (
     <section id="projects">
       <header className="projects-header d-flex align-items-center justify-content-center">
           <h1>Área de Proyectos</h1>
       </header>
       <main>
-      <div id="showProjectBoard" > 
+      <div id="showProjectBoard" >
+          { addProject? <i className="fa-solid fa-circle-check" onClick={sendProject}></i> : <i className="fa-solid fa-circle-plus "onClick={handdleAddProjectInput}></i>  } 
+          <div className={`${addProject ? "" : "d-none"}`} id="newProjectInput">
+              <input onChange={(e)=>{ setProjectTitle(e.target.value)}} value={projectTitle} placeholder="Añade un proyecto..."  id="projectInput" name="projectInput" type="text"/>
+          </div>
           {actions.showTheItems(projects, handleItemClick)}
       </div>
       <h2 className="my-4 titlePanel">Panel de proceso</h2>

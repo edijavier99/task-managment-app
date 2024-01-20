@@ -12,16 +12,29 @@
 }
 .projects-header h1{
     font-size: 60px;
-    background: linear-gradient(to right, #9c8b77, #fef0f6); /* Cambia los colores según tus preferencias */
+    background: linear-gradient(to right, #b59470, #fef0f6); /* Cambia los colores según tus preferencias */
     -webkit-background-clip: text;
     color: transparent; 
 }
 
 /* CSS PARA EL PANEL DE LOS PROYECTOS */
+#newProjectInput{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+#newProjectInput > input{
+    height: 50%;
+    margin-left: 10px;
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    width: 190px;
+}
 #showProjectBoard{
     border-radius:5px;
     background-color: #E5E4E2;
-    height: 130px;
+    height: 140px;
     width: 90%;
     margin: 0 auto;
     display: flex;
@@ -42,6 +55,16 @@
 .showTheItems span{
     margin: auto;
 }
+.fa-circle-plus, .fa-circle-check{
+    position: absolute;
+    right: 60px;
+    top: 105px;
+    font-size: 30px;
+    color: #63E6BE;
+    color: #f68e18e7;
+    background-color: black;
+    border-radius: 50%;
+}
 /* CSS for the projects container */
 #projects h2{
     width: 30%;
@@ -60,7 +83,7 @@
 }
 .organizer-inner-container {
     overflow-y: auto;
-    max-height: 440px;
+    max-height: 430px;
     position: relative; 
 
 }
@@ -92,6 +115,8 @@
     padding: 25px;
     position: sticky;
     bottom: 0;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 .addCartBoard{
     width: 100%;
@@ -124,5 +149,9 @@
     }
     .organizer-container{
         grid-template-columns: repeat(1,1fr);
+    }
+    .fa-circle-plus, .fa-circle-check{
+        right: 10px;
+        top: 107px;
     }
 }

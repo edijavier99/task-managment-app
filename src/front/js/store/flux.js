@@ -84,6 +84,21 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch (error) {
 					throw error; // Lanza el error para que sea manejado externamente si es necesario
 				}
+			},
+			sendProject : async (title) =>{
+				try{
+					const response = await fetch(`${process.env.BACKEND_URL}api/project`, {
+						method: 'POST',
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ title })
+					});
+					const data = await response.json();
+					return data;
+				} catch(err){
+					throw err; 
+				}
 			}
 		}
 	};
