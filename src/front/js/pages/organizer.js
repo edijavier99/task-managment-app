@@ -14,35 +14,37 @@ export const Organizer = () => {
   const [pasos, setPasos] = useState([]);
   const [enProceso, setEnProceso] = useState([]);
   const [terminado, setTerminado] = useState([]);
+  const [selectedProyjectId, setSelectedProjectId] = useState()
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = async () => {
     try {
     const data = await getAllProjects();
     setProjects(data.projects)
-    const allSteps = data.projects[0].steps
-      
-    console.log(allSteps);
-
-    // Organizar los pasos en contenedores según su categoría
-    const pasos = allSteps.filter(step => step.category === 'step');
-    const enProceso = allSteps.filter(step => step.category === 'proccess');
-    const terminado = allSteps.filter(step => step.category === 'finished');
-
-    setPasos(pasos);
-    setEnProceso(enProceso);
-    setTerminado(terminado);
-
     } catch (error) {
       console.log(error);
     }
   };
+
+  const handleItemClick = async (itemId) => {
+    // Resta 1 para ajustar el índice (si itemId es un índice basado en 1)
+    const adjustedItemId = itemId - 1;  
+    setSelectedProjectId(itemId)
+    const allSteps = projects[adjustedItemId].steps;  
+    // Organizar los pasos en contenedores según su categoría
+    const pasos = allSteps.filter(step => step.category === 'step');
+    const enProceso = allSteps.filter(step => step.category === 'proccess');
+    const terminado = allSteps.filter(step => step.category === 'finished');
+    setPasos(pasos);
+    setEnProceso(enProceso);
+    setTerminado(terminado);
+  };
   
-  useEffect(() => {
-    fetchData();
-  }, []);
-    
     const onDragEnd = (result) => {
-      const { source, destination } = result;      
+      const { source, destination } = result;     
       if(!destination) return;
       if(destination.droppableId === source.droppableId && destination.index === source.index) return;
       
@@ -67,6 +69,7 @@ export const Organizer = () => {
         }
       }else{
         let draggedItem;
+        const projectId = selectedProyjectId;
         // Eliminar el elemento del contenedor de origen
         if (source.droppableId === 'prueba-pasos') {
           setPasos((prevPasos) => {
@@ -107,11 +110,14 @@ export const Organizer = () => {
             return newPasos;
           });
         }
-        changeWhenDnD(draggedItem.project_id, draggedItem.id, destination.droppableId);
+        changeWhenDnD(projectId, draggedItem.id, destination.droppableId);
       }
   }
 
   const changeWhenDnD = (projectId, stepId, destinationDroppableId) => {
+    if (!projectId || !stepId) {
+      return;
+    }
     let category;
     if (destinationDroppableId === 'prueba-enProceso') {
       category = 'proccess';
@@ -120,6 +126,7 @@ export const Organizer = () => {
     } else {
       category = 'step';
     }
+  
     fetch(`${process.env.BACKEND_URL}/api/projects/${projectId}/stage/${stepId}`, {
       method: 'PUT',
       headers: {
@@ -127,23 +134,35 @@ export const Organizer = () => {
       },
       body: JSON.stringify({ category }),
     })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((err) => console.log(err));
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
   };
+  
 
-  const handleTextareaChange = (value, droppableId) => {
-      setNewItem("")
-      if (droppableId === "prueba-pasos") {
-        setPasos((prevPasos) => [...prevPasos, { id: Date.now().toString(), title: value }]);
-      } else if (droppableId === "prueba-enProceso") {
-        setEnProceso((prevEnProceso) => [...prevEnProceso, { id: Date.now().toString(), title: value }]);
-      } else if (droppableId === "prueba-terminado") {
-        setTerminado((prevTerminado) => [...prevTerminado, { id: Date.now().toString(), title: value }]);
-      }
-  };
+  const handleTextareaChange = async (value, droppableId) => {
+    setNewItem("");
+    let category;
+    let createdStep;
+    try {
+        if (droppableId === "prueba-pasos") {
+            category = "step";
+            createdStep = await actions.addStepToProject(value, category, selectedProyjectId);
+            setPasos((prevPasos) => [...prevPasos, { id: createdStep.id, title: value }]);
+        } else if (droppableId === "prueba-enProceso") {
+            category = "proccess";
+            createdStep = await actions.addStepToProject(value, category, selectedProyjectId);
+            setEnProceso((prevEnProceso) => [...prevEnProceso, { id: createdStep.id, title: value }]);
+        } else if (droppableId === "prueba-terminado") {
+            category = "finished";
+            createdStep = await actions.addStepToProject(value, category, selectedProyjectId);
+            setTerminado((prevTerminado) => [...prevTerminado, { id: createdStep.id, title: value }]);
+        }
+    } catch (error) {
+        // Manejar el error aquí
+        alert("Debes seleccionar o crear un proyecto para que puedas añadir")
+    }
+};
+
   
   return (
     <section id="projects">
@@ -152,7 +171,7 @@ export const Organizer = () => {
       </header>
       <main>
       <div id="showProjectBoard" > 
-          {actions.showTheItems(projects)}
+          {actions.showTheItems(projects, handleItemClick)}
       </div>
       <h2 className="my-4 titlePanel">Panel de proceso</h2>
         <section className="organizer-container">

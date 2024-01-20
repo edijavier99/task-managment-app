@@ -1,5 +1,6 @@
 import React from 'react';
 const getState = ({ getStore, getActions, setStore }) => {
+
 	return {
 		store: {
 			todayTodos : [],
@@ -56,14 +57,33 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return console.log(err);
 				}
 			},
-			showTheItems : (arr) =>{
-				return arr.map((item,index)=>{
-					return(
-						<div className="showTheItems" key={index}>
-							<span>{item.title}</span>
-						</div>
-					)
-				})
+			showTheItems: (arr, onClickHandler) => {
+				return arr.map((item) => {
+				  return (
+					<div
+					  className="showTheItems"
+					  key={item.id}
+					  onClick={() => onClickHandler(item.id)}
+					>
+					  <span>{item.title}</span>
+					</div>
+				  );
+				});
+			  },
+			   addStepToProject : async (title, category, proyecto_id) => {
+				try {
+					const response = await fetch(`${process.env.BACKEND_URL}api/projects/${proyecto_id}/steps`, {
+						method: 'POST',
+						headers: {
+							"Content-Type": "application/json"
+						},
+						body: JSON.stringify({ title, category })
+					});
+					const data = await response.json();
+					return data;
+				} catch (error) {
+					throw error; // Lanza el error para que sea manejado externamente si es necesario
+				}
 			}
 		}
 	};

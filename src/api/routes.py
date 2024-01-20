@@ -319,7 +319,12 @@ def create_step_for_project(proyecto_id):
     proyecto.steps.append(nuevo_paso)
     db.session.commit()
 
-    return jsonify({"mensaje": f"Has añadido un nuevo paso al proyecto {proyecto.title}."})
+    return jsonify({
+        "id": nuevo_paso.id,
+        "project_id": proyecto.id,
+        "title": nuevo_paso.title,
+        "category": nuevo_paso.category.value
+    })
 
 @api.route('/projects/<int:proyecto_id>/stage/<int:paso_id>', methods=['PUT'])
 def actualizar_categoria_paso(proyecto_id, paso_id):

@@ -2,7 +2,8 @@
 #projects{
     background: linear-gradient(90deg, rgb(97, 96, 96), black);
     min-height: 100vh;
-    width: 100vw
+    width: 100vw;
+    overflow-x: hidden; 
 }
 .projects-header{
     height: 120px;
@@ -20,21 +21,21 @@
 #showProjectBoard{
     border-radius:5px;
     background-color: #E5E4E2;
-    height: 150px;
+    height: 130px;
     width: 90%;
     margin: 0 auto;
     display: flex;
     align-items:center;
     justify-content:left;
+    overflow-y: auto;
 }
-
 .showTheItems{
     background-color: #f5f4f2;
     border-radius: 5px;
     display: flex;
     max-width:260px;
     min-width: 180px;
-    height: 80px;
+    height: 70px;
     padding:10px;
     margin: 10px;
 }
@@ -56,6 +57,12 @@
     gap: 30px;
     width: 90%;
     margin: 0 auto;
+}
+.organizer-inner-container {
+    overflow-y: auto;
+    max-height: 440px;
+    position: relative; 
+
 }
 .organizer-board{
     text-align: center;
@@ -83,6 +90,8 @@
     align-items: center;
     background-color: #E5E4E2;
     padding: 25px;
+    position: sticky;
+    bottom: 0;
 }
 .addCartBoard{
     width: 100%;
