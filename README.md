@@ -1,81 +1,65 @@
-# WebApp boilerplate with React JS and Flask API
+# OrganizaTuDía - Plataforma de Gestión de Tareas y Proyectos
 
-Build web applications using React.js for the front end and python/flask for your backend API.
+¡Bienvenido a OrganizaTuDía, tu aliado para mantener tu vida organizada y productiva! Esta aplicación web te ofrece una experiencia integral para la gestión eficiente de tus tareas diarias y proyectos, proporcionándote herramientas intuitivas y potentes.
 
-- Documentation can be found here: https://start.4geeksacademy.com/starters/react-flask
-- Here is a video on [how to use this template](https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b)
-- Integrated with Pipenv for package managing.
-- Fast deployment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
-- Use of .env file.
-- SQLAlchemy integration for database abstraction.
+## Descripción del Proyecto
 
-### 1) Installation:
+OrganizaTuDía es una aplicación web diseñada para ayudarte a organizar tu día a día de manera efectiva. Puedes crear y gestionar tus notas, así como planificar proyectos dividiéndolos en pasos, procesos y marcando su finalización. La aplicación está orientada a mejorar tu organización personal y profesional.
 
-> If you use Github Codespaces (recommended) or Gitpod this template will already come with Python, Node and the Posgres Database installed. If you are working locally make sure to install Python 3.10, Node 
+## Tecnologías Utilizadas
 
-It is recomended to install the backend first, make sure you have Python 3.8, Pipenv and a database engine (Posgress recomended)
+### Backend
+- **SQLAlchemy**: Utilizado para la creación y gestión de la base de datos, asegurando un almacenamiento eficiente y seguro de la información.
+- **Flask**: El marco de trabajo que impulsa la lógica del servidor, facilitando la gestión de rutas y la creación de APIs robustas.
+- *Otras tecnologías de backend a definir según las necesidades específicas del proyecto.*
 
-1. Install the python packages: `$ pipenv install`
-2. Create a .env file based on the .env.example: `$ cp .env.example .env`
-3. Install your database engine and create your database, depending on your database you have to create a DATABASE_URL variable with one of the possible values, make sure you replace the valudes with your database information:
+### Frontend
+- **React**: Biblioteca de JavaScript para la construcción de interfaces de usuario interactivas y dinámicas.
+- **HTML, CSS y Bootstrap**: Utilizados para el diseño y estilo del frontend, proporcionando una interfaz atractiva y responsive.
+- *Otras tecnologías de frontend a definir según las necesidades específicas del proyecto.*
 
-| Engine    | DATABASE_URL                                        |
-| --------- | --------------------------------------------------- |
-| SQLite    | sqlite:////test.db                                  |
-| MySQL     | mysql://username:password@localhost:port/example    |
-| Postgress | postgres://username:password@localhost:5432/example |
+## Características Destacadas
 
-4. Migrate the migrations: `$ pipenv run migrate` (skip if you have not made changes to the models on the `./src/api/models.py`)
-5. Run the migrations: `$ pipenv run upgrade`
-6. Run the application: `$ pipenv run start`
+### 1. Gestión de Tareas y Proyectos
+   - Crea y organiza tus notas de manera eficiente.
+   - Planifica proyectos dividiéndolos en pasos, procesos y marcando su finalización.
 
-> Note: Codespaces users can connect to psql by typing: `psql -h localhost -U gitpod example`
+### 2. Sincronización Multiplataforma
+   - Crea una cuenta de usuario para acceder a tus datos desde cualquier dispositivo.
+   - Base de datos robusta que garantiza la consistencia de la información en todos tus dispositivos.
 
-### Undo a migration
+### 3. Tecnologías Avanzadas
+   - Utiliza SQLAlchemy para una gestión eficiente de la base de datos.
+   - Flask facilita la creación de APIs, asegurando una comunicación fluida entre el frontend y el backend.
 
-You are also able to undo a migration by running
+### 4. Recordatorios por Correo Electrónico
+   - Recibe notificaciones por correo electrónico cuando haya tareas pendientes para el próximo día.
+   - Mejora tu productividad al tener recordatorios automáticos de tus actividades.
 
-```sh
-$ pipenv run downgrade
-```
+### 5. Diseño Responsivo e Intuitivo
+   - Interfaz de usuario diseñada para una experiencia intuitiva y fácil manejo.
+   - Diseño responsive que se adapta a diferentes dispositivos para una accesibilidad óptima.
 
-### Backend Populate Table Users
+## Cómo Iniciar
 
-To insert test users in the database execute the following command:
+Para ejecutar localmente OrganizaTuDía, sigue estos pasos:
 
-```sh
-$ flask insert-test-users 5
-```
+1. Clona este repositorio: `git clone https://github.com/tuusuario/OrganizaTuDia.git`
+2. Accede a la carpeta del proyecto: `cd OrganizaTuDia`
+3. Instala las dependencias del backend: `pip install -r requirements.txt`
+4. Instala las dependencias del frontend: `npm install`
+5. Configura la base de datos y ajusta las variables de entorno según sea necesario.
+6. Ejecuta la aplicación: `python app.py` para el backend y `npm start` para el frontend.
 
-And you will see the following message:
+¡Y listo! Ahora puedes acceder a OrganizaTuDía desde tu navegador preferido.
 
-```
-  Creating test users
-  test_user1@test.com created.
-  test_user2@test.com created.
-  test_user3@test.com created.
-  test_user4@test.com created.
-  test_user5@test.com created.
-  Users created successfully!
-```
+## Contribuciones y Problemas Conocidos
 
-### **Important note for the database and the data inside it**
+Agradecemos cualquier contribución o informe de problemas. Si encuentras algún problema o tienes sugerencias de mejora, por favor, abre un problema en el [repositorio de GitHub](https://github.com/tuusuario/OrganizaTuDia/issues).
 
-Every Github codespace environment will have **its own database**, so if you're working with more people eveyone will have a different database and different records inside it. This data **will be lost**, so don't spend too much time manually creating records for testing, instead, you can automate adding records to your database by editing ```commands.py``` file inside ```/src/api``` folder. Edit line 32 function ```insert_test_data``` to insert the data according to your model (use the function ```insert_test_users``` above as an example). Then, all you need to do is run ```pipenv run insert-test-data```.
+## Licencia
 
-### Front-End Manual Installation:
+Este proyecto está bajo la Licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
 
--   Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
+¡Esperamos que disfrutes usando OrganizaTuDía tanto como nosotros disfrutamos desarrollándolo! ¡Gracias por elegir nuestra aplicación para organizar tu vida!
 
-1. Install the packages: `$ npm install`
-2. Start coding! start the webpack dev server `$ npm run start`
-
-## Publish your website!
-
-This boilerplate it's 100% read to deploy with Render.com and Heroku in a matter of minutes. Please read the [official documentation about it](https://start.4geeksacademy.com/deploy).
-
-### Contributors
-
-This template was built as part of the 4Geeks Academy [Coding Bootcamp](https://4geeksacademy.com/us/coding-bootcamp) by [Alejandro Sanchez](https://twitter.com/alesanchezr) and many other contributors. Find out more about our [Full Stack Developer Course](https://4geeksacademy.com/us/coding-bootcamps/part-time-full-stack-developer), and [Data Science Bootcamp](https://4geeksacademy.com/us/coding-bootcamps/datascience-machine-learning).
-
-You can find other templates and resources like this at the [school github page](https://github.com/4geeksacademy/).
