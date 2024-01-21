@@ -10,7 +10,6 @@ export const Organizer = () => {
   const [projects, setProjects] = useState([])
   const {store,actions} = useContext(Context)
   const { getAllProjects } = actions;
-  const [stage,setStage] = useState()
   const [pasos, setPasos] = useState([]);
   const [enProceso, setEnProceso] = useState([]);
   const [terminado, setTerminado] = useState([]);
@@ -173,7 +172,6 @@ export const Organizer = () => {
             setTerminado((prevTerminado) => [...prevTerminado, { id: createdStep.id, title: value }]);
         }
     } catch (error) {
-        // Manejar el error aquí
         alert("Debes seleccionar o crear un proyecto para que puedas añadir")
     }
 };
@@ -207,8 +205,13 @@ export const Organizer = () => {
           <h1>Área de Proyectos</h1>
       </header>
       <main>
-      <div id="showProjectBoard" >
-          { addProject? <i className="fa-solid fa-circle-check" onClick={sendProject}></i> : <i className="fa-solid fa-circle-plus "onClick={handdleAddProjectInput}></i>  } 
+      <div id="showProjectBoard">
+          { addProject? <i className="fa-solid fa-circle-check" onMouseOver={()=>{
+            if(projectTitle.length === 0){
+                <i className="fa-solid fa-times text-muted"></i>}
+                
+           }
+            } onClick={sendProject}></i> : <i className="fa-solid fa-circle-plus "onClick={handdleAddProjectInput}></i>} 
           <div className={`${addProject ? "" : "d-none"}`} id="newProjectInput">
               <input onChange={(e)=>{ setProjectTitle(e.target.value)}} value={projectTitle} placeholder="Añade un proyecto..."  id="projectInput" name="projectInput" type="text"/>
           </div>
