@@ -16,6 +16,7 @@ export const Organizer = () => {
   const [selectedProyjectId, setSelectedProjectId] = useState()
   const [addProject, setAddProject] = useState(false)
   const [projectTitle, setProjectTitle] = useState("")
+  const owner_id = localStorage.getItem("user_id")
 
   useEffect(() => {
     fetchData();
@@ -23,7 +24,7 @@ export const Organizer = () => {
 
   const fetchData = async () => {
     try {
-    const data = await getAllProjects();
+    const data = await getAllProjects(owner_id);
     setProjects(data.projects)
     console.log(data.projects);
     } catch (error) {
@@ -187,8 +188,9 @@ export const Organizer = () => {
         headers: {
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ title: projectTitle })
+        body: JSON.stringify({ title: projectTitle, owner_id })
       });
+      console.log(response)
       fetchData()
       setProjectTitle("")
       setAddProject(false)

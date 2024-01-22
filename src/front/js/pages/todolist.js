@@ -13,6 +13,8 @@ export const ToDoList = () =>{
     const [todos, setTodos] = useState([])
     const [completedTodos, setCompletedTodos] = useState([])
     const [selected, setSelected] = useState(false)
+    const owner_id= localStorage.getItem("user_id")
+
 
 
     const handleCheckClick = (id) => {
@@ -58,7 +60,7 @@ export const ToDoList = () =>{
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({title, date}) 
+                body: JSON.stringify({title, date, owner_id}) 
             })
             .then(resp => {								
                 return resp.json();

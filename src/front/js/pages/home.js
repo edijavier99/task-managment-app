@@ -3,11 +3,13 @@ import { Context } from "../store/appContext";
 import "../../styles/home.css";
 import { Profile } from "../component/profile";
 import { Dashboard } from "../component/dashboard";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 	const [searchQuery, setSearchQuery] = useState("")
 	const [searchResults, setSearchResults] = useState([]);
+	const navigate = useNavigate()
 
 	const getFilteredSearch = (query)=>{
 			try {
@@ -44,7 +46,7 @@ export const Home = () => {
 			<nav className="navbar navbar-expand-lg navbar-light">
 				<div className="container-fluid">
 					<a className="navbar-brand" href="#">Navbar</a>
-					<i className="fa-solid fa-user"></i>
+					<i className="fa-solid fa-user" onClick={()=> navigate('/login')}></i>
 				</div>
 			</nav>
 			</header>

@@ -44,10 +44,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				})
 				.catch(error => {console.log(error)})
 			},
-			getAllProjects : async () =>{
+			getAllProjects : async (user_id) =>{
 					try {
-					const res = await fetch(process.env.BACKEND_URL + "api/projects", {
-						method: 'GET',
+						const res = await fetch(`${process.env.BACKEND_URL}api/${user_id}/projects`, {
+							method: 'GET',
 						headers: {
 							"Content-Type": "Application/json"
 						}

@@ -11,7 +11,6 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
@@ -29,11 +28,11 @@ def handle_hello():
 
 # Routes for Todo
 
-@api.route('/todo', methods=['GET'])
-def get_all_tasks():
+@api.route('<int:user_id>/todo', methods=['GET'])
+def get_all_tasks(user_id):
     all_tasks = Todo.query.all()
-    all_tasks = list(map(lambda x : x.serialize(), all_tasks))
-    return jsonify(all_tasks),200
+    filtered_tasks_serialized = [task.serialize() for task in all_tasks if all_tasks.owner_id == user_id]
+    return jsonify(filtered_tasks_serialized),200
 
 @api.route('/todo/<int:id>', methods= ['GET'])
 def get_single_task(id):
@@ -52,7 +51,7 @@ def add_todo():
         }
         return jsonify(response_body),400
     
-    required_fields = ["title", "date"]
+    required_fields = ["title", "date","owner_id"]
     for field in required_fields:
         if field not in data:
             response_body = {
@@ -63,7 +62,7 @@ def add_todo():
     date_str = data["date"]
     date_obj = datetime.strptime(date_str, '%Y-%m-%dT%H:%M:%S.%fZ').date()
     
-    new_todo = Todo(title=data["title"].capitalize(), date=date_obj)
+    new_todo = Todo(title=data["title"].capitalize(), date=date_obj , owner_id = data["owner_id"])
     db.session.add(new_todo)   
     db.session.commit()
 
@@ -111,11 +110,11 @@ def get_completed_todos():
 
 #Routes for Notes
 
-@api.route('/notes', methods=['GET'])
-def get_all_notes():
+@api.route('<int:user_id>/notes', methods=['GET'])
+def get_all_notes(user_id):
     all_notes = Notes.query.all()
-    all_notes = list(map(lambda x : x.serialize(), all_notes))
-    return jsonify(all_notes),200
+    filtered_notes_serialized = [ note.serialize() for note in all_notes if all_notes.owner_id == user_id]
+    return jsonify(filtered_notes_serialized),200
 
 @api.route('/notes/<int:id>', methods= ['GET'])
 def get_single_notes(id):
@@ -132,7 +131,7 @@ def add_notes():
         }
         return jsonify(response_body),400
     
-    required_fields = ["title","date", "description"]
+    required_fields = ["title","date", "description","owner_id"]
     for field in required_fields:
         if field not in data:
             response_body = {
@@ -143,7 +142,7 @@ def add_notes():
     date_str = data["date"]
     date_obj = datetime.strptime(date_str, '%d/%m/%Y').date()
     
-    new_notes = Notes(title = data["title"], date=date_obj, description = data["description"])
+    new_notes = Notes(title = data["title"], date=date_obj, description = data["description"], owner_id = data["owner_id"])
     db.session.add(new_notes)   
     db.session.commit()
 
@@ -262,11 +261,12 @@ def search():
 
     return jsonify({"Results": serialized_results , "Message": message}), 200
 
-@api.route('/projects', methods=['GET'])
-def get_all_projects():
+@api.route('<int:user_id>/projects', methods=['GET'])
+def get_all_projects(user_id):
     all_projects = Project.query.all()
-    all_projects = list(map(lambda x : x.serialize(), all_projects))
-    return jsonify({"projects" : all_projects}), 200
+    filtered_projects_serialized = [project.serialize() for project in all_projects if project.owner_id == user_id]
+    # filtered_reviews = filter(lambda project: project.owner_id == user_id, all_projects)
+    return jsonify({"projects" : filtered_projects_serialized}), 200
 
 @api.route('/projects/<int:id>', methods=['GET'])
 def get_single_projects(id):
@@ -298,13 +298,13 @@ def create_project():
         }
         return jsonify(response_body),400
     
-    if "title" not in data:
+    if "title" not in data and "owner_id" not in data:
         response_body = {
-            "msg" : "Title should be passed with request"
+            "msg" : "Title or owner_id should be passed with request"
         }
         return jsonify(response_body),400
     
-    new_project = Project(title = data["title"])
+    new_project = Project(title = data["title"], owner_id = data["owner_id"])
     db.session.add(new_project)
     db.session.commit()
 

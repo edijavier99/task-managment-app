@@ -15,10 +15,12 @@ export const Login = () =>{
             },
             body : JSON.stringify({email, password})
         })
-        .then(res => {
-            if(res.ok){
-                navigate("/")
-            }
+        .then(res =>res.json())
+        .then(data =>{
+           if(!data.msg){
+            navigate("/")
+            localStorage.setItem("user_id", data.user_id)
+           }
         })
         .catch(err =>{
             console.log(err)

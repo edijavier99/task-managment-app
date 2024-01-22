@@ -8,6 +8,7 @@ export const Notas = () =>{
     const [title,setTitle] = useState("")
     const today = new Date()
     const date = today.toLocaleDateString()
+    const owner_id= localStorage.getItem("user_id")
 
     const addNote = () =>{
 
@@ -21,7 +22,7 @@ export const Notas = () =>{
                 headers: {
                     "Content-Type" : "Application/json"
                 },
-                body: JSON.stringify({title,description,date})
+                body: JSON.stringify({title,description,date ,owner_id})
             })
             .then(res=>{
                 return(res.json())
