@@ -19,7 +19,7 @@ export const Login = () =>{
         .then(data =>{
            if(!data.msg){
             localStorage.setItem('jwt-token', data.token);
-            localStorage.setItem('userId', data.user_id);
+            localStorage.setItem('user_id', data.user_id);
             localStorage.setItem('username', data.name);
             navigate("/")
            }
