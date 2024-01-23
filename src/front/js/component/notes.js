@@ -6,7 +6,7 @@ const Notes = () =>{
     const navigate = useNavigate()
 
     const getAllNotes = () =>{
-        fetch(process.env.BACKEND_URL + 'api/notes', {
+        fetch(`${process.env.BACKEND_URL}api/${localStorage.getItem("user_id")}/notes`, {
             method: 'GET',
             headers: {
             "Content-Type" : "Application/json"

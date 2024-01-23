@@ -18,14 +18,15 @@ export const Login = () =>{
         .then(res =>res.json())
         .then(data =>{
            if(!data.msg){
+            localStorage.setItem('jwt-token', data.token);
+            localStorage.setItem('userId', data.user_id);
+            localStorage.setItem('username', data.name);
             navigate("/")
-            localStorage.setItem("user_id", data.user_id)
            }
         })
         .catch(err =>{
             console.log(err)
         })
-        
     }
 
     return(

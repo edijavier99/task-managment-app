@@ -24,6 +24,9 @@ class User(db.Model):
     todos = db.relationship("Todo", back_populates = "todo_owner")
     # 1 to Many Notes
     notes = db.relationship("Notes", back_populates = "note_owner")
+    
+    roles = db.relationship("Role", secondary="user_roles", backref=db.backref('users', lazy='dynamic'))
+
 
     def __repr__(self):
         return f'<User {self.email}>'

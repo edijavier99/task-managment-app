@@ -9,29 +9,22 @@ from datetime import datetime,timedelta
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-
+from flask_jwt_extended import (
+    JWTManager, jwt_required, create_access_token,
+    get_jwt_identity
+)
 
 api = Blueprint('api', __name__)
-
 # Allow CORS requests to this API
 CORS(api)
 
-
-@api.route('/hello', methods=['POST', 'GET'])
-def handle_hello():
-
-    response_body = {
-        "message": "Hello! I'm a message that came from the backend, check the network tab on the google inspector and you will see the GET request"
-    }
-
-    return jsonify(response_body), 200
 
 # Routes for Todo
 
 @api.route('<int:user_id>/todo', methods=['GET'])
 def get_all_tasks(user_id):
     all_tasks = Todo.query.all()
-    filtered_tasks_serialized = [task.serialize() for task in all_tasks if all_tasks.owner_id == user_id]
+    filtered_tasks_serialized = [task.serialize() for task in all_tasks if task.owner_id == user_id]
     return jsonify(filtered_tasks_serialized),200
 
 @api.route('/todo/<int:id>', methods= ['GET'])
@@ -113,7 +106,7 @@ def get_completed_todos():
 @api.route('<int:user_id>/notes', methods=['GET'])
 def get_all_notes(user_id):
     all_notes = Notes.query.all()
-    filtered_notes_serialized = [ note.serialize() for note in all_notes if all_notes.owner_id == user_id]
+    filtered_notes_serialized = [ note.serialize() for note in all_notes if note.owner_id == user_id]
     return jsonify(filtered_notes_serialized),200
 
 @api.route('/notes/<int:id>', methods= ['GET'])
@@ -204,7 +197,7 @@ def create_user():
                 "msg" : f"{fields.capitalize()} should be in the request"
             }
             return jsonify(response_body),400
-
+    
     new_user = User(name = data["name"], surname = data["surname"], email = data["email"], password = data["password"])
     db.session.add(new_user)
     db.session.commit()
@@ -242,9 +235,11 @@ def user_login():
 
     if user and user.password == password:
         logged = "Successfully logged"
-        return jsonify({"loginOK": logged, "user_id": user.id, "name": user.name, "email": user.email})
+        access_token = create_access_token(identity=user.id)
+        return jsonify({"loginOK": logged, "token": access_token, "user_id": user.id, "name": user.name, "email": user.email})
     else :
         return jsonify({"msg" : "Contraseña Incorrecta"})
+    
 
 @api.route('/search', methods=['GET'])
 def search():

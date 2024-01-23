@@ -12,7 +12,7 @@ export const TodayTodos = () =>{
 
    
     const getAllTodos = () =>{
-        fetch(process.env.BACKEND_URL + 'api/todo', {
+        fetch(`${process.env.BACKEND_URL}api/${localStorage.getItem("user_id")}/todo`, {
             method: 'GET',
             headers: {
                 "Content-type": "application/json"
