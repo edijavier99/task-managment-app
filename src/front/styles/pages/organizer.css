@@ -51,6 +51,10 @@
     height: 70px;
     padding:10px;
     margin: 10px;
+    cursor: pointer;
+}
+.selectedProject {
+    background-color: rgb(232, 178, 71);
 }
 .showTheItems span{
     margin: auto;

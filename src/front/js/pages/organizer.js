@@ -17,6 +17,7 @@ export const Organizer = () => {
   const [addProject, setAddProject] = useState(false)
   const [projectTitle, setProjectTitle] = useState("")
   const owner_id = localStorage.getItem("user_id")
+  // const [selected, setSelected]= useState("")
 
   useEffect(() => {
     fetchData();
@@ -36,7 +37,6 @@ export const Organizer = () => {
     try {
       // Obtener el proyecto con el id correspondiente
       const selectedProject = projects.find(project => project.id === projectId);
-  
       if (selectedProject && selectedProject.steps) {
         setSelectedProjectId(projectId);
   
@@ -208,16 +208,11 @@ export const Organizer = () => {
       </header>
       <main>
       <div id="showProjectBoard">
-          { addProject? <i className="fa-solid fa-circle-check" onMouseOver={()=>{
-            if(projectTitle.length === 0){
-                <i className="fa-solid fa-times text-muted"></i>}
-                
-           }
-            } onClick={sendProject}></i> : <i className="fa-solid fa-circle-plus "onClick={handdleAddProjectInput}></i>} 
+          { addProject? <i className="fa-solid fa-circle-check" onClick={sendProject}></i> : <i className="fa-solid fa-circle-plus "onClick={handdleAddProjectInput}></i>} 
           <div className={`${addProject ? "" : "d-none"}`} id="newProjectInput">
               <input onChange={(e)=>{ setProjectTitle(e.target.value)}} value={projectTitle} placeholder="Añade un proyecto..."  id="projectInput" name="projectInput" type="text"/>
           </div>
-          {actions.showTheItems(projects, handleItemClick)}
+          {actions.showTheItems(projects, handleItemClick, selectedProyjectId)}
       </div>
       <h2 className="my-4 titlePanel">Panel de proceso</h2>
         <section className="organizer-container">

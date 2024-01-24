@@ -57,15 +57,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return console.log(err);
 				}
 			},
-			showTheItems: (arr, onClickHandler) => {
+			showTheItems: (arr, onClickHandler, selected) => {
 				return arr.map((item) => {
 				  return (
 					<div
-					  className="showTheItems"
+					  className={`showTheItems ${selected == item.id ? 'selectedProject' : ''}`}
 					  key={item.id}
 					  onClick={() => onClickHandler(item.id)}
 					>
-					  <span>{item.title}</span>
+					  <span >{item.title}</span>
 					</div>
 				  );
 				});
