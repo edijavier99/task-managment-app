@@ -201,6 +201,8 @@ export const Organizer = () => {
     }
   }
 
+
+
   return (
     <section id="projects">
       <header className="projects-header d-flex align-items-center justify-content-center">

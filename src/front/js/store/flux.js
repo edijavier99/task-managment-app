@@ -1,4 +1,6 @@
 import React from 'react';
+import { ShareModal } from '../component/shareModal';
+
 const getState = ({ getStore, getActions, setStore }) => {
 
 	return {
@@ -65,6 +67,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 					  key={item.id}
 					  onClick={() => onClickHandler(item.id)}
 					>
+						<ShareModal projectId={item.id} />
 					  <span >{item.title}</span>
 					</div>
 				  );

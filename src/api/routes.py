@@ -1,7 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
-from flask import Flask, request, jsonify, url_for, Blueprint,current_app
+from flask import Flask, request, jsonify, url_for, Blueprint,current_app, abort
 from api.models import db, User,Todo,Notes,Project,Step,myEnum
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
@@ -256,12 +256,18 @@ def search():
 
     return jsonify({"Results": serialized_results , "Message": message}), 200
 
+
+
 @api.route('<int:user_id>/projects', methods=['GET'])
 def get_all_projects(user_id):
-    all_projects = Project.query.all()
-    filtered_projects_serialized = [project.serialize() for project in all_projects if project.owner_id == user_id]
-    # filtered_reviews = filter(lambda project: project.owner_id == user_id, all_projects)
-    return jsonify({"projects" : filtered_projects_serialized}), 200
+    user = User.query.get(user_id)
+    if not user:
+        abort(404, description=f"User with ID {user_id} not found")
+
+    users_projects = user.projects
+    serialized_projects = [project.serialize() for project in users_projects]
+    return jsonify({"projects": serialized_projects}), 200
+
 
 @api.route('/projects/<int:id>', methods=['GET'])
 def get_single_projects(id):
@@ -299,7 +305,9 @@ def create_project():
         }
         return jsonify(response_body),400
     
-    new_project = Project(title = data["title"], owner_id = data["owner_id"])
+    user = User.query.get(data['owner_id'])
+    new_project = Project(title=data['title'])
+    user.projects.append(new_project)
     db.session.add(new_project)
     db.session.commit()
 
@@ -332,6 +340,27 @@ def actualizar_categoria_paso(proyecto_id, paso_id):
 
     return jsonify({"mensaje": f"Se actualizó la categoría del paso {paso.title}."})
 
+
+@api.route('/share/project/<int:project_id>', methods=['POST'])
+def share_project(project_id):
+    project = Project.query.get(project_id)
+    print("zzzzzzzz", project)
+    
+    if not project:
+        return jsonify({"error": f"No se encontró un proyecto con ID {project_id}"}), 404
+    data = request.get_json()
+    email = data.get("email")
+    if not email:
+        return jsonify({"error": "Se requiere un campo 'email' en el cuerpo de la solicitud"}), 400
+    user = User.query.filter_by(email=email).first()
+    if not user:
+        return jsonify({"error": f"No se encontró un usuario con el correo electrónico {email}"}), 404
+    if project in user.projects:
+        return jsonify({"error": f"El usuario {user.name} ya está en el proyecto {project.title}"}), 400
+    user.projects.append(project)
+    db.session.commit()
+
+    return jsonify({"msg": f"{user.name} agregado al proyecto: {project.title}"}), 200
 
 
 
