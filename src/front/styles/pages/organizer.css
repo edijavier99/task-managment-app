@@ -56,6 +56,11 @@
 .selectedProject {
     background-color: rgb(232, 178, 71);
 }
+.fa-ellipsis{
+    position: relative;
+    left: 90%;
+    top: -5px;
+}
 .showTheItems span{
     margin: auto;
 }
