@@ -125,7 +125,6 @@ class Notes(db.Model):
         }
 
 
-
 class Step(db.Model):
     __tablename__ = "step"
     id = db.Column(db.Integer, primary_key=True)

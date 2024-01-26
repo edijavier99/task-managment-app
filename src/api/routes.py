@@ -344,16 +344,13 @@ def actualizar_categoria_paso(proyecto_id, paso_id):
 @api.route('/share/project/<int:project_id>',methods=['POST'])
 def share_project(project_id):
     project = Project.query.get(project_id)
-    print("zzzzzzz", project)
     if not project:
-        return jsonify({"error": f"No se encontró un proyecto con ID {project_id}"}), 404
+        return jsonify({"error": f"No se encontró un proyecto con el nombre {project_id}"}), 404
     
     data = request.get_json()
-    print(".............", data)
     email = data.get("email")
-    print("xxxxxxxxxxxxxxxx", email)
     if not email:
-        return jsonify({"error": "Se requiere un campo 'email' en el cuerpo de la solicitud"}), 400
+        return jsonify({"error": "Introduce el correo"}), 400
     
     user = User.query.filter_by(email=email).first()
     
