@@ -25,7 +25,7 @@ export const Profile = () =>{
             </section>
             <section className="personal-information dynamic-div" style={{ height: `${height}px` }}>
                 <img id="chincheta" src="https://cdn.icon-icons.com/icons2/1632/PNG/512/62931pushpin_109275.png" alt="chincheta" />
-                <p className="user-name">Bienvenido <strong>Edison Javier</strong></p>
+                <p className="user-name">Bienvenido <strong>{localStorage.getItem("username")}</strong></p>
                 <blockquote >
                     <p className="text-center"><i>Ordena tu día, y verás cómo cada pequeño paso se convierte en una danza armoniosa de logros y serenidad.</i></p>
                     <cite>Anónimo</cite>

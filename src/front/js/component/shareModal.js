@@ -6,7 +6,7 @@ export const ShareModal = (props) =>{
     const [shareProjectRes, setShareProjectRes] = useState("")
 
     const shareProyect = ()=>{
-        fetch(`${process.env.BACKEND_URL}api/share/project/12`,{
+        fetch(`${process.env.BACKEND_URL}api/share/project/${props.projectId}`,{
             method: "POST",
             headers: {
                 "Content-Type": "Application/json"
