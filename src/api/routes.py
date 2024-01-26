@@ -341,26 +341,30 @@ def actualizar_categoria_paso(proyecto_id, paso_id):
     return jsonify({"mensaje": f"Se actualizó la categoría del paso {paso.title}."})
 
 
-@api.route('/share/project/<int:project_id>', methods=['POST'])
+@api.route('/share/project/<int:project_id>',methods=['POST'])
 def share_project(project_id):
     project = Project.query.get(project_id)
-    print("zzzzzzzz", project)
-    
     if not project:
-        return jsonify({"error": f"No se encontró un proyecto con ID {project_id}"}), 404
+        return jsonify({"error": f"No se encontró un proyecto con el nombre {project_id}"}), 404
+    
     data = request.get_json()
     email = data.get("email")
     if not email:
-        return jsonify({"error": "Se requiere un campo 'email' en el cuerpo de la solicitud"}), 400
+        return jsonify({"error": "Introduce el correo"}), 400
+    
     user = User.query.filter_by(email=email).first()
+    
     if not user:
         return jsonify({"error": f"No se encontró un usuario con el correo electrónico {email}"}), 404
+    
     if project in user.projects:
         return jsonify({"error": f"El usuario {user.name} ya está en el proyecto {project.title}"}), 400
+
     user.projects.append(project)
     db.session.commit()
 
     return jsonify({"msg": f"{user.name} agregado al proyecto: {project.title}"}), 200
+
 
 
 

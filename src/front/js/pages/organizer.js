@@ -26,8 +26,8 @@ export const Organizer = () => {
   const fetchData = async () => {
     try {
     const data = await getAllProjects(owner_id);
-    setProjects(data.projects)
-    console.log(data.projects);
+      setProjects(data.projects)
+      console.log(data.projects);
     } catch (error) {
       console.log(error);
     }
