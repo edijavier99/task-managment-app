@@ -2,23 +2,25 @@ import React, { useState } from "react";
 
 export const ShareModal = (props) =>{
     const [email, setEmail] = useState()
+    const [isShared, setIsShared] = useState("")
 
     const shareProyect = ()=>{
-        fetch(`${process.env.BACKEND_URL}/api/share/project/${props.projectId}`, {
-            method: 'POST',
+        fetch(`${process.env.BACKEND_URL}api/share/project/12`,{
+            method: "POST",
             headers: {
-                'Content-Type': 'application/json',
+                "Content-Type": "Application/json"
             },
-            body: JSON.stringify({email}),
+            body: JSON.stringify({email})
         })
-        .then((res) => res.json())
-        .catch((err) => console.log(err));
+        .then((res)=>res.json())
+        .then((data)=>console.log(data))
+        .catch((err)=> console.log(err))
     }
 
     return(
         <div>
             <i className="fa-solid fa-ellipsis" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
-            <div className="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div className="modal-dialog">
                 <div className="modal-content">
                 <div className="modal-header">
@@ -33,7 +35,7 @@ export const ShareModal = (props) =>{
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary" onClick={shareProyect}>Compartir</button>
+                    <button type="button" className="btn btn-primary" onClick={()=> shareProyect()}>Compartir</button>
                 </div>
                 </div>
             </div>
