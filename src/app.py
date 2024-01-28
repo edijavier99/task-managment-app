@@ -6,12 +6,15 @@ from flask import Flask, request, jsonify, url_for, send_from_directory
 from flask_migrate import Migrate
 from flask_swagger import swagger
 from api.utils import APIException, generate_sitemap
-from api.models import db
+from api.models import db,User
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+from flask_socketio import SocketIO, emit, join_room
+
+
 
 
 
@@ -22,6 +25,37 @@ static_file_dir = os.path.join(os.path.dirname(
     os.path.realpath(__file__)), '../public/')
 app = Flask(__name__)
 app.url_map.strict_slashes = False
+socketio = SocketIO(app, cors_allowed_origins="*") 
+
+
+@socketio.on('connect')
+def handle_connect():
+    client_id = request.sid
+    print(f'Cliente conectado al servidor Socket.IO. ID del socket: {client_id}')
+
+
+connected_users = {}  # Esto debería ser un diccionario global
+
+@socketio.on('join_room')
+def handle_join_room(data):
+    room = data['room']
+    username = data['username']
+    
+    join_room(room)
+    
+    # Obtener o crear la lista de usuarios conectados para la sala del proyecto
+    users_for_room = connected_users.setdefault(room, [])
+    
+    # Verificar si el usuario ya está en la lista
+    if username not in users_for_room:
+        users_for_room.append(username)  # Agregar el nombre de usuario a la lista
+    
+    print(f'Usuario {username} se unió a la sala {room}')
+    
+    # Emitir la lista actualizada de usuarios conectados en la sala
+    emit('receivedConnectedUserInfo', users_for_room, room=room)
+   
+
 
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
@@ -82,4 +116,5 @@ def serve_any_other_file(path):
 # this only runs if `$ python src/main.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+    # Usa socketio.run() en lugar de app.run()
+    socketio.run(app, host='0.0.0.0', port=PORT, debug=True)

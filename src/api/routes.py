@@ -1,6 +1,7 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+from flask_socketio import emit
 from flask import Flask, request, jsonify, url_for, Blueprint,current_app, abort
 from api.models import db, User,Todo,Notes,Project,Step,myEnum
 from api.utils import generate_sitemap, APIException
