@@ -10,7 +10,7 @@ export const Home = () => {
 	const [searchQuery, setSearchQuery] = useState("")
 	const [searchResults, setSearchResults] = useState([]);
 	const navigate = useNavigate()
-
+	
 	const getFilteredSearch = (query)=>{
 			try {
 				fetch(`${process.env.BACKEND_URL}/api/search?query=${query}`, { 

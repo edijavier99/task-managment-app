@@ -1,12 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
-import getState from "../store/flux";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "../../styles/pages/organizer.css";
 import { DroppableElement } from "../component/droppableElement";
 import { Context } from "../store/appContext";
+import io from 'socket.io-client';
+
+const socket = io('https://turbo-rotary-phone-g4x6pg46jqgfrjj-3001.app.github.dev');
 
 export const Organizer = () => {
-  const [newItem, setNewItem] = useState()
+  const [newItem,setNewItem] = useState()
   const [projects, setProjects] = useState([])
   const {store,actions} = useContext(Context)
   const { getAllProjects } = actions;
@@ -17,17 +19,27 @@ export const Organizer = () => {
   const [addProject, setAddProject] = useState(false)
   const [projectTitle, setProjectTitle] = useState("")
   const owner_id = localStorage.getItem("user_id")
-  // const [selected, setSelected]= useState("")
+  const [conectedUser, setConectedUser] = useState([])
 
   useEffect(() => {
     fetchData();
+    socket.on("receivedConnectedUserInfo", (data) => {
+      setConectedUser(data);
+  });
   }, []);
+
+  const getConectedUser =  (projectId) =>{
+    const userInfo = {
+      room: projectId,
+      username: localStorage.getItem("username"),
+    }
+    socket.emit("join_room", userInfo)
+  }
 
   const fetchData = async () => {
     try {
     const data = await getAllProjects(owner_id);
       setProjects(data.projects)
-      console.log(data.projects);
     } catch (error) {
       console.log(error);
     }
@@ -39,6 +51,10 @@ export const Organizer = () => {
       const selectedProject = projects.find(project => project.id === projectId);
       if (selectedProject && selectedProject.steps) {
         setSelectedProjectId(projectId);
+
+        socket.emit("joinProjectRoom", projectId);
+        getConectedUser(projectId)
+        setConectedUser([]);
   
         const allSteps = selectedProject.steps;
         // Organizar los pasos en contenedores según su categoría
@@ -215,6 +231,15 @@ export const Organizer = () => {
               <input onChange={(e)=>{ setProjectTitle(e.target.value)}} value={projectTitle} placeholder="Añade un proyecto..."  id="projectInput" name="projectInput" type="text"/>
           </div>
           {actions.showTheItems(projects, handleItemClick, selectedProyjectId)}
+      </div>
+      <div className="bg-light col-md-5 mt-3 m-auto p-2">
+      {conectedUser && conectedUser.length > 0 ? (
+          conectedUser.map((user, index) => (
+            <span className="m-0 mx-3" key={index}>{user}</span>
+          ))
+        ) : (
+          <p className="m-0">No hay usuarios conectados</p>
+        )}
       </div>
       <h2 className="my-4 titlePanel">Panel de proceso</h2>
         <section className="organizer-container">
