@@ -1,49 +1,61 @@
-import React from "react";
-import { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import { Button, Card, CardBody, Collapse } from 'reactstrap';
 import "../../styles/components/dashboard.css"
 import { useNavigate } from "react-router-dom";
 import { Historial } from "./historial";
 import Notes from "./notes";
-import {TodayTodos} from "./todayTodos"
-import {OrganizerHome} from "./organizerHome"
+import { TodayTodos } from "./todayTodos";
+import { OrganizerHome } from "./organizerHome";
 
-export const Dashboard = () =>{
-    const navigate = useNavigate()
-    const [openPanel, setOpenPanel] = useState(null);
+const PanelButton = ({ panelKey, onClick, label }) => (
+    <Button onClick={() => onClick(panelKey)}>
+      {label}
+    </Button>
+  );
+  
+  const PanelContent = ({ children }) => (
+    <Card>
+      <CardBody>{children}</CardBody>
+    </Card>
+  );
+  
+  export const Dashboard = () => {
+    const navigate = useNavigate();
+    const [openPanel, setOpenPanel] = useState("Hoy");
+  
     const togglePanel = (key) => {
-        setOpenPanel(openPanel === key ? null : key);
+      setOpenPanel(openPanel === key ? null : key);
     };
   
     const panelData = [
-        { key: 'Hoy', content:  <TodayTodos/> },
-        { key: 'Proyectos', content: <OrganizerHome /> },
-        { key: 'Notas', content:<Notes /> },
-        { key: 'Historial', content: <Historial /> },
-      ];
-    useEffect(()=>{
-        togglePanel(panelData[0].key)
-    },[])
-      
-   
-   return(
-    <section className="dashboard">
+      { key: 'Hoy', content: <TodayTodos /> },
+      { key: 'Proyectos', content: <OrganizerHome /> },
+      { key: 'Notas', content: <Notes /> },
+      { key: 'Historial', content: <Historial /> },
+    ];
+  
+    return (
+      <section className="dashboard">
         <div className="titles ">
-        {panelData.map(({ key }) => (
-                <Button key={key} onClick={() => togglePanel(key)}>
-                  {key}
-                </Button>
-              ))}
+          {panelData.map(({ key }) => (
+            <PanelButton
+              key={key}
+              onClick={() => togglePanel(key)}
+              label={key}
+            />
+          ))}
         </div>
         <div className="dasboard-info">
-            {panelData.map(({ key, content }) => (
-                <Collapse key={key} isOpen={openPanel === key}>
-                <Card>
-                    <CardBody>{content}</CardBody>
-                </Card>
-                </Collapse>
-            ))}
+          {panelData.map(({ key, content }) => (
+            key === openPanel && (
+              <Collapse key={key} isOpen={openPanel === key}>
+                <PanelContent>{content}</PanelContent>
+              </Collapse>
+            )
+          ))}
         </div>
-    </section>
-   )
-}
+      </section>
+    );
+  };
+  

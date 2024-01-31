@@ -15,9 +15,6 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, emit, join_room
 
 
-
-
-
 # from models import Person
 
 ENV = "development" if os.getenv("FLASK_DEBUG") == "1" else "production"

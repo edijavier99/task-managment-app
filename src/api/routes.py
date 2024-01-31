@@ -237,7 +237,7 @@ def user_login():
     if user and user.password == password:
         logged = "Successfully logged"
         access_token = create_access_token(identity=user.id)
-        return jsonify({"loginOK": logged, "token": access_token, "user_id": user.id, "name": user.name, "email": user.email})
+        return jsonify({"loginOK": logged, "profileImg":user.profileImg, "token": access_token, "user_id": user.id, "name": user.name, "email": user.email})
     else :
         return jsonify({"msg" : "Contraseña Incorrecta"})
     

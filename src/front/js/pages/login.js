@@ -21,6 +21,7 @@ export const Login = () =>{
             localStorage.setItem('jwt-token', data.token);
             localStorage.setItem('user_id', data.user_id);
             localStorage.setItem('username', data.name);
+            localStorage.setItem('userImage', data.profileImg)
             navigate("/")
            }
         })
