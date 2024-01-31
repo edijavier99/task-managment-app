@@ -3,9 +3,9 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "../../styles/pages/organizer.css";
 import { DroppableElement } from "../component/droppableElement";
 import { Context } from "../store/appContext";
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
-const socket = io(`${process.env.BACKEND_URL}`);
+// const socket = io(`${process.env.BACKEND_URL}`);
 
 export const Organizer = () => {
   const [newItem,setNewItem] = useState()
@@ -23,18 +23,18 @@ export const Organizer = () => {
 
   useEffect(() => {
     fetchData();
-    socket.on("receivedConnectedUserInfo", (data) => {
-      setConectedUser(data);
-  });
+  //   socket.on("receivedConnectedUserInfo", (data) => {
+  //     setConectedUser(data);
+  // });
   }, []);
 
-  const getConectedUser =  (projectId) =>{
-    const userInfo = {
-      room: projectId,
-      username: localStorage.getItem("username"),
-    }
-    socket.emit("join_room", userInfo)
-  }
+  // const getConectedUser =  (projectId) =>{
+  //   const userInfo = {
+  //     room: projectId,
+  //     username: localStorage.getItem("username"),
+  //   }
+  //   socket.emit("join_room", userInfo)
+  // }
 
   const fetchData = async () => {
     try {
@@ -52,8 +52,8 @@ export const Organizer = () => {
       if (selectedProject && selectedProject.steps) {
         setSelectedProjectId(projectId);
 
-        socket.emit("joinProjectRoom", projectId);
-        getConectedUser(projectId)
+        // socket.emit("joinProjectRoom", projectId);
+        // getConectedUser(projectId)
         setConectedUser([]);
   
         const allSteps = selectedProject.steps;
@@ -229,7 +229,7 @@ export const Organizer = () => {
           </div>
           {actions.showTheItems(projects, handleItemClick, selectedProyjectId)}
       </div>
-      <div className="bg-light col-md-5 mt-3 m-auto p-2">
+      {/* <div className="bg-light col-md-5 mt-3 m-auto p-2">
       {conectedUser && conectedUser.length > 0 ? (
           conectedUser.map((user, index) => (
             <span className="m-0 mx-3" key={index}>{user}</span>
@@ -237,7 +237,7 @@ export const Organizer = () => {
         ) : (
           <p className="m-0">No hay usuarios conectados</p>
         )}
-      </div>
+      </div> */}
       <h2 className="my-4 titlePanel">Panel de proceso</h2>
         <section className="organizer-container">
           <DragDropContext onDragEnd={onDragEnd}>
