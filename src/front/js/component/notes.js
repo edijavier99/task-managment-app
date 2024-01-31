@@ -1,22 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../styles/components/notes.css"
+import { set } from "date-fns";
+
 const Notes = () =>{
     const [notes, setNotes] = useState([])
     const navigate = useNavigate()
 
-    const getAllNotes = () =>{
-        fetch(`${process.env.BACKEND_URL}api/${localStorage.getItem("user_id")}/notes`, {
-            method: 'GET',
-            headers: {
-            "Content-Type" : "Application/json"
-            }
-        })
-        .then(res=>res.json())
-        .then(data=>{
+    const getAllNotes = async () =>{
+        try {
+            const response = await fetch(`${process.env.BACKEND_URL}api/${localStorage.getItem("user_id")}/notes`, {
+                method: 'GET',
+                headers: {
+                "Content-Type" : "Application/json"
+                }
+            })
+            const data = await response.json();
+            console.log(data);
             setNotes(data)
-        })
-        .catch(err =>console.log(err))
+        } catch(error) {
+            console.log(error);
+        }
     }
 
     useEffect(()=>{
@@ -48,4 +52,5 @@ const Notes = () =>{
         </section>
     )
 }
+
 export default Notes

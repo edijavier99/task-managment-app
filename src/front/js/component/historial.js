@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../styles/components/historial.css"
 
-export const Historial = () =>{
+const Historial = () =>{
 
     const [completedTask, setCompletedTask] = useState([])
 
@@ -50,3 +50,5 @@ export const Historial = () =>{
         </section>
     )
 }
+
+export default Historial
