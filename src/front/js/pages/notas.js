@@ -10,6 +10,7 @@ export const Notas = () =>{
     const date = today.toLocaleDateString()
     const owner_id= localStorage.getItem("user_id")
 
+    
     const addNote = () =>{
 
         if(!title){
@@ -40,7 +41,7 @@ export const Notas = () =>{
            <div className="background-image">
                 <img src="https://cdn.pixabay.com/photo/2016/11/22/19/25/adult-1850177_1280.jpg" alt="imagen-de-fondo" />
             </div>
-            <h1>Notas</h1>
+            <h1>Notas</h1> 
             <section className="notas-container">
                 <input id="nota-title" 
                        className="text-center" 

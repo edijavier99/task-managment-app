@@ -5,7 +5,7 @@ import { DroppableElement } from "../component/droppableElement";
 import { Context } from "../store/appContext";
 import io from 'socket.io-client';
 
-const socket = io('https://turbo-rotary-phone-g4x6pg46jqgfrjj-3001.app.github.dev');
+const socket = io(`${process.env.BACKEND_URL}`);
 
 export const Organizer = () => {
   const [newItem,setNewItem] = useState()
@@ -216,9 +216,6 @@ export const Organizer = () => {
       throw err; 
     }
   }
-
-
-
   return (
     <section id="projects">
       <header className="projects-header d-flex align-items-center justify-content-center">

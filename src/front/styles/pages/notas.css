@@ -72,3 +72,80 @@
 .card-body{
     text-align: center;
 }
+
+
+/* 
+.notas {
+    background-color: rgb(253, 238, 219);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.notas h1{
+    margin-top:70px ;
+    text-align: center;
+    font-size: 50px;
+    z-index: 2;
+    background-color: transparent;
+    position: relative;
+    color: white;
+}
+.notas-container{
+    z-index: 2;
+    background-color: rgb(252, 221, 152);
+    width: 90%;
+    height: 500px;
+    margin: 0 auto;
+    margin-top: 50px;
+    position: relative;
+    border-radius: 15px;
+    background-position-y:-160px ;
+    overflow: hidden;
+    background-position-x:-100px ;
+    display: flex;
+    justify-content: center;
+    background-image: url(https://c0.klipartz.com/pngpicture/462/399/gratis-png-nota-adhesiva-amarilla-con-un-alfiler-rojo-nota-musical-papel-de-nota-post-it-samsung-galaxy-nota-8-nota-post-it.png);
+
+}
+.notas textarea{
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 30px;
+    margin-top: 75px;
+    padding: 20px;
+    line-height: 2;
+    padding-bottom: 20px;
+    border: none;
+    background-image: url("https://img.freepik.com/premium-photo/white-crumpled-paper-paper-texture_213524-50.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1700179200&semt=ais");
+}
+.notas-container textarea:focus {
+    outline: none !important;
+}
+#nota-title{
+    z-index: 20px;
+    display: flex;
+    position: absolute;
+    width: 300px;
+    top: 20px;
+    padding: 5px;
+    background-color: transparent;
+    border: none;
+    font-size: 20px;
+}
+.character-number{
+    position: absolute;
+    top:400px;
+    height: 40px;
+    width: 100%;
+    padding-left: 310px;
+    background-image: url("https://img.freepik.com/premium-photo/white-crumpled-paper-paper-texture_213524-50.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1700179200&semt=ais");
+    float: right;
+}
+#saveNoteBtn{
+    width: 45% !important;
+    margin: 20px auto
+}
+.card-body{
+    text-align: center;
+} */

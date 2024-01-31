@@ -10,8 +10,6 @@ class myEnum(enum.Enum):
 
 db = SQLAlchemy()
 
-
-# Tabla intermedia para la relación many-to-many
 user_project_association = db.Table(
     'user_project',
     db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
@@ -25,6 +23,7 @@ class User(db.Model):
     surname = db.Column(db.String(40), nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
+    profileImg = db.Column(db.String(400),nullable =True)
     
     # Many-to-Many relationship with Project
     projects = db.relationship("Project", secondary=user_project_association, back_populates="members")
@@ -45,6 +44,7 @@ class User(db.Model):
             "projects": [project.id for project in self.projects],
             "todos": [todo.serialize() for todo in self.todos],
             "notes": [note.serialize() for note in self.notes],
+            "profileImg" : self.profileImg
         }
 
 class Project(db.Model):

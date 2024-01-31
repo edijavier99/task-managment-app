@@ -17,7 +17,7 @@ export const Dashboard = () =>{
   
     const panelData = [
         { key: 'Hoy', content:  <TodayTodos/> },
-        { key: 'Organizador', content: <OrganizerHome /> },
+        { key: 'Proyectos', content: <OrganizerHome /> },
         { key: 'Notas', content:<Notes /> },
         { key: 'Historial', content: <Historial /> },
       ];
