@@ -4,7 +4,6 @@ import "../../styles/pages/organizer.css";
 import { DroppableElement } from "../component/droppableElement";
 import { Context } from "../store/appContext";
 // import io from 'socket.io-client';
-
 // const socket = io(`${process.env.BACKEND_URL}`);
 
 export const Organizer = () => {
@@ -24,8 +23,10 @@ export const Organizer = () => {
   useEffect(() => {
     fetchData();
   //   socket.on("receivedConnectedUserInfo", (data) => {
+  //     console.log("data");
   //     setConectedUser(data);
   // });
+
   }, []);
 
   // const getConectedUser =  (projectId) =>{
@@ -55,13 +56,13 @@ export const Organizer = () => {
         // socket.emit("joinProjectRoom", projectId);
         // getConectedUser(projectId)
         setConectedUser([]);
-  
+
         const allSteps = selectedProject.steps;
         // Organizar los pasos en contenedores según su categoría
         const pasos = allSteps.filter(step => step.category === 'step');
         const enProceso = allSteps.filter(step => step.category === 'proccess');
         const terminado = allSteps.filter(step => step.category === 'finished');
-  
+
         setPasos(pasos);
         setEnProceso(enProceso);
         setTerminado(terminado);
@@ -72,20 +73,20 @@ export const Organizer = () => {
       console.error('Error al manejar el clic en el proyecto:', error);
     }
   };
-  
-  
+
+
     const onDragEnd = (result) => {
-      const { source, destination } = result;     
+      const { source, destination } = result;
       if(!destination) return;
       if(destination.droppableId === source.droppableId && destination.index === source.index) return;
-      
+
       const reorderList = (startIndex, endIndex, list) => {
         const result = Array.from(list);
         const [removed] = result.splice(startIndex, 1);
         result.splice(endIndex, 0, removed);
         return result;
       };
-  
+
       if (source.droppableId === destination.droppableId) {
         let updatedList;
         if (source.droppableId === 'prueba-pasos') {
@@ -157,7 +158,7 @@ export const Organizer = () => {
     } else {
       category = 'step';
     }
-  
+
     fetch(`${process.env.BACKEND_URL}/api/projects/${projectId}/stage/${stepId}`, {
       method: 'PUT',
       headers: {
@@ -168,7 +169,7 @@ export const Organizer = () => {
     .then((res) => res.json())
     .catch((err) => console.log(err));
   };
-  
+
 
   const handleTextareaChange = async (value, droppableId) => {
     setNewItem("");
@@ -194,7 +195,7 @@ export const Organizer = () => {
 };
   const handdleAddProjectInput = () =>{
     setAddProject(!addProject)
-  } 
+  }
 
   const sendProject = async () =>{
     try{
@@ -210,10 +211,10 @@ export const Organizer = () => {
       fetchData()
       setProjectTitle("")
       setAddProject(false)
-    }else 
+    }else
       alert("Debes añadir un titulo al prpoyecto")
     } catch(err){
-      throw err; 
+      throw err;
     }
   }
   return (
@@ -223,13 +224,13 @@ export const Organizer = () => {
       </header>
       <main>
       <div id="showProjectBoard">
-          { addProject? <i className="fa-solid fa-circle-check" onClick={sendProject}></i> : <i className="fa-solid fa-circle-plus "onClick={handdleAddProjectInput}></i>} 
+          { addProject? <i className="fa-solid fa-circle-check" onClick={sendProject}></i> : <i className="fa-solid fa-circle-plus "onClick={handdleAddProjectInput}></i>}
           <div className={`${addProject ? "" : "d-none"}`} id="newProjectInput">
               <input onChange={(e)=>{ setProjectTitle(e.target.value)}} value={projectTitle} placeholder="Añade un proyecto..."  id="projectInput" name="projectInput" type="text"/>
           </div>
           {actions.showTheItems(projects, handleItemClick, selectedProyjectId)}
       </div>
-      {/* <div className="bg-light col-md-5 mt-3 m-auto p-2">
+      {/* { <div className="bg-light col-md-5 mt-3 m-auto p-2">
       {conectedUser && conectedUser.length > 0 ? (
           conectedUser.map((user, index) => (
             <span className="m-0 mx-3" key={index}>{user}</span>
@@ -237,7 +238,7 @@ export const Organizer = () => {
         ) : (
           <p className="m-0">No hay usuarios conectados</p>
         )}
-      </div> */}
+      </div>} */}
       <h2 className="my-4 titlePanel">Panel de proceso</h2>
         <section className="organizer-container">
           <DragDropContext onDragEnd={onDragEnd}>

@@ -48,7 +48,6 @@ app.url_map.strict_slashes = False
 #     print(f'Usuario {username} se unió a la sala {room}')
     
 #     emit('receivedConnectedUserInfo', users_for_room, room=room)
-   
 
 
 # database condiguration
