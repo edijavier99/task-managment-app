@@ -3,8 +3,8 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "../../styles/pages/organizer.css";
 import { DroppableElement } from "../component/droppableElement";
 import { Context } from "../store/appContext";
-// import io from 'socket.io-client';
-// const socket = io(`${process.env.BACKEND_URL}`);
+import io from 'socket.io-client';
+
 
 export const Organizer = () => {
   const [newItem,setNewItem] = useState()
@@ -19,23 +19,20 @@ export const Organizer = () => {
   const [projectTitle, setProjectTitle] = useState("")
   const owner_id = localStorage.getItem("user_id")
   const [conectedUser, setConectedUser] = useState([])
+  const [socket, setSocket] = useState(null);
+
 
   useEffect(() => {
     fetchData();
-  //   socket.on("receivedConnectedUserInfo", (data) => {
-  //     console.log("data");
-  //     setConectedUser(data);
-  // });
-
   }, []);
 
-  // const getConectedUser =  (projectId) =>{
-  //   const userInfo = {
-  //     room: projectId,
-  //     username: localStorage.getItem("username"),
-  //   }
-  //   socket.emit("join_room", userInfo)
-  // }
+  const getConectedUser =  (projectId) =>{
+    const userInfo = {
+      room: projectId,
+      username: localStorage.getItem("username"),
+    }
+    socket.emit("join_room", userInfo)
+  }
 
   const fetchData = async () => {
     try {
@@ -48,17 +45,30 @@ export const Organizer = () => {
 
   const handleItemClick = async (projectId) => {
     try {
-      // Obtener el proyecto con el id correspondiente
       const selectedProject = projects.find(project => project.id === projectId);
       if (selectedProject && selectedProject.steps) {
         setSelectedProjectId(projectId);
 
-        // socket.emit("joinProjectRoom", projectId);
-        // getConectedUser(projectId)
-        setConectedUser([]);
+        if (socket) {
+          socket.disconnect();
+          setSocket(null);
+        }
+        
+        try {
+          const newSocket = io(`${process.env.BACKEND_URL}`);
+          newSocket.emit("join_room", { room: projectId, username: localStorage.getItem("username") });
+
+          newSocket.on("receivedConnectedUserInfo", (data) => {
+            console.log("Usuarios conectados:", data);
+            setConectedUser(data);
+          });
+
+          setSocket(newSocket);
+        } catch (error) {
+          console.error('Error al manejar el clic en el proyecto:', error);
+        }
 
         const allSteps = selectedProject.steps;
-        // Organizar los pasos en contenedores según su categoría
         const pasos = allSteps.filter(step => step.category === 'step');
         const enProceso = allSteps.filter(step => step.category === 'proccess');
         const terminado = allSteps.filter(step => step.category === 'finished');
@@ -230,7 +240,7 @@ export const Organizer = () => {
           </div>
           {actions.showTheItems(projects, handleItemClick, selectedProyjectId)}
       </div>
-      {/* { <div className="bg-light col-md-5 mt-3 m-auto p-2">
+      { <div className="bg-light col-md-5 mt-3 m-auto p-2">
       {conectedUser && conectedUser.length > 0 ? (
           conectedUser.map((user, index) => (
             <span className="m-0 mx-3" key={index}>{user}</span>
@@ -238,7 +248,7 @@ export const Organizer = () => {
         ) : (
           <p className="m-0">No hay usuarios conectados</p>
         )}
-      </div>} */}
+      </div>}
       <h2 className="my-4 titlePanel">Panel de proceso</h2>
         <section className="organizer-container">
           <DragDropContext onDragEnd={onDragEnd}>
