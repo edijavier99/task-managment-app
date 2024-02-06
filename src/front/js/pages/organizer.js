@@ -3,7 +3,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import "../../styles/pages/organizer.css";
 import { DroppableElement } from "../component/droppableElement";
 import { Context } from "../store/appContext";
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 
 export const Organizer = () => {
@@ -26,13 +26,13 @@ export const Organizer = () => {
     fetchData();
   }, []);
 
-  const getConectedUser =  (projectId) =>{
-    const userInfo = {
-      room: projectId,
-      username: localStorage.getItem("username"),
-    }
-    socket.emit("join_room", userInfo)
-  }
+  // const getConectedUser =  (projectId) =>{
+  //   const userInfo = {
+  //     room: projectId,
+  //     username: localStorage.getItem("username"),
+  //   }
+  //   socket.emit("join_room", userInfo)
+  // }
 
   const fetchData = async () => {
     try {
@@ -49,24 +49,24 @@ export const Organizer = () => {
       if (selectedProject && selectedProject.steps) {
         setSelectedProjectId(projectId);
 
-        if (socket) {
-          socket.disconnect();
-          setSocket(null);
-        }
+        // if (socket) {
+        //   socket.disconnect();
+        //   setSocket(null);
+        // }
         
-        try {
-          const newSocket = io(`${process.env.BACKEND_URL}`);
-          newSocket.emit("join_room", { room: projectId, username: localStorage.getItem("username") });
+        // try {
+        //   const newSocket = io(`${process.env.BACKEND_URL}`);
+        //   newSocket.emit("join_room", { room: projectId, username: localStorage.getItem("username") });
 
-          newSocket.on("receivedConnectedUserInfo", (data) => {
-            console.log("Usuarios conectados:", data);
-            setConectedUser(data);
-          });
+        //   newSocket.on("receivedConnectedUserInfo", (data) => {
+        //     console.log("Usuarios conectados:", data);
+        //     setConectedUser(data);
+        //   });
 
-          setSocket(newSocket);
-        } catch (error) {
-          console.error('Error al manejar el clic en el proyecto:', error);
-        }
+        //   setSocket(newSocket);
+        // } catch (error) {
+        //   console.error('Error al manejar el clic en el proyecto:', error);
+        // }
 
         const allSteps = selectedProject.steps;
         const pasos = allSteps.filter(step => step.category === 'step');
@@ -240,7 +240,7 @@ export const Organizer = () => {
           </div>
           {actions.showTheItems(projects, handleItemClick, selectedProyjectId)}
       </div>
-      { <div className="bg-light col-md-5 mt-3 m-auto p-2">
+      {/* { <div className="bg-light col-md-5 mt-3 m-auto p-2">
       {conectedUser && conectedUser.length > 0 ? (
           conectedUser.map((user, index) => (
             <span className="m-0 mx-3" key={index}>{user}</span>
@@ -248,7 +248,7 @@ export const Organizer = () => {
         ) : (
           <p className="m-0">No hay usuarios conectados</p>
         )}
-      </div>}
+      </div>} */}
       <h2 className="my-4 titlePanel">Panel de proceso</h2>
         <section className="organizer-container">
           <DragDropContext onDragEnd={onDragEnd}>
