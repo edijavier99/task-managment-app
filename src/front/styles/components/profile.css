@@ -4,8 +4,8 @@
     box-sizing: border-box;
 }
 .profile-img-container{
-    height: 150px;
-    width: 35%;
+    height: 200px;
+    width: 200px;
     margin: 20px auto;
 }
 .profile-img-container img {
@@ -44,4 +44,11 @@
   
 .dynamic-div {
     transition: height 0.3s ease-in-out;
+  }
+
+  @media (max-width: 470px){
+    .profile-img-container{
+        height: 150px;
+        width: 150px;
+    }
   }

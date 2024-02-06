@@ -2,15 +2,13 @@
     height: 50px;
     background-color: white;
 }
-
 .fa-user{
     float: right;
-    font-size: 25px;
+    font-size: 30px;
 }
 #searchBar{
     width:90%;
     margin:40px auto 5px auto;
-
 }
 #item-result{
     width: 90%;

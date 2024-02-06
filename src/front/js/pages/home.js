@@ -3,6 +3,7 @@ import "../../styles/home.css";
 import { Profile } from "../component/profile";
 import { Dashboard } from "../component/dashboard";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "../component/navbar";
 
 export const Home = () => {
     const [searchQuery, setSearchQuery] = useState("");
@@ -51,12 +52,7 @@ export const Home = () => {
     return (
         <section>
             <header className="home-header">
-                <nav className="navbar navbar-expand-lg navbar-light">
-                    <div className="container-fluid">
-                        <a className="navbar-brand" href="#">Navbar</a>
-                        <i className="fa-solid fa-user" onClick={() => navigate('/login')}></i>
-                    </div>
-                </nav>
+               <Navbar />
             </header>
             <main id="main">
                 <Profile />
