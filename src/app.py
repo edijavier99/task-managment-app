@@ -25,7 +25,6 @@ app.url_map.strict_slashes = False
 
 # socketio = SocketIO(app, cors_allowed_origins="*") 
 
-
 # @socketio.on('connect')
 # def handle_connect():
 #     client_id = request.sid
