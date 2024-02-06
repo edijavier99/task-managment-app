@@ -31,36 +31,39 @@ export const Login = () =>{
     }
 
     return(
-        <section className="login">
-            <header className="header">
-                <img className="login-image" src="" alt="" />
-                <h1 className="text-center">Iniciar sesión</h1>
-                <p className="text-center">Inicia sesion</p>
-            </header>
-            <form onSubmit={(e)=>{
-                e.preventDefault()
-                handleLogin()
-            }}>
-                <label id="email-label" htmlFor="email" >Email</label>
-                <input id="email-label"
-                       name="email"
-                       type="email"
-                       value={email}
-                       onChange={(e)=>{
-                        setEmail(e.target.value)
-                       }}
-                />
-                <label id="password-label" htmlFor="password" >Contraseña</label>
-                <input id="password-label"
-                       name="password"
-                       type="password"
-                       value={password}
-                       onChange={(e)=>{
-                        setPassword(e.target.value)
-                       }}
-                />
-                <button type="submit">Log In</button>
-            </form>
-        </section>
+        <div id="login">
+            <section className="login">
+                <header className="header">
+                    <img className="login-image" src="https://cdn.pixabay.com/photo/2016/08/25/07/30/red-1618916_1280.png" alt="logo" />
+                    <h1>Iniciar sesión</h1>
+                    <p className="m-0">Inicia sesion</p>
+                </header>
+                <form onSubmit={(e)=>{
+                    e.preventDefault()
+                    handleLogin()
+                }}>
+                    <label id="email-label" htmlFor="email" >Email</label>
+                    <input id="email-label"
+                        name="email"
+                        type="email"
+                        value={email}
+                        onChange={(e)=>{
+                            setEmail(e.target.value)
+                        }}
+                    />
+                    <label id="password-label" htmlFor="password" >Contraseña</label>
+                    <input id="password-label"
+                        name="password"
+                        type="password"
+                        value={password}
+                        onChange={(e)=>{
+                            setPassword(e.target.value)
+                        }}
+                    />
+                    <button className="loginButton" type="submit">Log In</button>
+                </form>
+                <a className="linkToCreateAccount small mt-3" href="/crear-cuenta">Crear una cuenta</a>
+            </section>
+        </div>
     )
 }

@@ -1,7 +1,8 @@
-header{
+.home-header{
     height: 50px;
     background-color: white;
 }
+
 .fa-user{
     float: right;
     font-size: 25px;

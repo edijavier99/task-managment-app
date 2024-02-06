@@ -50,7 +50,7 @@ export const Home = () => {
 
     return (
         <section>
-            <header>
+            <header className="home-header">
                 <nav className="navbar navbar-expand-lg navbar-light">
                     <div className="container-fluid">
                         <a className="navbar-brand" href="#">Navbar</a>

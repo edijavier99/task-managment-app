@@ -1,20 +1,32 @@
+#login, #createAccount{
+    display: flex;
+    align-items: center;
+    height: 100vh;
+    background: linear-gradient( 90deg , gray, black);
+}
 .create-account, .login{
-    padding: 15px;
-    position: absolute;
-    top:50px
-}
-#title, #description{
-    text-align: center;
-}
-.survey-form{
+    width: 450px;
+    padding: 20px;
+    height: auto;
+    margin: 0 auto;
     border: 1px solid black;
-    padding: 15px;
     border-radius: 5px;
-    background-color: rgb(225, 209, 190);
+    background-color: white;
 }
-#name-label, #email-label, #surname-label, #password-label{
-    display: block;
-    margin: 0.5rem 0;
+.login .header{
+    display: flex;
+    height: auto;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.login .header > img {
+    width: 60px;
+    height: 60px;
+}
+ #title, #description{
+    text-align: center;
 }
 input[type="text"], input[type="email"], input[type="password"]{
     width: 100%;
@@ -22,7 +34,17 @@ input[type="text"], input[type="email"], input[type="password"]{
     border-radius: 3px;
     border: 1px solid black;
 }
-.survey-form button[type="submit"]{
+.login label[id="email-label"], .login label[id="password-label"]{
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+
+.create-account label[id="email-label"], .create-account label[id="name-label"], 
+.create-account label[id="password-label"], .create-account label[id="surname-label"]{
+    font-size: 17px;
+    margin-bottom: 8px;
+}
+.login .loginButton, #createAccountBtn{
     width:100%;
     font-size: 20px;
     padding:10px;
@@ -30,4 +52,16 @@ input[type="text"], input[type="email"], input[type="password"]{
     border-radius: 3px;
     background-color: green;
     border: 1px solid black;
+}
+.linkToCreateAccount{
+    text-decoration: none;
+    color: black;
+    display: flex;
+    justify-content: center;
+}
+
+@media (max-width: 470px){
+    .create-account , .login{
+        width: 390px;
+    }
 }
