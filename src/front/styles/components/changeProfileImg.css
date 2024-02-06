@@ -1,0 +1,19 @@
+.changeProfileImgPencil{
+    background: linear-gradient(240deg, gray, white);
+    border: none;
+    width: 100px;
+    position: absolute;
+    left:46%;
+    top: 250px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+} 
+
+@media (max-width: 470px){
+    .changeProfileImgPencil{
+        left:39%;
+        top: 200px
+    }     
+}

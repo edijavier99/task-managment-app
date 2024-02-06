@@ -367,6 +367,26 @@ def share_project(project_id):
     return jsonify({"msg": f"{user.name} agregado al proyecto: {project.title}"}), 200
 
 
+@api.route('/user/<int:id>', methods=['PUT'])
+def update_user(id):
+    data = request.get_json()
+
+    if data is None:
+        response_body = {"msg": "Body should be passed with request parameters"}
+        return jsonify(response_body), 400
+    
+    update_user = User.query.get(id)
+    
+    if update_user is None:
+        return jsonify({"msg": "User not found"}), 404
+
+    # Actualizar la foto del usuario
+    if "profileImg" in data:
+        update_user.profileImg = data["profileImg"]
+
+    db.session.commit()
+
+    return jsonify({"msg": "User's prrofile image updated"}), 200
 
 
 
