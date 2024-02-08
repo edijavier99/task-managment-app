@@ -24,33 +24,39 @@ static_file_dir = os.path.join(os.path.dirname(
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
-# socketio = SocketIO(app, cors_allowed_origins="*") 
+socketio = SocketIO(app, cors_allowed_origins="*") 
 
-# @socketio.on('connect')
-# def handle_connect():
-#     client_id = request.sid
-#     saludo = "holaaaaaa estoy conectado en el frontedn"
-#     print(f'Cliente conectado al servidor Socket.IO. ID del socket: {client_id}')
-#     emit('conectado',  saludo)
+@socketio.on('connect')
+def handle_connect():
+    client_id = request.sid
+    saludo = "holaaaaaa estoy conectado en el frontedn"
+    print(f'Cliente conectado al servidor Socket.IO. ID del socket: {client_id}')
+    emit('conectado',  saludo)
+
+@socketio.on('disconnect')
+def handle_disconnet():
+    client_id = request.sid
+    print(f"Cliente desconectado {client_id}")
 
 
-# connected_users = {}
 
-# @socketio.on('join_room')
-# def handle_join_room(data):
-#     room = data['room']
-#     username = data['username']
+connected_users = {}
+
+@socketio.on('join_room')
+def handle_join_room(data):
+    room = data['room']
+    username = data['username']
 
     
-#     join_room(room)
+    join_room(room)
     
-#     users_for_room = connected_users.setdefault(room, [])
+    users_for_room = connected_users.setdefault(room, [])
     
-#     if username not in users_for_room:
-#         users_for_room.append(username)  
-#     print(f'Usuario {username} se unió a la sala {room}')
+    if username not in users_for_room:
+        users_for_room.append(username)  
+    print(f'Usuario {username} se unió a la sala {room}')
     
-#     emit('receivedConnectedUserInfo', users_for_room, room=room)
+    emit('receivedConnectedUserInfo', users_for_room, room=room)
 
 
 # database condiguration
@@ -113,4 +119,4 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     # Usa socketio.run() en lugar de app.run()
-    app.run(app, host='0.0.0.0', port=PORT, debug=True)
+    socketio.run(app, host='0.0.0.0', port=PORT, debug=True)
