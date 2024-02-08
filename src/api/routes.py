@@ -15,6 +15,7 @@ from flask_jwt_extended import (
     get_jwt_identity
 )
 
+
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
