@@ -56,26 +56,6 @@ def prpyectoId(data):
    
 
 
-
-
-
-# connected_users = {}
-
-# @socketio.on('join_room')
-# def handle_join_room(data):
-#     room = data['room']
-#     print("----", room)
-#     username = data['username']
-#     join_room(room)
-#     users_for_room = connected_users.setdefault(room, [])
-    
-#     if username not in users_for_room:
-#         users_for_room.append(username)  
-#     print(f'Usuario {username} se unió a la sala {room}')
-    
-#     emit('receivedConnectedUserInfo', users_for_room, room=room)
-
-
 # database condiguration
 db_url = os.getenv("DATABASE_URL")
 if db_url is not None:
