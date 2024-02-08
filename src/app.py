@@ -12,7 +12,7 @@ from api.admin import setup_admin
 from api.commands import setup_commands
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
-from flask_socketio import SocketIO, emit, join_room
+from flask_socketio import SocketIO, emit, join_room, leave_room
 
 
 
@@ -25,38 +25,55 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 socketio = SocketIO(app, cors_allowed_origins="*") 
-
+connected_users = {}
 @socketio.on('connect')
 def handle_connect():
     client_id = request.sid
-    saludo = "holaaaaaa estoy conectado en el frontedn"
     print(f'Cliente conectado al servidor Socket.IO. ID del socket: {client_id}')
-    emit('conectado',  saludo)
+    emit('saludo', {'mensaje': "saludos del el backend"})
 
 @socketio.on('disconnect')
 def handle_disconnet():
     client_id = request.sid
     print(f"Cliente desconectado {client_id}")
 
+@socketio.on('proyectoId')
+def prpyectoId(data):
+    emit('proyectoId', {'mensaje': data})
 
-
-connected_users = {}
-
-@socketio.on('join_room')
-def handle_join_room(data):
-    room = data['room']
-    username = data['username']
-
-    
+@socketio.on('join_project')
+def prpyectoId(data):
+    room = data["project"]
+    username = data["username"]
     join_room(room)
-    
+
     users_for_room = connected_users.setdefault(room, [])
     
     if username not in users_for_room:
         users_for_room.append(username)  
-    print(f'Usuario {username} se unió a la sala {room}')
-    
+    print(f'Usuario {username} se unió a la sala {room}')    
     emit('receivedConnectedUserInfo', users_for_room, room=room)
+   
+
+
+
+
+
+# connected_users = {}
+
+# @socketio.on('join_room')
+# def handle_join_room(data):
+#     room = data['room']
+#     print("----", room)
+#     username = data['username']
+#     join_room(room)
+#     users_for_room = connected_users.setdefault(room, [])
+    
+#     if username not in users_for_room:
+#         users_for_room.append(username)  
+#     print(f'Usuario {username} se unió a la sala {room}')
+    
+#     emit('receivedConnectedUserInfo', users_for_room, room=room)
 
 
 # database condiguration

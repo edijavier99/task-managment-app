@@ -22,17 +22,28 @@ export const Organizer = () => {
   const [socket, setSocket] = useState(null);
 
 
+
   useEffect(() => {
     fetchData();
-  }, []);
+      const newSocket = io(`${process.env.BACKEND_URL}`);
+      setSocket(newSocket)
 
-  const getConectedUser =  (projectId) =>{
-    const userInfo = {
-      room: projectId,
-      username: localStorage.getItem("username"),
-    }
-    socket.emit("join_room", userInfo)
-  }
+      newSocket.on("connect", () => {
+        console.log("Conexión establecida con el servidor Socket.IO");
+      });
+
+      newSocket.on("saludo", (data) => {
+        console.log(data.mensaje);
+    });
+    newSocket.on("proyectoId", (data) => {
+      console.log(data.mensaje);
+  });
+  newSocket.on("receivedConnectedUserInfo", (data) => {
+    setConectedUser(data)
+});
+
+
+  }, []);
 
   const fetchData = async () => {
     try {
@@ -49,24 +60,9 @@ export const Organizer = () => {
       if (selectedProject && selectedProject.steps) {
         setSelectedProjectId(projectId);
 
-        if (socket) {
-          socket.disconnect();
-          setSocket(null);
-        }
-        
-        try {
-          const newSocket = io(`${process.env.BACKEND_URL}`);
-          newSocket.emit("join_room", { room: projectId, username: localStorage.getItem("username") });
+        socket.emit("proyectoId", projectId)
+        socket.emit("join_project", {project : projectId, username: localStorage.getItem("username") })
 
-          newSocket.on("receivedConnectedUserInfo", (data) => {
-            console.log("Usuarios conectados:", data);
-            setConectedUser(data);
-          });
-
-          setSocket(newSocket);
-        } catch (error) {
-          console.error('Error al manejar el clic en el proyecto:', error);
-        }
 
         const allSteps = selectedProject.steps;
         const pasos = allSteps.filter(step => step.category === 'step');
