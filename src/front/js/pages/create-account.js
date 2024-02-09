@@ -7,6 +7,7 @@ export const CreateAccount = () =>{
     const [email, setEmail] = useState("")
     const [surname, setSurname] = useState("")
     const [password, setPassword] = useState("")
+    const profileImg =" https://picsum.photos/seed/picsum/200/300"
     const navigate = useNavigate()
 
     const createUser = () =>{
@@ -15,7 +16,7 @@ export const CreateAccount = () =>{
             headers: {
                 "Content-Type" : "application/json"
             },
-            body: JSON.stringify({ name, email, surname, password })
+            body: JSON.stringify({ name, email, surname, password, profileImg })
         })
         .then(response => {
             if (response.ok) {

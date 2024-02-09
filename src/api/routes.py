@@ -191,7 +191,7 @@ def create_user():
         }
         return jsonify(response_body),400
         
-    required_fields = ["name" , "surname" , "email" , "password"]
+    required_fields = ["name" , "surname" , "email" , "password", "profileImg"]
     for fields in required_fields:
         if fields not in data:
             response_body = {
@@ -207,7 +207,7 @@ def create_user():
         }
         return jsonify(response_body), 400
         
-    new_user = User(name = data["name"], surname = data["surname"], email = data["email"], password = data["password"])
+    new_user = User(name = data["name"], surname = data["surname"], email = data["email"],profileImg = data["profileImg"], password = data["password"])
     db.session.add(new_user)
     db.session.commit()
     return jsonify({"msg": f"{new_user.name} added"}),200

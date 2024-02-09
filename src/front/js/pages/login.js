@@ -59,6 +59,7 @@ export const Login = () =>{
                         name="password"
                         type="password"
                         value={password}
+                        autoComplete="current-password"
                         onChange={(e)=>{
                             setPassword(e.target.value)
                         }}

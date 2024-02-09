@@ -26,6 +26,7 @@ export const Profile = () => {
     const username = localStorage.getItem("username");
     const today = useMemo(() => new Date().toDateString(), []);
     const [userImage, setUserImage] = useState(localStorage.getItem("userImage"));
+    const token = localStorage.getItem("jwt-token")
 
     const handleImageChange = (imageUrl) => {
         setUserImage(imageUrl);
@@ -35,7 +36,7 @@ export const Profile = () => {
     return (
         <main id="profile">
             <section className="profile-img-container">
-                <img className="img" src={userImage} alt="user-profile-image" />
+                <img className="img" src={token ? userImage: "https://cdn.pixabay.com/photo/2016/11/29/03/15/man-1867009_1280.jpg" } alt="user-profile-image" />
                 <ChangeProfileImg onImageChange={handleImageChange} />
             </section>
             <section className="personal-information dynamic-div" style={{ height: `${height}px` }}>
