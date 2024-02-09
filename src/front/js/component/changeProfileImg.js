@@ -12,6 +12,8 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
     const [image, setImage] = useState("")
     const user_id = localStorage.getItem("user_id")
     const {store,actions} = useContext(Context)
+    const token = localStorage.getItem("jwt-token")
+
 
     const handleFile = (e) => {
         const file = e.target.files[0];
@@ -102,7 +104,7 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
     }
     
     return(
-        <section className="changeProfileImgPencil">
+        <section className={ token ? "changeProfileImgPencil" : "d-none"}>
             <label htmlFor="fileInput">
                 <i className="fa-solid fa-pencil"
                     onClick={(e)=>{
