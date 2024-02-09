@@ -2,7 +2,7 @@
     height: 50px;
     background-color: white;
 }
-.fa-user{
+.fa-user, .fa-right-to-bracket{
     float: right;
     font-size: 30px;
 }
