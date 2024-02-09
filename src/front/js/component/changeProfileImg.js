@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRef } from "react";
 import "../../styles/components/changeProfileImg.css";
+import { Context } from "../store/appContext";
+
  
 
 export const ChangeProfileImg = ({ onImageChange }) =>{
@@ -8,6 +10,8 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
     const cloudName = "dhyrv5g3w"; 
     const fileInputRef = useRef(null)
     const [image, setImage] = useState("")
+    const user_id = localStorage.getItem("user_id")
+    const {store,actions} = useContext(Context)
 
     const handleFile = (e) => {
         const file = e.target.files[0];
@@ -62,7 +66,7 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
     const sendDataToAPI = (image) => {
         const token = localStorage.getItem('jwt-token');
             if(token) {
-        fetch(process.env.BACKEND_URL + "api/user/" + localStorage.getItem("user_id"), { 
+        fetch(process.env.BACKEND_URL + "api/user/" + user_id, { 
                 method: "PUT", 
                 headers: { 
                     "Content-Type": "application/json",
@@ -81,6 +85,21 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
               alert('Image not uploaded')
             }
         };
+    
+    const deleteUser = () =>{
+      fetch(`${process.env.BACKEND_URL}api/delete-user/${user_id}`, {
+        method: "DELETE",
+        headers : {
+          "Content-Type" : "Application/json"
+        }
+      })
+      .then(response => response.json())
+      .then(data => {
+        alert(data.msg)
+        actions.logOut()
+      })
+      .catch(err => console.log(err))
+    }
     
     return(
         <section className="changeProfileImgPencil">
@@ -103,6 +122,8 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
             <i className="fa-solid fa-check"onClick={(e) => {
                 handleUpload(e);
             }} ></i>
+
+            <i className="fa-solid fa-trash" onClick={deleteUser}></i>
         </section>
     )
 }

@@ -212,17 +212,21 @@ def create_user():
     db.session.commit()
     return jsonify({"msg": f"{new_user.name} added"}),200
 
-
-@api.route('/delete-user/<int:id>', methods=['DELETE'])
-def delete_user(id):
-    user_to_delete = User.query.get(id)
-    db.session.delete(user_to_delete) 
-    db.session.commit()
-
-    return jsonify({"msg" : f"{user_to_delete.name} user deleted"})
-
+@api.route('/delete-user/<int:userId>/' , methods=['DELETE'])
+def delete_user(userId):
+    user = User.query.get(userId)
+    if user:
+        Notes.query.filter_by(owner_id=userId).delete()
+        Todo.query.filter_by(owner_id=userId).delete()
+        for project in user.projects: 
+            project.members.remove(user)
+        db.session.commit()
+        db.session.delete(user)
+        db.session.commit()
+        return jsonify({"msg": "Usuario eliminado correctamente"}),200
+    else:
+        return jsonify({"msg": "Usuario no encontrado"}),400
 # Route to Login
-
 @api.route('/login', methods=['POST'])
 def user_login():
     email = request.json.get("email", None)

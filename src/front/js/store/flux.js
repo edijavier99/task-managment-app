@@ -102,6 +102,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				} catch(err){
 					throw err; 
 				}
+			},
+			logOut : () => {
+				localStorage.removeItem('jwt-token');
+				localStorage.removeItem('user_id');
+				localStorage.removeItem('username');
+				localStorage.removeItem('userImage')
+				window.location.reload()
 			}
 		}
 	};
