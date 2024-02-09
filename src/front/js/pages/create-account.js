@@ -19,9 +19,11 @@ export const CreateAccount = () =>{
         })
         .then(response => {
             if (response.ok) {
-                navigate('/login');
-            } else {
-                throw new Error(`Error en la solicitud: ${response.statusText}`);
+                navigate('/login')}
+            else {
+                response.json().then(data => {
+                    alert(data.msg);
+                })
             }
         })
         .catch(error => console.error('Error:', error));
@@ -75,6 +77,8 @@ export const CreateAccount = () =>{
                             }}
                             value={email}
                             required
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                            title="Por favor, introduce un email válido"
                         />
                     </div>
                     <div className="form-group">

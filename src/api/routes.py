@@ -199,11 +199,18 @@ def create_user():
                 "msg" : f"{fields.capitalize()} should be in the request"
             }
             return jsonify(response_body),400
-    
+        
+    email = data["email"]
+    allUserEmails = [user.email for user in User.query.all()]
+    if email in allUserEmails:
+        response_body = {
+            "msg": "El usuario ya existe, inicia sesión"
+        }
+        return jsonify(response_body), 400
+        
     new_user = User(name = data["name"], surname = data["surname"], email = data["email"], password = data["password"])
     db.session.add(new_user)
     db.session.commit()
-
     return jsonify({"msg": f"{new_user.name} added"}),200
 
 
@@ -231,12 +238,12 @@ def user_login():
     user = User.query.filter_by(email=email).first()
     if user is None:
         response_body = {
-            "msg": "User not found"
+            "msg": "El usuario no existe, crea una cuenta"
         }
         return jsonify(response_body), 404
 
     if user and user.password == password:
-        logged = "Successfully logged"
+        logged = "Bienvenido"
         access_token = create_access_token(identity=user.id)
         return jsonify({"loginOK": logged, "profileImg":user.profileImg, "token": access_token, "user_id": user.id, "name": user.name, "email": user.email})
     else :
