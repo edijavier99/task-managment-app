@@ -7,6 +7,7 @@ export const DroppableElement = (props) => {
   const [stageContainer, setStageContainer] = useState(props.stageContainer);
 
   useEffect(() => {
+    // Actualizar el estado local cuando cambie el stageContainer desde props
     setStageContainer(props.stageContainer);
   }, [props.stageContainer]);
 

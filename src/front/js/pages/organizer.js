@@ -5,7 +5,6 @@ import { DroppableElement } from "../component/droppableElement";
 import { Context } from "../store/appContext";
 import io from 'socket.io-client';
 
-
 export const Organizer = () => {
   const [newItem,setNewItem] = useState()
   const [projects, setProjects] = useState([])
@@ -20,8 +19,6 @@ export const Organizer = () => {
   const owner_id = localStorage.getItem("user_id")
   const [conectedUser, setConectedUser] = useState([])
   const [socket, setSocket] = useState(null);
-
-
 
   useEffect(() => {
     fetchData();
@@ -41,45 +38,39 @@ export const Organizer = () => {
 //   newSocket.on("receivedConnectedUserInfo", (data) => {
 //     setConectedUser(data)
 // });
-
-
   }, []);
 
-  const fetchData = async () => {
-    try {
-    const data = await getAllProjects(owner_id);
-      setProjects(data.projects)
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  const fetchData = () => {
+        getAllProjects(owner_id)
+        .then(data => {
+            setProjects(data.projects);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+};
 
-  const handleItemClick = async (projectId) => {
-    try {
+const handleItemClick = (projectId) => {
+  try {
       const selectedProject = projects.find(project => project.id === projectId);
       if (selectedProject && selectedProject.steps) {
-        setSelectedProjectId(projectId);
+          setSelectedProjectId(projectId);
 
-        // socket.emit("proyectoId", projectId)
-        // socket.emit("join_project", {project : projectId, username: localStorage.getItem("username") })
+          const allSteps = selectedProject.steps;
+          const pasos = allSteps.filter(step => step.category === 'step');
+          const enProceso = allSteps.filter(step => step.category === 'proccess');
+          const terminado = allSteps.filter(step => step.category === 'finished');
 
-
-        const allSteps = selectedProject.steps;
-        const pasos = allSteps.filter(step => step.category === 'step');
-        const enProceso = allSteps.filter(step => step.category === 'proccess');
-        const terminado = allSteps.filter(step => step.category === 'finished');
-
-        setPasos(pasos);
-        setEnProceso(enProceso);
-        setTerminado(terminado);
+          setPasos(pasos);
+          setEnProceso(enProceso);
+          setTerminado(terminado);
       } else {
-        console.error(`No se encontró el proyecto con id ${projectId} o no tiene la propiedad 'steps'.`);
+          console.error(`No se encontró el proyecto con id ${projectId} o no tiene la propiedad 'steps'.`);
       }
-    } catch (error) {
+  } catch (error) {
       console.error('Error al manejar el clic en el proyecto:', error);
-    }
-  };
-
+  }
+};
 
     const onDragEnd = (result) => {
       const { source, destination } = result;
@@ -164,7 +155,6 @@ export const Organizer = () => {
     } else {
       category = 'step';
     }
-
     fetch(`${process.env.BACKEND_URL}/api/projects/${projectId}/stage/${stepId}`, {
       method: 'PUT',
       headers: {
@@ -173,6 +163,7 @@ export const Organizer = () => {
       body: JSON.stringify({ category }),
     })
     .then((res) => res.json())
+    .then(data=>console.log(data)) 
     .catch((err) => console.log(err));
   };
 
@@ -202,27 +193,31 @@ export const Organizer = () => {
   const handdleAddProjectInput = () =>{
     setAddProject(!addProject)
   }
-
-  const sendProject = async () =>{
-    try{
-      if(projectTitle.length >0){
-      const response = await fetch(`${process.env.BACKEND_URL}api/project`, {
-        method: 'POST',
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ title: projectTitle, owner_id })
-      });
-      console.log(response)
-      fetchData()
-      setProjectTitle("")
-      setAddProject(false)
-    }else
-      alert("Debes añadir un titulo al prpoyecto")
-    } catch(err){
-      throw err;
+  const sendProject = () => {
+    if (projectTitle.length > 0) {
+        return fetch(`${process.env.BACKEND_URL}api/project`, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ title: projectTitle, owner_id })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            fetchData();
+            setProjectTitle("");
+            setAddProject(false);
+        })
+        .catch(error => {
+            throw error;
+        });
+    } else {
+        alert("Debes añadir un titulo al proyecto");
     }
-  }
+};
+
   return (
     <section id="projects">
       <header className="projects-header d-flex align-items-center justify-content-center">
