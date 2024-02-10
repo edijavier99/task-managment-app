@@ -7,7 +7,8 @@ export const CreateAccount = () =>{
     const [email, setEmail] = useState("")
     const [surname, setSurname] = useState("")
     const [password, setPassword] = useState("")
-    const profileImg =" https://picsum.photos/seed/picsum/200/300"
+    const randomNumber = Math.floor(Math.random() * 999);
+    const profileImg =`https://picsum.photos/seed/${randomNumber}/500/600`
     const navigate = useNavigate()
 
     const createUser = () =>{

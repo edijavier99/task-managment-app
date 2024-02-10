@@ -11,7 +11,6 @@ const useScrollHeight = () => {
             const newHeight = Math.max(40, 180 - window.scrollY);
             setHeight(newHeight);
         };
-
         window.addEventListener('scroll', handleScroll);
         return () => {
             window.removeEventListener('scroll', handleScroll);
@@ -36,7 +35,7 @@ export const Profile = () => {
     return (
         <main id="profile">
             <section className="profile-img-container">
-                <img className="img" src={token ? userImage: "https://cdn.pixabay.com/photo/2016/11/29/03/15/man-1867009_1280.jpg" } alt="user-profile-image" />
+                <img className="img" src={token ? userImage : "https://cdn.pixabay.com/photo/2016/11/29/03/15/man-1867009_1280.jpg" } alt="user-profile-image" />
                 <ChangeProfileImg onImageChange={handleImageChange} />
             </section>
             <section className="personal-information dynamic-div" style={{ height: `${height}px` }}>
