@@ -3,13 +3,11 @@ import { Button, Card, CardBody, Collapse } from 'reactstrap';
 import "../../styles/components/dashboard.css"
 import { useNavigate } from "react-router-dom";
 
-
 const PanelButton = ({ panelKey, onClick, label }) => (
   <Button onClick={() => onClick(panelKey)}>
     {label}
   </Button>
 );
-
 const PanelContent = ({ children }) => (
   <Card>
     <CardBody>{children}</CardBody>
@@ -21,11 +19,8 @@ const LazyOrganizerHome = lazy(() => import('./organizerHome.js'));
 const LazyNotes = lazy(() => import('./notes.js'));
 const LazyHistorial = lazy(() => import('./historial.js'));
 
-
 export const Dashboard = () => {
-  const navigate = useNavigate();
   const [openPanel, setOpenPanel] = useState("Hoy");
-
   const togglePanel = (key) => {
     setOpenPanel(openPanel === key ? null : key);
   };
@@ -36,7 +31,6 @@ export const Dashboard = () => {
     { key: 'Notas', content: <LazyNotes /> },
     { key: 'Historial', content: <LazyHistorial /> },
   ];
-
   return (
     <section className="dashboard">
       <div className="titles ">
