@@ -22,22 +22,22 @@ export const Organizer = () => {
 
   useEffect(() => {
     fetchData();
-//       const newSocket = io(`${process.env.BACKEND_URL}`);
-//       setSocket(newSocket)
+      const newSocket = io(`${process.env.BACKEND_URL}`);
+      setSocket(newSocket)
 
-//       newSocket.on("connect", () => {
-//         console.log("Conexión establecida con el servidor Socket.IO");
-//       });
+      newSocket.on("connect", () => {
+        console.log("Conexión establecida con el servidor Socket.IO");
+      });
 
-//       newSocket.on("saludo", (data) => {
-//         console.log(data.mensaje);
-//     });
-//     newSocket.on("proyectoId", (data) => {
-//       console.log(data.mensaje);
-//   });
-//   newSocket.on("receivedConnectedUserInfo", (data) => {
-//     setConectedUser(data)
-// });
+      newSocket.on("saludo", (data) => {
+        console.log(data.mensaje);
+    });
+    newSocket.on("proyectoId", (data) => {
+      console.log(data.mensaje);
+  });
+  newSocket.on("receivedConnectedUserInfo", (data) => {
+    setConectedUser(data)
+});
   }, []);
 
   const fetchData = () => {
@@ -231,7 +231,7 @@ const handleItemClick = (projectId) => {
           </div>
           {actions.showTheItems(projects, handleItemClick, selectedProyjectId)}
       </div>
-      {/* { <div className="bg-light col-md-5 mt-3 m-auto p-2">
+      { <div className="bg-light col-md-5 mt-3 m-auto p-2">
       {conectedUser && conectedUser.length > 0 ? (
           conectedUser.map((user, index) => (
             <span className="m-0 mx-3" key={index}>{user}</span>
@@ -239,7 +239,7 @@ const handleItemClick = (projectId) => {
         ) : (
           <p className="m-0">No hay usuarios conectados</p>
         )}
-      </div>} */}
+      </div>}
       <h2 className="my-4 titlePanel">Panel de proceso</h2>
         <section className="organizer-container">
           <DragDropContext onDragEnd={onDragEnd}>
