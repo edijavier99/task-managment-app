@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useMemo } from "react";
 import "../../styles/components/profile.css";
 import {ChangeProfileImg} from "../component/changeProfileImg"
-
+import { RamdonText } from "./ramdonText";
 
 const useScrollHeight = () => {
     const [height, setHeight] = useState(180);
-
     useEffect(() => {
         const handleScroll = () => {
             const newHeight = Math.max(40, 180 - window.scrollY);
@@ -26,11 +25,9 @@ export const Profile = () => {
     const today = useMemo(() => new Date().toDateString(), []);
     const [userImage, setUserImage] = useState(localStorage.getItem("userImage"));
     const token = localStorage.getItem("jwt-token")
-
     const handleImageChange = (imageUrl) => {
         setUserImage(imageUrl);
     };
-
 
     return (
         <main id="profile">
@@ -42,7 +39,7 @@ export const Profile = () => {
                 <img id="chincheta" src="https://cdn.icon-icons.com/icons2/1632/PNG/512/62931pushpin_109275.png" alt="chincheta" />
                 <p className="user-name">Bienvenido <strong>{username}</strong></p>
                 <blockquote>
-                    <p className="text-center"><i>Ordena tu día, y verás cómo cada pequeño paso se convierte en una danza armoniosa de logros y serenidad.</i></p>
+                   <RamdonText/>
                     <cite>Anónimo</cite>
                 </blockquote>
                 <p className="todayDate">Fecha de hoy: <span className="date">{today}</span></p>

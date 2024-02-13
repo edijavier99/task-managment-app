@@ -2,14 +2,11 @@ import React, { useContext, useEffect, useState } from "react";
 import "../../styles/home.css";
 import { Profile } from "../component/profile";
 import { Dashboard } from "../component/dashboard";
-import { useNavigate } from "react-router-dom";
 import { Navbar } from "../component/navbar";
 
 export const Home = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
-    const navigate = useNavigate();
-
     let delayTimer;
 
     const getFilteredSearch = (query) => {
