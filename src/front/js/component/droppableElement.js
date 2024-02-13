@@ -15,7 +15,6 @@ export const DroppableElement = (props) => {
     setAddCart(false);
     setStepTitle("");
   };
-
   const submitAddCart = () => {
     if (stepTitle.trim() !== "") {
       props.onTextareaChange(stepTitle, props.droppableId);

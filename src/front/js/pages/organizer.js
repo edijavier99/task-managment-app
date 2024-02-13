@@ -19,6 +19,7 @@ export const Organizer = () => {
   const owner_id = localStorage.getItem("user_id")
   const [conectedUser, setConectedUser] = useState([])
   const [socket, setSocket] = useState(null);
+  const username = localStorage.getItem("username")
 
   useEffect(() => {
     fetchData();
@@ -55,6 +56,10 @@ const handleItemClick = (projectId) => {
       const selectedProject = projects.find(project => project.id === projectId);
       if (selectedProject && selectedProject.steps) {
           setSelectedProjectId(projectId);
+          socket.emit('join_project', {
+            project: projectId,  // Datos del proyecto al que te estás uniendo
+            username:  username   // Nombre de usuario que se está uniendo al proyecto
+        });
 
           const allSteps = selectedProject.steps;
           const pasos = allSteps.filter(step => step.category === 'step');
