@@ -8,7 +8,8 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "webpack-dev-server --config webpack.dev.js --port 3000",
-		"build": "webpack --config webpack.prod.js"
+		"build": "webpack --config webpack.prod.js",
+		"analyze": "webpack-bundle-analyzer 'build/static/js/*.js'"
 	},
 	"author": {
 		"name": "Alejandro Sanchez",
@@ -54,6 +55,7 @@
 		"remote-origin-url": "^2.0.0",
 		"style-loader": "^3.3.1",
 		"webpack": "^5.65.0",
+		"webpack-bundle-analyzer": "^4.10.1",
 		"webpack-cli": "^4.9.1",
 		"webpack-dev-server": "^4.6.0",
 		"webpack-merge": "^5.8.0"
@@ -80,8 +82,6 @@
 		"react": "^16.8.4",
 		"react-beautiful-dnd": "^13.1.1",
 		"react-datepicker": "^4.25.0",
-		"react-dnd": "^16.0.1",
-		"react-dnd-html5-backend": "^16.0.1",
 		"react-dom": "^16.8.4",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^6.3.0",
