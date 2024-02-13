@@ -88,6 +88,7 @@ def modify_todo(id):
 
     return jsonify({"msg": f"{update_todo.title} Todo updated"}),200
 
+
 @api.route('/completedTodo/<int:id>', methods=['PUT'])
 def mark_todo_as_completed(id):
     todo = Todo.query.get_or_404(id)
@@ -97,9 +98,9 @@ def mark_todo_as_completed(id):
 
     return jsonify({"msg": f"{todo.title} marcada como completada"}), 200
 
-@api.route('/completed-todos', methods=['GET'])
-def get_completed_todos():
-    completed_todos = Todo.query.filter_by(complete=True).all()
+@api.route('/user/<int:id>/completed-todos', methods=['GET'])
+def get_completed_todos(id):
+    completed_todos = Todo.query.filter_by(owner_id=id, complete=True).all()
     return jsonify([todo.serialize() for todo in completed_todos])
 
 #Routes for Notes

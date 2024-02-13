@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import "../../styles/components/historial.css"
 
 const Historial = () =>{
-
+    const user = localStorage.getItem("user_id")
     const [completedTask, setCompletedTask] = useState([])
 
     const getCompletedTasks = () =>{
-        fetch(process.env.BACKEND_URL + 'api/completed-todos' , {
+        fetch(`${process.env.BACKEND_URL}api/user/${user}/completed-todos`, {
             method: 'GET',
             headers: {
                 "Content-Type" : "Application/json"
@@ -14,6 +14,7 @@ const Historial = () =>{
         })
         .then(res => res.json())
         .then(data =>{
+            console.log(data);
             setCompletedTask(data)
         })
         .catch(err=>console.log(err))
