@@ -24,6 +24,8 @@ class User(db.Model):
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     profileImg = db.Column(db.String(400),nullable =True)
+    verification_token = db.Column(db.String(120), unique=True, nullable=True)
+    email_verified = db.Column(db.Boolean, default=False)
     
     # Many-to-Many relationship with Project
     projects = db.relationship("Project", secondary=user_project_association, back_populates="members")
@@ -44,7 +46,9 @@ class User(db.Model):
             "projects": [project.id for project in self.projects],
             "todos": [todo.serialize() for todo in self.todos],
             "notes": [note.serialize() for note in self.notes],
-            "profileImg" : self.profileImg
+            "profileImg" : self.profileImg,
+            "verification_token" : self.verification_token,
+            "email_verified": self.email_verified
         }
 
 class Project(db.Model):

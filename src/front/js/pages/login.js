@@ -32,7 +32,6 @@ export const Login = () =>{
             console.log(err)
         })
     }
-
     return(
         <div id="login">
             <section className="login">

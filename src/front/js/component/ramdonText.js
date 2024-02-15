@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-
 export const RamdonText = () =>{
     const [text,setText] = useState()
     useEffect(()=>{

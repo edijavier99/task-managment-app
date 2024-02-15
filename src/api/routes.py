@@ -14,14 +14,15 @@ from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
     get_jwt_identity
 )
+from api.verification_token import generate_verification_token
+from api.email import send_verification_email
 
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
 
-
 # Routes for Todo
-
+    
 @api.route('<int:user_id>/todo', methods=['GET'])
 def get_all_tasks(user_id):
     all_tasks = Todo.query.all()
@@ -207,11 +208,24 @@ def create_user():
             "msg": "El usuario ya existe, inicia sesión"
         }
         return jsonify(response_body), 400
-        
-    new_user = User(name = data["name"], surname = data["surname"], email = data["email"],profileImg = data["profileImg"], password = data["password"])
+
+    verification_token = generate_verification_token()
+    new_user = User(name = data["name"], surname = data["surname"], email = data["email"],profileImg = data["profileImg"], password = data["password"],verification_token= verification_token,email_verified=False)
     db.session.add(new_user)
     db.session.commit()
+    send_verification_email(new_user.email, new_user.verification_token) 
+
     return jsonify({"msg": f"{new_user.name} added"}),200
+
+@api.route('/verify/<token>', methods=['GET'])
+def verify_email(token):
+    user = User.query.filter_by(verification_token=token).first()
+    if user:        
+        user.email_verified = True
+        db.session.commit()
+        return jsonify({"redirect": "/success"}), 200
+    else:
+        return jsonify({"msg": "Invalid or expired verification token"}), 400
 
 @api.route('/delete-user/<int:userId>/' , methods=['DELETE'])
 def delete_user(userId):
