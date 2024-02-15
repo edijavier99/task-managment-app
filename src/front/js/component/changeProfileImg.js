@@ -2,8 +2,7 @@ import React, { useContext, useState } from "react";
 import { useRef } from "react";
 import "../../styles/components/changeProfileImg.css";
 import { Context } from "../store/appContext";
-
- 
+import Swal from 'sweetalert2';
 
 export const ChangeProfileImg = ({ onImageChange }) =>{
     const presetKey = "ptwmh2mt";
@@ -19,7 +18,11 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
         const file = e.target.files[0];
     
         if (file && file.type !== 'image/jpeg') {
-          alert('Only .jpg format is allowed.');
+          Swal.fire({
+            icon: 'error',
+            title: 'oppss...',
+            text: 'Only .jpg format is allowed.'            
+          })
           return;
         }
         setImage(file);
@@ -28,7 +31,11 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
     const handleUpload =  async (e)=>{
         e.preventDefault(); 
         if (!image) {
-            alert('Please select an image before uploading.');
+          Swal.fire({
+            icon: 'error',
+            title: 'oppss...',
+            text: 'Please select an image before uploading.'            
+          });
             return;
         }
         try {
@@ -36,7 +43,11 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
             sendDataToAPI(imageUrl);
           } catch (error) {
             console.error('Error uploading:', error);
-            alert('Error uploading image. Please try again.');
+            Swal.fire({
+              icon: 'error',
+              title: 'oppss...',
+              text: 'Error uploading image. Please try again.'            
+            });
         }
     } 
 
@@ -51,7 +62,6 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
           })
           .then((response) => response.json())
           .then((data) => {
-            console.log(data);
             if (data.secure_url) {
               resolve(data.secure_url);
             } else {
@@ -59,7 +69,6 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
             }
           })
           .catch((error) => {
-            console.error(error);
             reject(error);
           });
         });
@@ -84,7 +93,11 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
                 console.log(err);
             })
             }else  {
-              alert('Image not uploaded')
+              Swal.fire({
+                icon: 'error',
+                title: 'oppss...',
+                text: 'Image not uploaded.'            
+              });
             }
         };
     
@@ -97,7 +110,11 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
       })
       .then(response => response.json())
       .then(data => {
-        alert(data.msg)
+        Swal.fire({
+          icon: 'error',
+          title: 'oppss...',
+          text: data.msg         
+        });
         actions.logOut()
       })
       .catch(err => console.log(err))

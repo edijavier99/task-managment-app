@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/components/create-account.css"
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 export const CreateAccount = () =>{
     const [name, setName] = useState("")
@@ -24,7 +25,11 @@ export const CreateAccount = () =>{
                 navigate('/login')}
             else {
                 response.json().then(data => {
-                    alert(data.msg);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'oppss...',
+                        text: data.msg    
+                      })
                 })
             }
         })

@@ -5,6 +5,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 import { Context } from "../store/appContext";
 import  { forwardRef } from 'react';
 import { SingleTodo } from "../component/singleTodo";
+import Swal from 'sweetalert2';
 
 export const ToDoList = () =>{
     const [title, setTitle] = useState('');
@@ -14,8 +15,6 @@ export const ToDoList = () =>{
     const [completedTodos, setCompletedTodos] = useState([])
     const [selected, setSelected] = useState(false)
     const owner_id= localStorage.getItem("user_id")
-
-
 
     const handleCheckClick = (id) => {
       setCompletedTodos((prevCompleted) => [...prevCompleted, id]);
@@ -49,9 +48,17 @@ export const ToDoList = () =>{
 
     const createTodo = () =>{
         if (!date){
-            alert("Introduce una fecha antes de añadir ")
+            Swal.fire({
+                icon: 'error',
+                title: 'oppss...',
+                text:"Introduce una fecha antes de añadir"
+              })
         }else if(!title){
-            alert("Introduce una tarea antes de añadir")
+            Swal.fire({
+                icon: 'error',
+                title: 'oppss...',
+                text: "Introduce una tarea antes de añadir"
+              })
         }else {
             const newTodo = { title, date };
             setTodos([...todos, newTodo]);

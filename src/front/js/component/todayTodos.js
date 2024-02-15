@@ -6,10 +6,11 @@ const TodayTodos = () => {
     const navigate = useNavigate();
     const [todos, setTodos] = useState([]);
     const [completedTodos, setCompletedTodos] = useState([]);
-    const token = localStorage.getItem("jtw-token")
+    const token = localStorage.getItem("jwt-token")
+    const user_id = localStorage.getItem("user_id")
 
     const getAllTodos = () => {
-        fetch(`${process.env.BACKEND_URL}api/${localStorage.getItem("user_id")}/todo`, {
+        fetch(`${process.env.BACKEND_URL}api/${user_id}/todo`, {
             method: 'GET',
             headers: {
                 "Content-type": "application/json"
@@ -22,6 +23,8 @@ const TodayTodos = () => {
             return response.json();
         })
         .then(data => {
+            console.log("holaaaaaaa");
+            console.log(data);
             const incompleteTasks = data.filter(task => !task.complete);
             const today = new Date().toLocaleDateString();
             const todayTodos = incompleteTasks.filter(task => new Date(task.date).toLocaleDateString() === today);

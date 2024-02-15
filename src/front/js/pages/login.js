@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../../styles/components/create-account.css"
 import { useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 export const Login = () =>{
     const [email,setEmail] = useState("")
@@ -18,7 +19,10 @@ export const Login = () =>{
         .then(res =>res.json())
         .then(data =>{
            if(!data.msg){
-            alert(data.loginOK)
+            Swal.fire({
+                icon: 'success',
+                text: data.loginOK 
+              })
             localStorage.setItem('jwt-token', data.token);
             localStorage.setItem('user_id', data.user_id);
             localStorage.setItem('username', data.name);
@@ -26,7 +30,14 @@ export const Login = () =>{
             navigate("/")
            }
            else
-            alert(data.msg)
+           Swal.fire({
+            icon: 'error',
+            title: 'oppss...',
+            text: data.msg,
+            customClass: {
+                popup: 'custom-popup-class'
+            }           
+        });
         })
         .catch(err =>{
             console.log(err)

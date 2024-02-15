@@ -5,13 +5,8 @@ import "../../styles/components/emailverification.css";
 
 const EmailVerification = () => {
   const { token } = useParams();
-  console.log('Token from URL:', token);
-
   useEffect(() => { 
-    console.log("holaaaaaaaaa");
-
     const verifyEmail = async () => {
-        console.log('I am here');
       try {
         const response = await fetch(`${process.env.BACKEND_URL}api/verify/${token}`, {
           method: 'GET',

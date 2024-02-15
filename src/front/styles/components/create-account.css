@@ -59,9 +59,12 @@ input[type="text"], input[type="email"], input[type="password"]{
     display: flex;
     justify-content: center;
 }
-
 @media (max-width: 470px){
     .create-account , .login{
         width: 390px;
+    }
+    .custom-popup-class{
+        width:80%;
+        height: 400px
     }
 }

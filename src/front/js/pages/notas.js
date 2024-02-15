@@ -1,6 +1,7 @@
 import React, { useState,useEffect, useContext } from "react";
 import "../../styles/pages/notas.css"
 import { Context } from "../store/appContext";
+import Swal from 'sweetalert2';
 
 export const Notas = () =>{
     const [description, setDescription] = useState("")
@@ -10,13 +11,19 @@ export const Notas = () =>{
     const date = today.toLocaleDateString()
     const owner_id= localStorage.getItem("user_id")
 
-    
     const addNote = () =>{
-
         if(!title){
-            alert("Inserta un titulo para la nota")
+            Swal.fire({
+                icon: 'error',
+                title: 'oppss...',
+                text: "Inserta un titulo para la nota"
+              })            
         }else if(!description){
-            alert("Inserta una description para la nota")
+            Swal.fire({
+                icon: 'error',
+                title: 'oppss...',
+                text: "Inserta una description para la nota"
+              })
         }else{
             fetch(process.env.BACKEND_URL + 'api/add-notes' , {
                 method: 'POST',
@@ -62,7 +69,6 @@ export const Notas = () =>{
             <button className="btn btn-dark"
                     id="saveNoteBtn"
                     onClick={()=>{
-                        console.log("Before Add Note - Title:", title, "Description:", description);
                         addNote()             
                     }}
             >Guardar</button>

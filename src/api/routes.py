@@ -261,11 +261,20 @@ def user_login():
         return jsonify(response_body), 404
 
     if user and user.password == password:
-        logged = "Bienvenido"
-        access_token = create_access_token(identity=user.id)
-        return jsonify({"loginOK": logged, "profileImg":user.profileImg, "token": access_token, "user_id": user.id, "name": user.name, "email": user.email})
-    else :
-        return jsonify({"msg" : "Contraseña Incorrecta"})
+        if user.email_verified: 
+            logged = "Successfully logged"
+            access_token = create_access_token(identity=user.id)
+            return jsonify({"loginOK": logged, "token": access_token, "user_id": user.id, "username": user.name, "email": user.email, "profileImg": user.profileImg, "email_verified": user.email_verified})
+        else:
+            response_body = {
+                "msg": "Email no verificado. Por favor verifica el email antes de iniciar sesión."
+            }
+            return jsonify(response_body), 403
+    else:
+        response_body = {
+            "msg": "Incorrect password"
+        }
+        return jsonify(response_body), 400
     
 
 @api.route('/search', methods=['GET'])
