@@ -21,36 +21,35 @@ static_file_dir = os.path.join(os.path.dirname(
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
+# socketio = SocketIO(app, cors_allowed_origins="*") 
+# connected_users = {}
+# @socketio.on('connect')
+# def handle_connect():
+#     client_id = request.sid
+#     print(f'Cliente conectado al servidor Socket.IO. ID del socket: {client_id}')
+#     emit('saludo', {'mensaje': "saludos del el backend"})
 
-socketio = SocketIO(app, cors_allowed_origins="*") 
-connected_users = {}
-@socketio.on('connect')
-def handle_connect():
-    client_id = request.sid
-    print(f'Cliente conectado al servidor Socket.IO. ID del socket: {client_id}')
-    emit('saludo', {'mensaje': "saludos del el backend"})
+# @socketio.on('disconnect')
+# def handle_disconnet():
+#     client_id = request.sid
+#     print(f"Cliente desconectado {client_id}")
 
-@socketio.on('disconnect')
-def handle_disconnet():
-    client_id = request.sid
-    print(f"Cliente desconectado {client_id}")
+# @socketio.on('proyectoId')
+# def prpyectoId(data):
+#     emit('proyectoId', {'mensaje': data})
 
-@socketio.on('proyectoId')
-def prpyectoId(data):
-    emit('proyectoId', {'mensaje': data})
+# @socketio.on('join_project')
+# def prpyectoId(data):
+#     room = data["project"]
+#     username = data["username"]
+#     join_room(room)
 
-@socketio.on('join_project')
-def prpyectoId(data):
-    room = data["project"]
-    username = data["username"]
-    join_room(room)
-
-    users_for_room = connected_users.setdefault(room, [])
+#     users_for_room = connected_users.setdefault(room, [])
     
-    if username not in users_for_room:
-        users_for_room.append(username)  
-    print(f'Usuario {username} se unió a la sala {room}')    
-    emit('receivedConnectedUserInfo', users_for_room, room=room)
+#     if username not in users_for_room:
+#         users_for_room.append(username)  
+#     print(f'Usuario {username} se unió a la sala {room}')    
+#     emit('receivedConnectedUserInfo', users_for_room, room=room)
    
 
 
@@ -114,4 +113,4 @@ def serve_any_other_file(path):
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3001))
     # Usa socketio.run() en lugar de app.run()
-    socketio.run(app, host='0.0.0.0', port=PORT, debug=True)
+    app.run(app, host='0.0.0.0', port=PORT, debug=True)
