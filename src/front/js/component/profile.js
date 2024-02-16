@@ -22,7 +22,7 @@ const useScrollHeight = () => {
 export const Profile = () => {
     const height = useScrollHeight();
     const username = localStorage.getItem("username");
-    let usernameCapitalized = username.charAt(0).toUpperCase() + username.slice(1);
+    const usernameCapitalized = username ? username.charAt(0).toUpperCase() + username.slice(1) : ""; 
     const today = useMemo(() => new Date().toDateString(), []);
     const [userImage, setUserImage] = useState(localStorage.getItem("userImage"));
     const token = localStorage.getItem("jwt-token")
@@ -38,7 +38,7 @@ export const Profile = () => {
             </section>
             <section className="personal-information dynamic-div" style={{ height: `${height}px` }}>
                 <img id="chincheta" src="https://cdn.icon-icons.com/icons2/1632/PNG/512/62931pushpin_109275.png" alt="chincheta" />
-                <p className="user-name">Bienvenido <strong>{ token ? usernameCapitalized : ""}</strong></p>
+                <p className="user-name">Bienvenido <strong>{ usernameCapitalized}</strong></p>
                 <blockquote>
                    <RamdonText/>
                     <cite>Anónimo</cite>
