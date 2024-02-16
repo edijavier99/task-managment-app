@@ -23,8 +23,6 @@ const TodayTodos = () => {
             return response.json();
         })
         .then(data => {
-            console.log("holaaaaaaa");
-            console.log(data);
             const incompleteTasks = data.filter(task => !task.complete);
             const today = new Date().toLocaleDateString();
             const todayTodos = incompleteTasks.filter(task => new Date(task.date).toLocaleDateString() === today);
@@ -89,8 +87,9 @@ const TodayTodos = () => {
     return (
         <section>
             <h4>Tareas que tienes pendientes para hoy</h4>
-            <button className="btn goButton" onClick={() => navigate("/todo-list")}>Añadir Tareas</button>
-
+            <button className="btn goButton" onClick={() => {
+                token ? navigate("/todo-list") : navigate("/login")
+            }}>Añadir Tareas</button>
             <ul id="todayList">
                 {showTodaysTodos()}
             </ul>

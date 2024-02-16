@@ -5,7 +5,8 @@ import "../../styles/components/notes.css";
 const Notes = () => {
     const [notes, setNotes] = useState([]);
     const navigate = useNavigate();
-
+    const token = localStorage.getItem("jwt-token")
+    
     const getAllNotes = () => {
         fetch(`${process.env.BACKEND_URL}api/${localStorage.getItem("user_id")}/notes`, {
             method: 'GET',
@@ -27,7 +28,6 @@ const Notes = () => {
         });
     };
 
-    // Llama a getAllNotes cuando el componente se monta
     useEffect(() => {
         getAllNotes();
     }, []);
@@ -49,7 +49,9 @@ const Notes = () => {
     return (
         <section className="flex flex-column text-center">
             <h2 className="">Tus notas...📝</h2>
-            <button className="btn goButton my-4" onClick={() => navigate("/notas")}>Añadir Notas</button>
+            <button className="btn goButton my-4" onClick={() =>{
+                token ? navigate("/notas") : navigate("/login")
+            }}>Añadir Notas</button>
             <ul id="notesList">
                 {showAllNotes()}
             </ul>

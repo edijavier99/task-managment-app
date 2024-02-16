@@ -1,7 +1,6 @@
 import React, { useState, Suspense,lazy } from "react";
 import { Button, Card, CardBody, Collapse } from 'reactstrap';
 import "../../styles/components/dashboard.css"
-import { useNavigate } from "react-router-dom";
 
 const PanelButton = ({ panelKey, onClick, label }) => (
   <Button onClick={() => onClick(panelKey)}>
