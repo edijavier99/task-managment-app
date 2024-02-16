@@ -8,6 +8,7 @@ const TodayTodos = () => {
     const [completedTodos, setCompletedTodos] = useState([]);
     const token = localStorage.getItem("jwt-token")
     const user_id = localStorage.getItem("user_id")
+    
 
     const getAllTodos = () => {
         fetch(`${process.env.BACKEND_URL}api/${user_id}/todo`, {
@@ -27,6 +28,8 @@ const TodayTodos = () => {
             const today = new Date().toLocaleDateString();
             const todayTodos = incompleteTasks.filter(task => new Date(task.date).toLocaleDateString() === today);
             setTodos(todayTodos);
+            sendReminder(incompleteTasks)
+
         })
         .catch(error => {
             console.error("Error fetching todos:", error);
@@ -66,6 +69,19 @@ const TodayTodos = () => {
             getAllTodos();
         }
     }, []);
+
+    const sendReminder = (taskForReminder) =>{
+        fetch(`${process.env.BACKEND_URL}api/user/${user_id}/task-reminder`,{
+            method: "POST",
+            headers: {
+                "Content-Type" : "Application/json"
+            },
+            body : JSON.stringify({taskForReminder})
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
+    }
 
     const showTodaysTodos = () => {
         return todos.map((item, index) => {

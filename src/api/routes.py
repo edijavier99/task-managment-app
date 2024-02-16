@@ -7,15 +7,15 @@ from api.models import db, User,Todo,Notes,Project,Step,myEnum
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from datetime import datetime,timedelta
-import smtplib
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+import schedule
+import time
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
     get_jwt_identity
 )
 from api.verification_token import generate_verification_token
 from api.email import send_verification_email
+from api.reminder import sendTaskReminder
 
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
@@ -423,28 +423,19 @@ def update_user(id):
 
     return jsonify({"msg": "User's prrofile image updated"}), 200
 
+@api.route('/user/<int:id>/task-reminder', methods=['POST'])
+def task_reminder(id):
+    try:
+        user = User.query.get(id)
+        tomorrow_date = datetime.now() + timedelta(days=1)
+        tasks_for_tomorrow = Todo.query.filter_by(owner_id=user.id, date=tomorrow_date.date()).all()
+        task_titles = [task.title for task in tasks_for_tomorrow]
+        def send_daily_reminder(user_email, task_titles):
+            sendTaskReminder(user_email, "Tareas para mañana", "\n".join(task_titles))
 
-
-# def send_mail(task):
-#     smtp_server = "smtp.gmail.com"
-#     smtp_port = 587
-#     smtp_username = "eddy.javiieer@gmail.com"
-#     smtp_password = "edijavier"
-
-
-
-# @api.route('/verify-tasks', methods=['GET'])
-# def verify_tasks():
-#     with current_app.app_context():
-
-#         fecha_manana = datetime.now() + timedelta(days=1)
-#         all_tasks = Todo.query.all()
-#         all_tasks = list( map(lambda x : x.serialize(), all_tasks))
-#         tasks_for_tomorrow = [ task for task in all_tasks if task["date"] == fecha_manana.date()]
-
-#         for tarea in tasks_for_tomorrow :
-#             send_mail(tarea)
-
-#         return jsonify(print(tasks_for_tomorrow ))
-    
-
+        schedule.every().day.at("18:00").do(send_daily_reminder, user_email=user.email, task_titles=task_titles)
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
