@@ -38,7 +38,7 @@ export const Profile = () => {
             </section>
             <section className="personal-information dynamic-div" style={{ height: `${height}px` }}>
                 <img id="chincheta" src="https://cdn.icon-icons.com/icons2/1632/PNG/512/62931pushpin_109275.png" alt="chincheta" />
-                <p className="user-name">Bienvenido <strong>{usernameCapitalized}</strong></p>
+                <p className="user-name">Bienvenido <strong>{ token ? usernameCapitalized : ""}</strong></p>
                 <blockquote>
                    <RamdonText/>
                     <cite>Anónimo</cite>
