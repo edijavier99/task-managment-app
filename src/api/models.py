@@ -54,7 +54,7 @@ class User(db.Model):
 class Project(db.Model):
     __tablename__ = "project"
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(70), nullable=False)
+    title = db.Column(db.String(120), nullable=False)
     steps = db.relationship("Step", back_populates="project")
     
     # Many-to-Many relationship with User
@@ -132,7 +132,7 @@ class Notes(db.Model):
 class Step(db.Model):
     __tablename__ = "step"
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(70), nullable=False)
+    title = db.Column(db.String(14<0), nullable=False)
     project_id = db.Column(db.Integer, ForeignKey('project.id'))
     project = db.relationship("Project", back_populates="steps")
     category = db.Column(Enum(myEnum))

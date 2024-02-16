@@ -7,7 +7,6 @@ export const DroppableElement = (props) => {
   const [stageContainer, setStageContainer] = useState(props.stageContainer);
 
   useEffect(() => {
-    // Actualizar el estado local cuando cambie el stageContainer desde props
     setStageContainer(props.stageContainer);
   }, [props.stageContainer]);
 
@@ -16,10 +15,8 @@ export const DroppableElement = (props) => {
     setStepTitle("");
   };
   const submitAddCart = () => {
-    if (stepTitle.trim() !== "") {
       props.onTextareaChange(stepTitle, props.droppableId);
       setStepTitle("");
-    }
   };
 
   return (
@@ -57,7 +54,7 @@ export const DroppableElement = (props) => {
       </Droppable>
       <div className={`addCartBoard ${addCart ? "" : "d-none"}`}>
         <textarea
-          rows={3}
+          rows={5}
           placeholder="Introduce un titulo a esta carta..."
           onChange={(e) => setStepTitle(e.target.value)}
           value={stepTitle}
