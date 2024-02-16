@@ -20,8 +20,7 @@ flask-admin = "*"
 typing-extensions = "*"
 flask_jwt_extended = "*"
 flask-socketio = "*"
-flask-mail = "*"
-schedule = "*"
+apscheduler = "*"
 
 [requires]
 python_version = "3.10"

@@ -49,9 +49,9 @@ const Notes = () => {
     return (
         <section className="flex flex-column text-center">
             <h2 className="">Tus notas...📝</h2>
-            <button className="btn goButton my-4" onClick={() =>{
-                token ? navigate("/notas") : navigate("/login")
-            }}>Añadir Notas</button>
+            <a className="btn goButton" href={token ? "/notas" : "/login"}>
+                Añadir Notas
+             </a>
             <ul id="notesList">
                 {showAllNotes()}
             </ul>

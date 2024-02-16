@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "33db32b26eeccdf4ee02925fa3dac13d090d2368ff56744c0c217b9f2ae0a253"
+            "sha256": "7a9c0e2c43c05d33858df954ddd1ed50b2fb1db9c82dbd28ff3262dccfc63477"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -23,6 +23,14 @@
             ],
             "markers": "python_version >= '3.8'",
             "version": "==1.13.1"
+        },
+        "apscheduler": {
+            "hashes": [
+                "sha256:e6df071b27d9be898e486bc7940a7be50b4af2e9da7c08f0744a96d4bd4cef4a",
+                "sha256:fb91e8a768632a4756a585f79ec834e0e27aad5860bac7eaa523d9ccefd87661"
+            ],
+            "index": "pypi",
+            "version": "==3.10.4"
         },
         "bidict": {
             "hashes": [
@@ -94,13 +102,6 @@
             ],
             "index": "pypi",
             "version": "==4.6.0"
-        },
-        "flask-mail": {
-            "hashes": [
-                "sha256:22e5eb9a940bf407bcf30410ecc3708f3c56cc44b29c34e1726fe85006935f41"
-            ],
-            "index": "pypi",
-            "version": "==0.9.1"
         },
         "flask-migrate": {
             "hashes": [
@@ -422,6 +423,13 @@
             "markers": "python_version >= '3.8'",
             "version": "==5.11.1"
         },
+        "pytz": {
+            "hashes": [
+                "sha256:2a29735ea9c18baf14b448846bde5a48030ed267578472d8955cd0e7443a9812",
+                "sha256:328171f4e3623139da4983451950b28e95ac706e13f3f2630a879749e7a8b319"
+            ],
+            "version": "==2024.1"
+        },
         "pyyaml": {
             "hashes": [
                 "sha256:04ac92ad1925b2cff1db0cfebffb6ffc43457495c9b3c39d3fcae417d7125dc5",
@@ -478,14 +486,6 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==6.0.1"
-        },
-        "schedule": {
-            "hashes": [
-                "sha256:14cdeb083a596aa1de6dc77639a1b2ac8bf6eaafa82b1c9279d3612823063d01",
-                "sha256:843bc0538b99c93f02b8b50e3e39886c06f2d003b24f48e1aa4cadfa3f341279"
-            ],
-            "index": "pypi",
-            "version": "==1.2.1"
         },
         "simple-websocket": {
             "hashes": [
@@ -557,6 +557,14 @@
             ],
             "index": "pypi",
             "version": "==4.9.0"
+        },
+        "tzlocal": {
+            "hashes": [
+                "sha256:49816ef2fe65ea8ac19d19aa7a1ae0551c834303d5014c6d5a62e4cbda8047b8",
+                "sha256:8d399205578f1a9342816409cc1e46a93ebd5755e39ea2d85334bea911bf0e6e"
+            ],
+            "markers": "python_version >= '3.8'",
+            "version": "==5.2"
         },
         "urllib3": {
             "hashes": [

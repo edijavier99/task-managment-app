@@ -7,8 +7,12 @@ from api.models import db, User,Todo,Notes,Project,Step,myEnum
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
 from datetime import datetime,timedelta
-import schedule
-import time
+from apscheduler.schedulers.background import BackgroundScheduler
+from apscheduler.triggers.cron import CronTrigger
+
+scheduler = BackgroundScheduler()
+scheduler.start()
+
 from flask_jwt_extended import (
     JWTManager, jwt_required, create_access_token,
     get_jwt_identity
@@ -28,12 +32,6 @@ def get_all_tasks(user_id):
     all_tasks = Todo.query.all()
     filtered_tasks_serialized = [task.serialize() for task in all_tasks if task.owner_id == user_id]
     return jsonify(filtered_tasks_serialized),200
-
-@api.route('/todo/<int:id>', methods= ['GET'])
-def get_single_task(id):
-    single_task = Todo.query.get(id)
-    return jsonify(single_task),200
-
 
 
 @api.route('/add-todo', methods= ['POST'])
@@ -262,7 +260,7 @@ def user_login():
 
     if user and user.password == password:
         if user.email_verified: 
-            logged = "Successfully logged"
+            logged = "Welcome!"
             access_token = create_access_token(identity=user.id)
             return jsonify({"loginOK": logged, "token": access_token, "user_id": user.id, "username": user.name, "email": user.email, "profileImg": user.profileImg, "email_verified": user.email_verified})
         else:
@@ -366,7 +364,7 @@ def create_step_for_project(proyecto_id):
     })
 
 @api.route('/projects/<int:proyecto_id>/stage/<int:paso_id>', methods=['PUT'])
-def actualizar_categoria_paso(proyecto_id, paso_id):
+def actualizar_categoria_paso(paso_id):
     paso = Step.query.filter_by(id=paso_id).first_or_404()
     nueva_categoria = request.json.get('category')
     if nueva_categoria not in myEnum.__members__:
@@ -430,12 +428,13 @@ def task_reminder(id):
         tomorrow_date = datetime.now() + timedelta(days=1)
         tasks_for_tomorrow = Todo.query.filter_by(owner_id=user.id, date=tomorrow_date.date()).all()
         task_titles = [task.title for task in tasks_for_tomorrow]
+
         def send_daily_reminder(user_email, task_titles):
             sendTaskReminder(user_email, "Tareas para mañana", "\n".join(task_titles))
+        trigger = CronTrigger(hour=18, minute=00)
+        scheduler.add_job(send_daily_reminder, trigger, args=[user.email, task_titles])
 
-        schedule.every().day.at("18:00").do(send_daily_reminder, user_email=user.email, task_titles=task_titles)
-        while True:
-            schedule.run_pending()
-            time.sleep(1)
+        return 'Task reminder set up successfully', 200
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500

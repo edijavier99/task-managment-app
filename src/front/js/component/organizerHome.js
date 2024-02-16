@@ -7,9 +7,9 @@ const OrganizerHome = () =>{
     return(
     <section className="flex flex-column text-center">
         <h2 className="">Organizador</h2>
-        <button className="btn goButton my-4" onClick={()=>{
-            token ? navigate("/organizador") : navigate("/login")
-        }}>Añadir Proyecto</button>
+        <a className="btn goButton" href={token ? "/organizador" : "/login"}>
+            Añadir Proyecto
+        </a>
     </section>
     )
 }

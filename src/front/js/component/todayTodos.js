@@ -28,8 +28,10 @@ const TodayTodos = () => {
             const today = new Date().toLocaleDateString();
             const todayTodos = incompleteTasks.filter(task => new Date(task.date).toLocaleDateString() === today);
             setTodos(todayTodos);
-            sendReminder(incompleteTasks)
-
+            const currentHour = new Date().getHours();
+            const currentMinutes = new Date().getMinutes();
+                sendReminder(todayTodos);
+            
         })
         .catch(error => {
             console.error("Error fetching todos:", error);
