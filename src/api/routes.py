@@ -9,7 +9,6 @@ from flask_cors import CORS
 from datetime import datetime,timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
-
 scheduler = BackgroundScheduler()
 scheduler.start()
 
@@ -364,7 +363,7 @@ def create_step_for_project(proyecto_id):
     })
 
 @api.route('/projects/<int:proyecto_id>/stage/<int:paso_id>', methods=['PUT'])
-def actualizar_categoria_paso(paso_id):
+def actualizar_categoria_paso(proyecto_id,paso_id):
     paso = Step.query.filter_by(id=paso_id).first_or_404()
     nueva_categoria = request.json.get('category')
     if nueva_categoria not in myEnum.__members__:
