@@ -31,7 +31,6 @@ const TodayTodos = () => {
             const currentHour = new Date().getHours();
             const currentMinutes = new Date().getMinutes();
                 sendReminder(todayTodos);
-            
         })
         .catch(error => {
             console.error("Error fetching todos:", error);

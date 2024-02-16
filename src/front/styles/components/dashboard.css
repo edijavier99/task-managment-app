@@ -21,8 +21,13 @@
     border-radius: 0 !important;
 }
 .goButton{
-    width: 45% !important
+    width: 45% !important;
+    color: white;
+    background-color: black;
+    border-radius : none !important;
+    margin-bottom: 10px;
 }
+
 @media (max-width: 470px){
 .titles{
     height: 40px;
