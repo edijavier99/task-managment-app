@@ -104,7 +104,7 @@ const TodayTodos = () => {
             <h4>Tasks remaining for today</h4>
             <button className="btn goButton" onClick={() => {
                 token ? navigate("/todo-list") : navigate("/login")
-            }}>Añadir Tareas</button>
+            }}>Add Tasks</button>
             <ul id="todayList">
                 {showTodaysTodos()}
             </ul>

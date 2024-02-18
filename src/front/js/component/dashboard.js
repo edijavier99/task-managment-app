@@ -19,7 +19,7 @@ const LazyNotes = lazy(() => import('./notes.js'));
 const LazyHistorial = lazy(() => import('./historial.js'));
 
 export const Dashboard = () => {
-  const [openPanel, setOpenPanel] = useState("Hoy");
+  const [openPanel, setOpenPanel] = useState("Today");
   const togglePanel = (key) => {
     setOpenPanel(openPanel === key ? null : key);
   };

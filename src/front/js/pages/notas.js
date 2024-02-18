@@ -2,7 +2,7 @@ import React, { useState,useEffect, useContext } from "react";
 import "../../styles/pages/notas.css"
 import { Context } from "../store/appContext";
 import Swal from 'sweetalert2';
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const Notas = () =>{
     const [description, setDescription] = useState("")
@@ -12,6 +12,7 @@ export const Notas = () =>{
     const date = today.toLocaleDateString()
     const owner_id= localStorage.getItem("user_id")
     const params = useParams()
+    const navigate = useNavigate()
 
     const addNote = () =>{
         if(!title){
@@ -46,7 +47,27 @@ export const Notas = () =>{
     }
 
     const editNote = () =>{
-        console.log("dedo");
+        fetch(process.env.BACKEND_URL + "api/modify-note/" + params.id,{
+            method: 'PUT',
+                headers: {
+                    "Content-Type" : "Application/json"
+                },
+                body: JSON.stringify({title,description})
+        })
+        .then(res=>res.json())
+        .then(data=>console.log(data))
+        .catch(err =>console.log(err))
+    }
+
+    const deleteNote = () =>{
+        fetch(process.env.BACKEND_URL + "api/delete-note/" + params.id,{
+            method: 'DELETE',
+                headers: {
+                    "Content-Type" : "Application/json"
+                },
+        })
+        .then(res=>res.json())
+        .catch(err =>console.log(err))
     }
 
     useEffect(() => {
@@ -92,14 +113,27 @@ export const Notas = () =>{
                            ></textarea>
                 <span className="character-number text-muted">{description.length }/1600</span>
             </section>
-            <button className="btn btn-dark"
-                    id="saveNoteBtn"
-                    onClick={()=>{
-                        params.id ? editNote() :  addNote()     
-                    }}
-            >Save</button>
-            <button className="btn btn-dark"
-            >Delete</button>
+            <div className="btnContainer d-flex">
+                <button className="btn btn-dark"
+                        id="saveNoteBtn"
+                        onClick={()=>{
+                            params.id ? editNote() :  addNote()     
+                        }}
+                >Save</button>
+                <button className="btn btn-dark"
+                        id="deleteNoteBtn"
+                        onClick={()=>{
+                            deleteNote()
+                            navigate("/")
+                        }}
+                >Delete</button>
+                <button className="btn btn-dark"
+                        id="backBtn"
+                        onClick={()=>{
+                            navigate("/")
+                        }}
+                >Back</button>
+            </div>
         </section>
     )
 }

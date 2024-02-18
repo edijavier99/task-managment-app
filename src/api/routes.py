@@ -151,7 +151,7 @@ def delete_note(id):
 
 @api.route('/modify-note/<int:id>', methods = ['PUT'])
 def modify_note(id):
-    data = Notes.request.get_json()
+    data = request.get_json()
     
     if data is None:
         response_body = {
@@ -161,10 +161,8 @@ def modify_note(id):
     
     update_note = Notes.query.get(id)
     update_note.title = data["title"]
-    update_note.date = data["date"]
     update_note.description = data["description"]
-
-    db.session.commit(update_note)
+    db.session.commit()
 
     return jsonify({"msg": f"{update_note.title} Notes updated"}),200
 
