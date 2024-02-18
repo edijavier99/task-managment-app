@@ -10,6 +10,10 @@
     align-items: center;
     justify-content: space-around;
 } 
+.btnDeleteConfirmation{
+    border:none;
+    background: linear-gradient(240deg, gray, white);
+}
 
 @media (max-width: 470px){
     .changeProfileImgPencil{

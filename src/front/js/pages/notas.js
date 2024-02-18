@@ -114,25 +114,38 @@ export const Notas = () =>{
                 <span className="character-number text-muted">{description.length }/1600</span>
             </section>
             <div className="btnContainer d-flex">
-                <button className="btn btn-dark"
+                {
+                    params.id ?  
+                    <>
+                    <button className="btn btn-dark"
                         id="saveNoteBtn"
                         onClick={()=>{
                             params.id ? editNote() :  addNote()     
                         }}
-                >Save</button>
-                <button className="btn btn-dark"
+                    >Save</button>
+                    <button className="btn btn-dark"
                         id="deleteNoteBtn"
                         onClick={()=>{
-                            deleteNote()
-                            navigate("/")
-                        }}
-                >Delete</button>
-                <button className="btn btn-dark"
-                        id="backBtn"
+                        deleteNote()
+                        navigate("/")
+                    }}
+                    >Delete</button>
+                    <button className="btn btn-dark"
+                            id="backBtn"
+                            onClick={()=>{
+                                navigate("/")
+                            }}
+                    >Back</button>
+                    </>
+                    : 
+                    <button className="btn btn-dark"
+                        id="saveNoteBtn"
                         onClick={()=>{
-                            navigate("/")
+                            params.id ? editNote() :  addNote()     
                         }}
-                >Back</button>
+                    >Save</button>
+                }
+            
             </div>
         </section>
     )

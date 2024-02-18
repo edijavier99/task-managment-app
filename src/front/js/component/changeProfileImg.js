@@ -10,7 +10,7 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
     const fileInputRef = useRef(null)
     const [image, setImage] = useState("")
     const user_id = localStorage.getItem("user_id")
-    const {store,actions} = useContext(Context)
+    const {store, actions} = useContext(Context)
     const token = localStorage.getItem("jwt-token")
     const [showCheck, setShowCheck] = useState(false)
     
@@ -26,7 +26,7 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
           return;
         }
         setImage(file);
-      };
+    };
     
     const handleUpload =  async (e)=>{
         e.preventDefault(); 
@@ -76,8 +76,8 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
 
     const sendDataToAPI = (image) => {
         const token = localStorage.getItem('jwt-token');
-            if(token) {
-        fetch(process.env.BACKEND_URL + "api/user/" + user_id, { 
+        if(token) {
+            fetch(process.env.BACKEND_URL + "api/user/" + user_id, { 
                 method: "PUT", 
                 headers: { 
                     "Content-Type": "application/json",
@@ -87,41 +87,40 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
             })
             .then((res) => res.json())
             .then((result) => {
-              onImageChange(image);
-              localStorage.setItem("userImage", image);
+                onImageChange(image);
+                localStorage.setItem("userImage", image);
             }).catch((err) => {
                 console.log(err);
             })
-            }else  {
-              Swal.fire({
+        } else {
+            Swal.fire({
                 icon: 'error',
                 title: 'oppss...',
                 text: 'Image not uploaded.'            
-              });
-            }
-        };
-    
-    const deleteUser = () =>{
-      fetch(`${process.env.BACKEND_URL}api/delete-user/${user_id}`, {
-        method: "DELETE",
-        headers : {
-          "Content-Type" : "Application/json"
+            });
         }
-      })
-      .then(response => response.json())
-      .then(data => {
-        Swal.fire({
-          icon: 'error',
-          title: 'oppss...',
-          text: data.msg         
-        });
-        actions.logOut()
-      })
-      .catch(err => console.log(err))
+    };
+
+    const deleteUser = () => {
+        fetch(`${process.env.BACKEND_URL}api/delete-user/${user_id}`, {
+            method: "DELETE",
+            headers : {
+                "Content-Type" : "Application/json"
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            Swal.fire({
+                icon: 'success',
+                text: data.msg         
+            });
+            actions.logOut()
+        })
+        .catch(err => console.log(err))
     }
-    
+
     return(
-        <section className={ token ? "changeProfileImgPencil" : "d-none"}>
+        <section className={ token ? "changeProfileImgPencil " : "d-none"}>
             <label htmlFor="fileInput">
                 <i className="fa-solid fa-pencil"
                     onClick={(e)=>{
@@ -139,13 +138,28 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
                 ref={fileInputRef} 
                 style={{ display: 'none' }} 
             /> {
-              showCheck ?  <i className="fa-solid fa-check"onClick={(e) => {
-                handleUpload(e);
-            }} ></i> : ""
-            }
-           
-
-            <i className="fa-solid fa-trash" onClick={deleteUser}></i>
+                showCheck ?  <i className="fa-solid fa-check" onClick={(e) => { handleUpload(e); }} ></i> : ""
+            }          
+          <div>
+              <i className="fa-solid fa-trash" onClick={()=>{}} data-bs-toggle="modal" data-bs-target="#deleteUserModal"></i> 
+            <div className="modal fade" id="deleteUserModal" tabIndex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+              <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title text-center" id="deleteUserModalLabel">Are you sure you want to delete your account?</h5>
+                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div className="modal-body">
+                    <p>This action is not reversible, and you will not be able to recover the data once deleted.</p>
+                  </div>
+                  <div className="modal-footer">
+                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" className="btn btn-primary" onClick={deleteUser}>Delete</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
     )
 }

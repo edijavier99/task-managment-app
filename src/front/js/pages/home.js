@@ -58,7 +58,7 @@ export const Home = () => {
                 <Profile />
                 <form className="d-flex" id="searchBar" onSubmit={(e) => { e.preventDefault(); }}>
                     <input
-                        className="form-control me-2"
+                        className="form-control  me-2"
                         type="search"
                         placeholder="Search"
                         aria-label="Search"

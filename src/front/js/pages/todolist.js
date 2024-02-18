@@ -7,6 +7,7 @@ import  { forwardRef } from 'react';
 import { SingleTodo } from "../component/singleTodo";
 import Swal from 'sweetalert2';
 
+
 export const ToDoList = () =>{
     const [title, setTitle] = useState('');
     const [date, setDate] = useState('');
@@ -126,7 +127,7 @@ export const ToDoList = () =>{
                 <div className="input-container d-flex">
                     <input
                     className="todo-input"
-                    placeholder="Introduce nueva tarea..."
+                    placeholder="Type new task..."
                     value={title}
                     onChange={(e) => {
                         setTitle(actions.capitalizeFirstLetter(e.target.value))

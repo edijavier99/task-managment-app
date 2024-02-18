@@ -36,6 +36,9 @@
     border-radius: 10px;
     border: none
 }
+.todo-input:focus{
+    outline: none;
+}
 .dateTodo {
     position: absolute;
     right: 0;
