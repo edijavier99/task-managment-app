@@ -3,11 +3,13 @@ import "../../styles/home.css";
 import { Profile } from "../component/profile";
 import { Dashboard } from "../component/dashboard";
 import { Navbar } from "../component/navbar";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
     const [searchMessage, setSearchMessage] = useState("");
+    const navigate = useNavigate()
 
     let delayTimer;
 
@@ -44,7 +46,7 @@ export const Home = () => {
     const showSearchResults = () => {
         return searchResults.map((result, index) => (
             <span key={index} id="item-result">
-                <a id="item-result-title">{result.title}</a>
+                <a id="item-result-title" onClick={()=> navigate("/notas/"+result.id)}>{result.title}</a>
             </span>
         )) 
     };
@@ -60,7 +62,7 @@ export const Home = () => {
                     <input
                         className="form-control  me-2"
                         type="search"
-                        placeholder="Search"
+                        placeholder="Search your notes..."
                         aria-label="Search"
                         value={searchQuery}
                         onChange={handleSearchChange}
@@ -74,12 +76,12 @@ export const Home = () => {
                     </button>
                 </form>
                 <div>
-                    {searchResults.length == 0 ? (
+                {(searchQuery !== '' && searchResults.length === 0) ? (
+                        <div>{searchMessage}</div>
+                    ) : (
                         <div className="d-flex flex-column">
                             {showSearchResults()}
                         </div>
-                    ) : (
-                        <div>{searchMessage}</div>
                     )}
                 </div>
                 <Dashboard/>

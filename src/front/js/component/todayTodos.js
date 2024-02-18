@@ -101,10 +101,10 @@ const TodayTodos = () => {
 
     return (
         <section>
-            <h4>Tasks remaining for today</h4>
-            <button className="btn goButton" onClick={() => {
-                token ? navigate("/todo-list") : navigate("/login")
-            }}>Add Tasks</button>
+            <h6>Tasks remaining for today. Stay organized and focused on your daily priorities.</h6>
+             <a className="btn goButton" href={token ? "/todo-list" : "/login"}>
+                Add Tasks
+             </a>
             <ul id="todayList">
                 {showTodaysTodos()}
             </ul>

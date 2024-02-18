@@ -42,7 +42,7 @@ const Historial = () =>{
     
     return(
         <section className="text-center">
-                <h5 className="text-center my-3">This are the tasks you completed in the last 5 days</h5>
+                <h6 className="text-center my-3">These are the tasks you completed in the last days. Please note that after 5 days, they will be automatically removed.</h6>
                 <ul id="completedTaskList">
                     {showCompletedTasks()}
                 </ul>

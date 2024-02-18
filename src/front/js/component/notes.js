@@ -48,7 +48,7 @@ const Notes = () => {
 
     return (
         <section className="flex flex-column text-center">
-            <h2 className="">Your Notes...📝</h2>
+            <h6 className="">Your Notes...📝</h6>
             <a className="btn goButton" href={token ? "/notas" : "/login"}>
                 Add Note
              </a>
