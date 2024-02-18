@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
-
 export const Navbar = () => {
 	const navigate = useNavigate()
 	const currentUser = localStorage.getItem("jwt-token")	

@@ -12,6 +12,7 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
     const user_id = localStorage.getItem("user_id")
     const {store,actions} = useContext(Context)
     const token = localStorage.getItem("jwt-token")
+    const [showCheck, setShowCheck] = useState(false)
     
     const handleFile = (e) => {
         const file = e.target.files[0];
@@ -126,6 +127,7 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
                     onClick={(e)=>{
                         e.preventDefault()
                         fileInputRef.current.click()
+                        setShowCheck(true)
                     }}
                 ></i>
             </label>
@@ -136,10 +138,12 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
                 onChange={handleFile}
                 ref={fileInputRef} 
                 style={{ display: 'none' }} 
-            />
-            <i className="fa-solid fa-check"onClick={(e) => {
+            /> {
+              showCheck ?  <i className="fa-solid fa-check"onClick={(e) => {
                 handleUpload(e);
-            }} ></i>
+            }} ></i> : ""
+            }
+           
 
             <i className="fa-solid fa-trash" onClick={deleteUser}></i>
         </section>

@@ -7,6 +7,8 @@ import { Navbar } from "../component/navbar";
 export const Home = () => {
     const [searchQuery, setSearchQuery] = useState("");
     const [searchResults, setSearchResults] = useState([]);
+    const [searchMessage, setSearchMessage] = useState("");
+
     let delayTimer;
 
     const getFilteredSearch = (query) => {
@@ -22,6 +24,7 @@ export const Home = () => {
                     .then((res) => res.json())
                     .then((result) => {
                         setSearchResults(result.Results);
+                        setSearchMessage(result.Message);
                     })
                     .catch((error) => {
                         console.error('Error al realizar la búsqueda:', error);
@@ -63,7 +66,7 @@ export const Home = () => {
                         onChange={handleSearchChange}
                     />
                     <button
-                        className="btn btn-outline-success"
+                        className="btn btn-success"
                         type="button"
                         onClick={() => getFilteredSearch(searchQuery)}
                     >
@@ -71,10 +74,12 @@ export const Home = () => {
                     </button>
                 </form>
                 <div>
-                    {searchResults.length > 0 && (
+                    {searchResults.length == 0 ? (
                         <div className="d-flex flex-column">
                             {showSearchResults()}
                         </div>
+                    ) : (
+                        <div>{searchMessage}</div>
                     )}
                 </div>
                 <Dashboard/>

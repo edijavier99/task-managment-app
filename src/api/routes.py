@@ -277,9 +277,9 @@ def search():
     search_query = request.args.get('query')
     message = ""
     if search_query:
-        resultsTodo = Todo.query.filter(Todo.title.ilike(f'%{search_query}%')).all()
+        # resultsTodo = Todo.query.filter(Todo.title.ilike(f'%{search_query}%')).all()
         resultNotes = Notes.query.filter(Notes.title.ilike(f'%{search_query}%')).all()
-        allResults = resultNotes + resultsTodo
+        allResults = resultNotes 
         serialized_results = [{'id': item.id, 'title': item.title} for item in allResults]
     else:
         serialized_results = []
