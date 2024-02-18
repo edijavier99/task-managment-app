@@ -147,6 +147,10 @@
     background-color: rgb(16, 150, 240);
     color: white !important;
 }
+.stepTitle{
+    margin:0;
+    padding:10px;
+}
 
 @media (max-width: 470px){
     .projects-header h1{

@@ -43,7 +43,7 @@ export const DroppableElement = (props) => {
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                   >
-                    <p>{item.title}</p>
+                    <p className="stepTitle">{item.title}</p>
                   </span>
                 )}
               </Draggable>

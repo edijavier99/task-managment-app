@@ -138,12 +138,20 @@ export const Notas = () =>{
                     >Back</button>
                     </>
                     : 
+                    <>
                     <button className="btn btn-dark"
                         id="saveNoteBtn"
                         onClick={()=>{
                             params.id ? editNote() :  addNote()     
                         }}
                     >Save</button>
+                    <button className="btn btn-dark"
+                        id="backBtn"
+                        onClick={()=>{
+                            navigate("/")     
+                        }}
+                    >Back</button>
+                    </>
                 }
             
             </div>

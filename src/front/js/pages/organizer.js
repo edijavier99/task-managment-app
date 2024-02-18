@@ -220,7 +220,7 @@ const handleItemClick = (projectId) => {
             throw error;
         });
     } else {
-        alert("Debes añadir un titulo al proyecto");
+        alert("Write a title to the project");
     }
 };
 
@@ -233,7 +233,7 @@ const handleItemClick = (projectId) => {
       <div id="showProjectBoard">
           { addProject? <i className="fa-solid fa-circle-check" onClick={sendProject}></i> : <i className="fa-solid fa-circle-plus "onClick={handdleAddProjectInput}></i>}
           <div className={`${addProject ? "" : "d-none"}`} id="newProjectInput">
-              <input onChange={(e)=>{ setProjectTitle(e.target.value)}} value={projectTitle} placeholder="Añade un proyecto..."  id="projectInput" name="projectInput" type="text"/>
+              <input onChange={(e)=>{ setProjectTitle(e.target.value)}} value={projectTitle} placeholder="Add a project..."  id="projectInput" name="projectInput" type="text"/>
           </div>
           {actions.showTheItems(projects, handleItemClick, selectedProyjectId)}
       </div>
