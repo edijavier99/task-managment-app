@@ -43,7 +43,7 @@ export const Home = () => {
             <span key={index} id="item-result">
                 <a id="item-result-title">{result.title}</a>
             </span>
-        ));
+        )) 
     };
 
     return (
@@ -67,7 +67,7 @@ export const Home = () => {
                         type="button"
                         onClick={() => getFilteredSearch(searchQuery)}
                     >
-                        Buscar
+                        Search
                     </button>
                 </form>
                 <div>

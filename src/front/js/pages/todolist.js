@@ -121,7 +121,7 @@ export const ToDoList = () =>{
             <div className="background-image">
                 <img src="https://cdn.pixabay.com/photo/2020/02/08/14/36/trees-4830285_1280.jpg" alt="imagen-de-fondo" />
             </div>
-            <h1>Tareas</h1>
+            <h1>Tasks</h1>
             <div className="container">
                 <div className="input-container d-flex">
                     <input
@@ -152,7 +152,7 @@ export const ToDoList = () =>{
                   {showTodos()}
                </ul> 
                 <div className="todos-counter">
-                    <span className="text-muted m-3">{todos.length} tareas por completar</span> 
+                    <span className="text-muted m-3">{todos.length} tasks to complete</span> 
                 </div>
             </div>
         </main>

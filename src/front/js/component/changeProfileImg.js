@@ -12,8 +12,7 @@ export const ChangeProfileImg = ({ onImageChange }) =>{
     const user_id = localStorage.getItem("user_id")
     const {store,actions} = useContext(Context)
     const token = localStorage.getItem("jwt-token")
-
-
+    
     const handleFile = (e) => {
         const file = e.target.files[0];
     

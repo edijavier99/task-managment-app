@@ -112,7 +112,7 @@ def get_all_notes(user_id):
 @api.route('/notes/<int:id>', methods= ['GET'])
 def get_single_notes(id):
     single_notes = Notes.query.get(id)
-    return jsonify(single_notes),200
+    return jsonify(single_notes.serialize()),200
 
 @api.route('/add-notes', methods= ['POST'])
 def add_notes():
@@ -418,7 +418,7 @@ def update_user(id):
 
     db.session.commit()
 
-    return jsonify({"msg": "User's prrofile image updated"}), 200
+    return jsonify({"msg": "User's profile image updated"}), 200
 
 @api.route('/user/<int:id>/task-reminder', methods=['POST'])
 def task_reminder(id):
@@ -433,7 +433,7 @@ def task_reminder(id):
         trigger = CronTrigger(hour=18, minute=00)
         scheduler.add_job(send_daily_reminder, trigger, args=[user.email, task_titles])
 
-        return 'Task reminder set up successfully', 200
+        return 'task reminder set up successfully', 200
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500

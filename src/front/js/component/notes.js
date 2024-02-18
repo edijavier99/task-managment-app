@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "../../styles/components/notes.css";
+import { useNavigate } from "react-router-dom";
 
 const Notes = () => {
     const [notes, setNotes] = useState([]);
-    const navigate = useNavigate();
     const token = localStorage.getItem("jwt-token")
+    const navigate = useNavigate()
     
     const getAllNotes = () => {
         fetch(`${process.env.BACKEND_URL}api/${localStorage.getItem("user_id")}/notes`, {
@@ -40,7 +40,7 @@ const Notes = () => {
                     <li><h4>{note.title}</h4></li>
                     <span>{note.description}</span>
                     <span className="text-muted small mt-2">{dateObject.toDateString()}</span>
-                    <button className="btn btn-dark dark-text w-100 mt-4 mb-3">Ir</button>
+                    <button className="btn btn-dark dark-text w-100 mt-4 mb-3" onClick={()=>navigate(`/notas/${note.id}`)}>See</button>
                 </div>
             );
         });
@@ -48,14 +48,14 @@ const Notes = () => {
 
     return (
         <section className="flex flex-column text-center">
-            <h2 className="">Tus notas...📝</h2>
+            <h2 className="">Your Notes...📝</h2>
             <a className="btn goButton" href={token ? "/notas" : "/login"}>
-                Añadir Notas
+                Add Note
              </a>
             <ul id="notesList">
                 {showAllNotes()}
             </ul>
-            <span className="text-muted small d-block">{notes.length} Notas añadidas</span>
+            <span className="text-muted small d-block">{notes.length} Notes added</span>
         </section>
     );
 };

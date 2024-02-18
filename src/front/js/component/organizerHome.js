@@ -6,9 +6,9 @@ const OrganizerHome = () =>{
     const token = localStorage.getItem("jwt-token")
     return(
     <section className="flex flex-column text-center">
-        <h2 className="">Organizador</h2>
+        <h2 className="">Project Area</h2>
         <a className="btn goButton" href={token ? "/organizador" : "/login"}>
-            Añadir Proyecto
+            Add Project
         </a>
     </section>
     )

@@ -49,7 +49,7 @@ export const Login = () =>{
                 <header className="header">
                     <img className="login-image" src="https://cdn.pixabay.com/photo/2016/08/25/07/30/red-1618916_1280.png" alt="logo" />
                     <h1>Iniciar sesión</h1>
-                    <p className="m-0">Inicia sesion</p>
+                    <p className="m-0">Log In</p>
                 </header>
                 <form onSubmit={(e)=>{
                     e.preventDefault()
@@ -64,7 +64,7 @@ export const Login = () =>{
                             setEmail(e.target.value)
                         }}
                     />
-                    <label id="password-label" htmlFor="password" >Contraseña</label>
+                    <label id="password-label" htmlFor="password" >Password</label>
                     <input id="password-label"
                         name="password"
                         type="password"
@@ -76,7 +76,7 @@ export const Login = () =>{
                     />
                     <button className="loginButton" type="submit">Log In</button>
                 </form>
-                <a className="linkToCreateAccount small mt-3" href="/crear-cuenta">Crear una cuenta</a>
+                <a className="linkToCreateAccount small mt-3" href="/crear-cuenta">Create account</a>
             </section>
         </div>
     )

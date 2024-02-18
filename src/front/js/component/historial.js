@@ -14,7 +14,6 @@ const Historial = () =>{
         })
         .then(res => res.json())
         .then(data =>{
-            console.log(data);
             setCompletedTask(data)
         })
         .catch(err=>console.log(err))
@@ -43,11 +42,11 @@ const Historial = () =>{
     
     return(
         <section className="text-center">
-                <h5 className="text-center my-3">Estas son las tareas que has completado en los últimos 5 días</h5>
+                <h5 className="text-center my-3">This are the tasks you completed in the last 5 days</h5>
                 <ul id="completedTaskList">
                     {showCompletedTasks()}
                 </ul>
-                <span className="text-muted small">{completedTask.length} Tareas completadas</span>
+                <span className="text-muted small">{completedTask.length} Task completed</span>
         </section>
     )
 }

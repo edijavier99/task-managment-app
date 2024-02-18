@@ -227,7 +227,7 @@ const handleItemClick = (projectId) => {
   return (
     <section id="projects">
       <header className="projects-header d-flex align-items-center justify-content-center">
-          <h1>Área de Proyectos</h1>
+          <h1>Projects dashboard</h1>
       </header>
       <main>
       <div id="showProjectBoard">
@@ -246,7 +246,7 @@ const handleItemClick = (projectId) => {
           <p className="m-0">No hay usuarios conectados</p>
         )}
       </div>} */}
-      <h2 className="my-4 titlePanel">Panel de proceso</h2>
+      <h2 className="my-4 titlePanel">Process panel</h2>
         <section className="organizer-container">
           <DragDropContext onDragEnd={onDragEnd}>
             <DroppableElement droppableId ="prueba-pasos" stageName="Pasos" stageContainer ={pasos} onTextareaChange={handleTextareaChange}  />

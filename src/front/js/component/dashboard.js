@@ -25,10 +25,10 @@ export const Dashboard = () => {
   };
 
   const panelData = [
-    { key: 'Hoy', content: <LazyTodayTodos /> },
-    { key: 'Proyectos', content: <LazyOrganizerHome /> },
-    { key: 'Notas', content: <LazyNotes /> },
-    { key: 'Historial', content: <LazyHistorial /> },
+    { key: 'Today', content: <LazyTodayTodos /> },
+    { key: 'Projects', content: <LazyOrganizerHome /> },
+    { key: 'Notes', content: <LazyNotes /> },
+    { key: 'History', content: <LazyHistorial /> },
   ];
   return (
     <section className="dashboard">

@@ -40,17 +40,17 @@ export const CreateAccount = () =>{
         <div id="createAccount">
             <section className="create-account">
             <header className="header">
-                    <h1 id="title">Task Managment <br/>Crear una cuenta</h1>
-                    <p id="description">Empieza a organizar tu dia con nosotros...</p>
+                    <h1 id="title">Task Managment <br/>Create Account</h1>
+                    <p id="description">You're one step closer to taking advantage of your day with us...</p>
             </header>
             <form className="survey-form"  onSubmit={(e) => {
                         e.preventDefault();
                         createUser();
                     }}>
                     <div className="form-group">
-                        <label htmlFor="name" id="name-label">Nombre</label>
+                        <label htmlFor="name" id="name-label">Name</label>
                         <input id="name" 
-                            placeholder="Introduce tu nombre"
+                            placeholder="Type your name"
                             name="name"
                             type="text"
                             onChange={(e)=>{
@@ -61,9 +61,9 @@ export const CreateAccount = () =>{
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="surname" id="surname-label">Apellido</label>
+                        <label htmlFor="surname" id="surname-label">Surname</label>
                         <input id="surname" 
-                            placeholder="Introduce tu nombre"
+                            placeholder="Type your surname"
                             name="surname"
                             type="text"
                             onChange={(e)=>{
@@ -76,7 +76,7 @@ export const CreateAccount = () =>{
                     <div className="form-group">
                         <label htmlFor="email" id="email-label">Email</label>
                         <input id="email" 
-                            placeholder="Introduce tu email"
+                            placeholder="Type your email"
                             name="email"
                             type="email"
                             onChange={(e)=>{
@@ -85,13 +85,13 @@ export const CreateAccount = () =>{
                             value={email}
                             required
                             pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-                            title="Por favor, introduce un email válido"
+                            title="Please, type a valid email"
                         />
                     </div>
                     <div className="form-group">
-                        <label htmlFor="password" id="password-label">Contraseña</label>
+                        <label htmlFor="password" id="password-label">Password</label>
                         <input id="password" 
-                            placeholder="Introduce contraseña"
+                            placeholder="Type a password"
                             name="password"
                             type="password"
                             onChange={(e)=>{
@@ -102,10 +102,10 @@ export const CreateAccount = () =>{
                         />
                     </div>
                     <div className="form-group">
-                        <button type="submit" id="createAccountBtn" className="submit-button">Crear cuenta</button>
+                        <button type="submit" id="createAccountBtn" className="submit-button">Create account</button>
                     </div>
             </form>
-                <a className="linkToCreateAccount small mt-3" href="/login">Iniciar sesión</a>
+                <a className="linkToCreateAccount small mt-3" href="/login">Login</a>
             </section>
         </div>
     )

@@ -2,6 +2,7 @@ import React, { useState,useEffect, useContext } from "react";
 import "../../styles/pages/notas.css"
 import { Context } from "../store/appContext";
 import Swal from 'sweetalert2';
+import { useParams } from "react-router-dom";
 
 export const Notas = () =>{
     const [description, setDescription] = useState("")
@@ -10,19 +11,20 @@ export const Notas = () =>{
     const today = new Date()
     const date = today.toLocaleDateString()
     const owner_id= localStorage.getItem("user_id")
+    const params = useParams()
 
     const addNote = () =>{
         if(!title){
             Swal.fire({
                 icon: 'error',
                 title: 'oppss...',
-                text: "Inserta un titulo para la nota"
+                text: "Insert a title for the note"
               })            
         }else if(!description){
             Swal.fire({
                 icon: 'error',
                 title: 'oppss...',
-                text: "Inserta una description para la nota"
+                text: "Insert a description for the note"
               })
         }else{
             fetch(process.env.BACKEND_URL + 'api/add-notes' , {
@@ -43,12 +45,36 @@ export const Notas = () =>{
         }
     }
 
+    const editNote = () =>{
+        console.log("dedo");
+    }
+
+    useEffect(() => {
+        if (params.id) {
+            const getSingleNote = () => {
+                fetch(process.env.BACKEND_URL + "api/notes/" + params.id, {
+                    method: 'GET',
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                })
+                .then(res => res.json())
+                .then(data =>{
+                    setTitle(data.title)
+                    setDescription(data.description)
+                })
+                .catch(err => console.log(err));
+            };
+            getSingleNote();
+        }
+    }, [params.id]);
+
     return(
         <section className="notas">
            <div className="background-image">
                 <img src="https://cdn.pixabay.com/photo/2016/11/22/19/25/adult-1850177_1280.jpg" alt="imagen-de-fondo" />
             </div>
-            <h1>Notas</h1> 
+            <h1>Notes</h1> 
             <section className="notas-container">
                 <input id="nota-title" 
                        className="text-center" 
@@ -69,9 +95,11 @@ export const Notas = () =>{
             <button className="btn btn-dark"
                     id="saveNoteBtn"
                     onClick={()=>{
-                        addNote()             
+                        params.id ? editNote() :  addNote()     
                     }}
-            >Guardar</button>
+            >Save</button>
+            <button className="btn btn-dark"
+            >Delete</button>
         </section>
     )
 }

@@ -15,7 +15,6 @@ const useScrollHeight = () => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, []);
-
     return height;
 };
 
@@ -38,12 +37,12 @@ export const Profile = () => {
             </section>
             <section className="personal-information dynamic-div" style={{ height: `${height}px` }}>
                 <img id="chincheta" src="https://cdn.icon-icons.com/icons2/1632/PNG/512/62931pushpin_109275.png" alt="chincheta" />
-                <p className="user-name">Bienvenido <strong>{ usernameCapitalized}</strong></p>
+                <p className="user-name">Welcome <strong>{ usernameCapitalized}</strong></p>
                 <blockquote>
                    <RamdonText/>
-                    <cite>Anónimo</cite>
+                    <cite>Anonimus</cite>
                 </blockquote>
-                <p className="todayDate">Fecha de hoy: <span className="date">{today}</span></p>
+                <p className="todayDate">Date : <span className="date">{today}</span></p>
             </section>
         </main>
     );

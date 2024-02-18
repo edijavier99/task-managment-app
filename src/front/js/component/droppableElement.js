@@ -55,7 +55,7 @@ export const DroppableElement = (props) => {
       <div className={`addCartBoard ${addCart ? "" : "d-none"}`}>
         <textarea
           rows={5}
-          placeholder="Introduce un titulo a esta carta..."
+          placeholder="Write a title to this card..."
           onChange={(e) => setStepTitle(e.target.value)}
           value={stepTitle}
         ></textarea>
@@ -66,7 +66,7 @@ export const DroppableElement = (props) => {
           className={`btn text-muted ${addCart ? "addCartActive" : ""}`}
           onClick={addCart ? submitAddCart : () => setAddCart(true)}
         >
-          <i className="fa-solid fa-plus"></i> {addCart ? "Añadir Tarjeta" : "Añadir"}
+          <i className="fa-solid fa-plus"></i> {addCart ? "Add Card" : "Add"}
         </button>
         <i
           className={`fa-solid fa-times text-muted ps-4 ${

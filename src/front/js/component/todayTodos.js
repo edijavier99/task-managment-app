@@ -9,7 +9,6 @@ const TodayTodos = () => {
     const token = localStorage.getItem("jwt-token")
     const user_id = localStorage.getItem("user_id")
     
-
     const getAllTodos = () => {
         fetch(`${process.env.BACKEND_URL}api/${user_id}/todo`, {
             method: 'GET',
@@ -71,16 +70,15 @@ const TodayTodos = () => {
         }
     }, []);
 
-    const sendReminder = (taskForReminder) =>{
+    const sendReminder = (taskReminder) =>{
         fetch(`${process.env.BACKEND_URL}api/user/${user_id}/task-reminder`,{
             method: "POST",
             headers: {
-                "Content-Type" : "Application/json"
+                "Content-Type" : "application/json"
             },
-            body : JSON.stringify({taskForReminder})
+            body: JSON.stringify({taskReminder})
         })
-        .then(res => res.json())
-        .then(data => console.log(data))
+        .then(res => res.text())
         .catch(err => console.log(err))
     }
 
@@ -103,7 +101,7 @@ const TodayTodos = () => {
 
     return (
         <section>
-            <h4>Tareas que tienes pendientes para hoy</h4>
+            <h4>Tasks remaining for today</h4>
             <button className="btn goButton" onClick={() => {
                 token ? navigate("/todo-list") : navigate("/login")
             }}>Añadir Tareas</button>

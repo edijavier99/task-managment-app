@@ -12,7 +12,6 @@ class ScrollToTop extends React.Component {
 		return this.props.children;
 	}
 }
-
 export default ScrollToTop;
 ScrollToTop.propTypes = {
 	location: PropTypes.object,

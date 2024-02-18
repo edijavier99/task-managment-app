@@ -4,13 +4,11 @@ import ScrollToTop from "./component/scrollToTop";
 import { BackendURL } from "./component/backendURL";
 
 import { Home } from "./pages/home";
-import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 import { ToDoList } from "./pages/todolist";
 import { Notas } from "./pages/notas";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import { Welcome } from "./pages/welcome";
 import { Login } from "./pages/login";
 import { CreateAccount } from "./pages/create-account";
 import { Organizer } from "./pages/organizer";
@@ -30,7 +28,6 @@ const Layout = () => {
                 <ScrollToTop>
                     <Routes>
                         <Route element={<Home />} path="/" />
-                        <Route element={<Welcome />} path="/welcome"/>
                         <Route element={<EmailVerification />} path="/verify/:token" />
                         <Route element={<Success/>} path="/success"/>
                         <Route element={<Login/>} path="/login" />
@@ -38,7 +35,7 @@ const Layout = () => {
                         <Route element={<ToDoList />} path="/todo-list" />
                         <Route element={<Organizer />} path="/organizador" />
                         <Route element={<Notas />} path="/notas" />
-                        <Route element={<Single />} path="/single/:theid" />
+                        <Route element={<Notas />} path="/notas/:id" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                 </ScrollToTop>

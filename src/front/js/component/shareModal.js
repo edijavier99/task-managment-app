@@ -29,11 +29,10 @@ export const ShareModal = (props) =>{
             <div className="modal-dialog">
                 <div className="modal-content">
                 <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">Compartir proyecto</h5>
+                    <h5 className="modal-title" id="exampleModalLabel">Share Project</h5>
                     <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div className="modal-body">
-                    <p>Introduce el correo electronico de la persona con la que quieres compartir el proyecto.</p>
+                <div className="modal-body"><p>Please enter the email address of the person you would like to share this project with.</p>
                     <input type="text" id="shareWithEmail" name="shareWithEmail" value={email} onChange={(e)=>{
                         setEmail(e.target.value)
                     }} />
@@ -41,7 +40,7 @@ export const ShareModal = (props) =>{
                 </div>
                 <div className="modal-footer">
                     <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary" onClick={()=> shareProyect()}>Compartir</button>
+                    <button type="button" className="btn btn-primary" onClick={()=> shareProyect()}>Share</button>
                 </div>
                 </div>
             </div>
