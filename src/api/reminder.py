@@ -12,9 +12,8 @@ def sendTaskReminder(to_email, subject, task_titles):
     message['To'] = to_email
     message['Subject'] = subject
 
-    body = f'Esto es un recordatorio para las tareas que tienes previstas para mañana:\n\n'
+    body = f'This is a reminder with the task you have to completed for tomorrow:\n\n'
     body += ''.join(task_titles)
-
     message.attach(MIMEText(body, 'plain'))
 
     try:

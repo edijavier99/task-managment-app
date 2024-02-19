@@ -19,7 +19,7 @@ from flask_jwt_extended import (
 from api.verification_token import generate_verification_token
 from api.email import send_verification_email
 from api.reminder import sendTaskReminder
-
+from api.sharemail import send_email_when_project_share
 api = Blueprint('api', __name__)
 # Allow CORS requests to this API
 CORS(api)
@@ -376,12 +376,12 @@ def actualizar_categoria_paso(proyecto_id,paso_id):
 def share_project(project_id):
     project = Project.query.get(project_id)
     if not project:
-        return jsonify({"error": f"No se encontró un proyecto con el nombre {project_id}"}), 404
+        return jsonify({"error": f"No se encontró un proyecto con el nombre {project.title}"}), 404
     
     data = request.get_json()
     email = data.get("email")
     if not email:
-        return jsonify({"error": "Introduce el correo"}), 400
+        return jsonify({"error": "Introduce un correo"}), 400
     
     user = User.query.filter_by(email=email).first()
     
@@ -390,7 +390,12 @@ def share_project(project_id):
     
     if project in user.projects:
         return jsonify({"error": f"El usuario {user.name} ya está en el proyecto {project.title}"}), 400
-
+    
+    try:
+        send_email_when_project_share(user.email, project.title)
+    except Exception as e:
+        return jsonify({"error": f"Error al enviar el correo electrónico: {str(e)}"}), 500
+    
     user.projects.append(project)
     db.session.commit()
 
@@ -435,3 +440,4 @@ def task_reminder(id):
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+    
