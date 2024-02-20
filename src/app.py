@@ -36,10 +36,13 @@ def handle_disconnet():
 
 @socketio.on('proyectoId')
 def prpyectoId(data):
+    print("---------- ,projectttttttt iddddddddddddddddd")
+
     emit('proyectoId', {'mensaje': data})
 
 @socketio.on('join_project')
 def prpyectoId(data):
+    print("---------- joiiiin projectttttttt")
     room = data["project"]
     username = data["username"]
     join_room(room)
