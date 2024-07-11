@@ -59,6 +59,10 @@ input[type="text"], input[type="email"], input[type="password"]{
     display: flex;
     justify-content: center;
 }
+.login-image{
+    height: 135px !important;
+    width: 170px !important;
+}
 @media (max-width: 470px){
     .create-account , .login{
         width: 390px;

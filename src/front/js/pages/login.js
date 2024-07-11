@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../../styles/components/create-account.css"
 import { useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
+import logo from "./../../img/logo.png"
+
 
 export const Login = () =>{
     const [email,setEmail] = useState("")
@@ -47,7 +49,7 @@ export const Login = () =>{
         <div id="login">
             <section className="login">
                 <header className="header">
-                    <img className="login-image" src="https://cdn.pixabay.com/photo/2016/08/25/07/30/red-1618916_1280.png" alt="logo" />
+                    <img className="login-image" src={logo}  alt="logo" />
                     <h1>Iniciar sesión</h1>
                     <p className="m-0">Log In</p>
                 </header>
