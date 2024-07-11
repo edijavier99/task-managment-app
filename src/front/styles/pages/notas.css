@@ -15,7 +15,7 @@
 }
 .notas-container{
     z-index: 2;
-    background-color: rgb(252, 221, 152);
+    background-color: rgb(231, 201, 135);
     width: 85%;
     height: 500px;
     margin: 0 auto;
@@ -27,8 +27,6 @@
     background-position-x:-100px ;
     display: flex;
     justify-content: center;
-    background-image: url(https://c0.klipartz.com/pngpicture/462/399/gratis-png-nota-adhesiva-amarilla-con-un-alfiler-rojo-nota-musical-papel-de-nota-post-it-samsung-galaxy-nota-8-nota-post-it.png);
-
 }
 .notas textarea{
     width: 100%;
@@ -61,6 +59,7 @@
     top:400px;
     height: 40px;
     width: 100%;
+    right: 0 !important;
     padding-left:300px;
     background-image: url("https://img.freepik.com/premium-photo/white-crumpled-paper-paper-texture_213524-50.jpg?size=626&ext=jpg&ga=GA1.1.1880011253.1700179200&semt=ais");
     float: right;
